@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页</title>
+    <link rel="stylesheet" href="./style-login.css">
+</head>
+<body>
+    <header class="sticky">
+        <a href="XXXX" class="logo">主页</a>
+        <ul>
+            <li><a href="XXXX"><b>社交论坛</b></a></li>
+            <li><a id="signIN" href="LoginImage.html"><b>登录/注册</b></a></li>
+            <li><a href="XXXX"><b>页面三</b></a></li>
+        </ul>
+    </header>
+    <div class="box">  
+        <h1>登录</h1>
+        <div class="inputbox">
+            <div class="inputText">
+            <img class="userImg" src="./LoginImage/user.png" alt="">  <input id="loginName" type="text" placeholder="Username" required/>
+            </div>
+            <div class="inputText">
+            <img class="passwordImg" src="./LoginImage/password.png" alt="">    <input id="loginPassword" type="password" placeholder="Password" required/>
+            </div>
+        </div>
+        <button id="loginButton" class="loginButton">LOGIN</button>
+        <div id="register" >新用户，去注册！</div>
+    </div>
+    <div class="box2" id="box2">
+        <div class="head">注册 
+            <div class="close">✖</div>
+        </div>
+        <div class="ipputBox">
+            <div>  <p>输入用户名:</p> <input id="inName" class="inName" type="text" ></div>
+            <div>  <p>输入密码:</p>  <input id="inPassword" class="inPassword" type="password"></div>
+            <div>  <p>确认密码:</p>   <input id="inPassword2" class="inPassword" type="password"></div>
+            <div><input id="button2" class="button2" type="button" value="完成"></div>
+        </div>
+    </div>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="./login.js"></script>
+</body>
+</html>
