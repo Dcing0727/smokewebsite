@@ -1,16 +1,61 @@
-*
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body
-{
-    background-image: url("./LoginImage/7.png");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+<template>
+<div>
+   <div class="box">  
+        <h1>登录</h1>
+        <div class="inputbox">
+            <div class="inputText">
+            <img class="userImg" src="@/assets/user.png" alt="">  <input id="loginName" type="text" placeholder="Username" required/>
+            </div>
+            <div class="inputText">
+            <img class="passwordImg" src="@/assets/password.png" alt="">    <input id="loginPassword" type="password" placeholder="Password" required/>
+            </div>
+        </div>
+        <button id="loginButton" class="loginButton">LOGIN</button>
+        <div id="register" >新用户，去注册！</div>
+    </div>
+    <div class="box2" id="box2">
+        <div class="head">注册 
+            <div class="close">✖</div>
+        </div>
+        <div class="ipputBox">
+            <div>  <p>输入用户名:</p> <input id="inName" class="inName" type="text" ></div>
+            <div>  <p>输入密码:</p>  <input id="inPassword" class="inPassword" type="password"></div>
+            <div>  <p>确认密码:</p>   <input id="inPassword2" class="inPassword" type="password"></div>
+            <div><input id="button2" class="button2" type="button" value="完成"></div>
+        </div>
+    </div>
+</div>
+   
+</template>
+
+<script>
+export default {
+  name: 'LoginComponent',
+  data() {
+    return {
+      username: '',
+      password: '',
+      loggedIn: false,
+    };
+  },
+  methods: {
+    login() {
+      // 在这里处理登录逻辑
+      if (this.username === 'your_username' && this.password === 'your_password') {
+        // 模拟登录成功，显示登录成功消息
+        this.loggedIn = true;
+      } else {
+        // 模拟登录失败，显示错误消息
+        this.loggedIn = false;
+        alert('用户名或密码不正确');
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+
 header
 {
     position: fixed;
@@ -69,7 +114,7 @@ header ul li a
     width: 100%;
     height: 100vh;
     /* height: 100%; */
-    background: url(1.jpg);
+    /*background: url(1.jpg);*/
     background-size: cover;
     color: red;
     /* line-height: 100vh;
@@ -242,3 +287,9 @@ header.sticky ul li a
 #signIN{
     color: #0084ff;
 }
+
+</style>
+
+
+
+
