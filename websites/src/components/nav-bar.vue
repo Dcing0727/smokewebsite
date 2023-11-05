@@ -4,10 +4,10 @@
       <img src="@/assets/5.png" alt="Logo">
     </div>
     <ul class="nav-links">
-      <li><a href="/">首页</a></li>
-      <li><a href="/about">关于我们</a></li>
-      <li><a href="/services">烟量统计</a></li>
-      <li><a href="/contact">戒烟打卡</a></li>
+      <li><router-link to="/" class="custom-link">登录页</router-link></li>
+      <li><router-link to="/statistics" class="custom-link">烟量统计</router-link></li>
+      <li><router-link to="/about" class="custom-link">关于我们</router-link></li>
+      <li><router-link to="/contact" class="custom-link">戒烟打卡</router-link></li> 
     </ul>
   </nav>
 </template>
@@ -24,35 +24,46 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+
   color: #000;
   transition: background 0.3s;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 8%;
+  height: 58px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
 }
 
 .logo img {
-  max-width: 50px;
+  max-width: 40px;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  height: 100%; /* 设置链接容器高度为 100% */
 }
 
-.nav-links li a {
+.custom-link {
+  line-height: 58px;
   text-decoration: none;
   color: #000;
   font-weight: bold;
   transition: color 0.3s;
+  display: flex; /* 设置链接元素为弹性盒子 */
+  padding: 0px 20px; /* 调整链接内边距 */
+  height: 58px;
 }
 
-.nav-links li a:hover {
-  text-decoration: underline;
+.custom-link:hover {
+  text-decoration: none; /* 去掉下横线 */
   color: #00D68F;
+  background-color: #f0f0f0; /* 设置背景色 */
+}
+
+.custom-link.active {
+  background-color: #00D68F; /* 活动链接的背景颜色 */
+  color: #fff; /* 活动链接的文字颜色 */
 }
 </style>
