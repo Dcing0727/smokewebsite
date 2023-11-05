@@ -11,17 +11,19 @@
             </div>
         </div>
         <button id="loginButton" class="loginButton">LOGIN</button>
-        <div id="register" >新用户，去注册！</div>
+        <div id="register" @click="openBox()" >新用户，去注册！</div>
     </div>
-    <div class="box2" id="box2">
+    <div class="box2" @mousedown="dragElement" ref="box2">
+        <!-- 注册窗口内容 -->
         <div class="head">注册 
-            <div class="close">✖</div>
+            <div class="close" @click="closeBox">✖</div>
         </div>
-        <div class="ipputBox">
-            <div>  <p>输入用户名:</p> <input id="inName" class="inName" type="text" ></div>
-            <div>  <p>输入密码:</p>  <input id="inPassword" class="inPassword" type="password"></div>
-            <div>  <p>确认密码:</p>   <input id="inPassword2" class="inPassword" type="password"></div>
-            <div><input id="button2" class="button2" type="button" value="完成"></div>
+        <div class="inputBox">
+        <!-- 输入框内容 -->
+            <div><p>输入用户名:</p><input class="inName" type="text" v-model="username"></div>
+            <div><p>输入密码:</p><input class="inPassword" type="password" v-model="password"></div>
+            <div><p>确认密码:</p><input class="inPassword" type="password" v-model="password2"></div>
+            <div><input class="button2" type="button" value="完成" @click="register"></div>
         </div>
     </div>
 </div>
@@ -39,16 +41,53 @@ export default {
     };
   },
   methods: {
-    login() {
-      // 在这里处理登录逻辑
-      if (this.username === 'your_username' && this.password === 'your_password') {
-        // 模拟登录成功，显示登录成功消息
-        this.loggedIn = true;
-      } else {
-        // 模拟登录失败，显示错误消息
-        this.loggedIn = false;
-        alert('用户名或密码不正确');
+    openBox()  {
+      this.$refs.box2.style.display = "block";
+    },
+    closeBox() {
+      this.$refs.box2.style.display = "none";
+    },
+    dragElement(event) {
+      const box = this.$refs.box2;
+      const diffX = event.clientX - box.offsetLeft;
+      const diffY = event.clientY - box.offsetTop;
+
+      const moveElement = (event) => {
+        let moveX = event.clientX - diffX;
+        let moveY = event.clientY - diffY;
+        if (moveX < 0) {
+          moveX = 0;
+        } else if (moveX > window.innerWidth - box.offsetWidth) {
+          moveX = window.innerWidth - box.offsetWidth;
+        }
+        if (moveY < 0) {
+          moveY = 0;
+        } else if (moveY > window.innerHeight - box.offsetHeight) {
+          moveY = window.innerHeight - box.offsetHeight;
+        }
+        box.style.left = moveX + 'px';
+        box.style.top = moveY + 'px';
+      };
+
+      const releaseElement = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        if (box.releaseCapture) {
+          box.releaseCapture();
+        }
+      };
+
+      if (box.setCapture) {
+        box.setCapture();
       }
+      document.onmousemove = moveElement;
+      document.onmouseup = releaseElement;
+    },
+    register() {
+      // 在这里处理注册逻辑
+      // 使用 this.username, this.password 和 this.password2 来获取输入的值
+      // 可以在这里添加逻辑来验证和处理注册
+      // 之后可以关闭注册窗口，例如：this.closeBox();
     },
   },
 };
@@ -166,7 +205,7 @@ header.sticky ul li a
     color: white;
 }
 
-.box .inputbox input:hover
+.inputbox input:hover
 {
     transition: 0.6s;
     border-bottom: 1px solid  white;
@@ -244,20 +283,20 @@ header.sticky ul li a
     font-size: 25px;
     outline: none;
 }
-.ipputBox
+.inputBox
 {
     position: absolute;
     left: 30%;
     top: 20%;
-    /* transform: translate(-50%); */
+
 }
-.ipputBox p
+.inputBox p
 {
     margin-top: 20px;
     color: gray;
 }
 
-.ipputBox .button2
+.inputBox  .button2
 {
     color: #fff;
     height: 30px;
@@ -269,7 +308,7 @@ header.sticky ul li a
     border-radius: 5px;
     
 }
-.ipputBox .button2:active
+.inputBox .button2:active
 {
     background-color: rgb(30,144,200);
 }
@@ -287,7 +326,6 @@ header.sticky ul li a
 #signIN{
     color: #0084ff;
 }
-
 </style>
 
 
