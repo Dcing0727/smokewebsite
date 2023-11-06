@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="background-container">
    <div class="box">  
         <h1>登录</h1>
         <div class="inputbox">
@@ -94,7 +94,15 @@ export default {
 </script>
 
 <style scoped>
+.background-container {
+  background-image: url("@/assets/7.png"); 
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-size: 100% 100%;
+  z-index: -1;
 
+}
 header
 {
     position: fixed;

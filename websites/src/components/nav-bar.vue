@@ -36,7 +36,9 @@ export default {
 }
 
 .logo img {
-  max-width: 40px;
+  position: relative;
+  left: 20px;
+  max-width: 50px;
 }
 
 .nav-links {

@@ -24,7 +24,7 @@ export default {
 
 body
 {
-    background-image: url("@/assets/7.png");
+   /* background-image: url("@/assets/7.png"); */
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;

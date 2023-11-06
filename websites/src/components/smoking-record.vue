@@ -20,7 +20,7 @@
         position: absolute;
         top: 30%;
         left: 15%;
-        color: white;
+        color: black;
     }
 
     
