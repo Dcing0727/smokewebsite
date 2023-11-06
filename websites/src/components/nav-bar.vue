@@ -6,8 +6,8 @@
     <ul class="nav-links">
       <li><router-link to="/" class="custom-link">登录页</router-link></li>
       <li><router-link to="/statistics" class="custom-link">烟量统计</router-link></li>
-      <li><router-link to="/about" class="custom-link">关于我们</router-link></li>
-      <li><router-link to="/contact" class="custom-link">戒烟打卡</router-link></li> 
+      <li><router-link to="/blog" class="custom-link">博客页面</router-link></li>
+      <li><router-link to="/record" class="custom-link">戒烟打卡</router-link></li> 
     </ul>
   </nav>
 </template>
