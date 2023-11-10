@@ -2,14 +2,17 @@
 <template>
     <NavBar></NavBar>
     <router-view></router-view>
+    <Footer></Footer>
 </template>
 
 <script>
 import NavBar from './components/nav-bar.vue'
+import Footer from './components/page-footer.vue'
 export default {
   name: 'App',
   components: {
     NavBar,
+    Footer
   }
 }
 </script>
@@ -24,7 +27,6 @@ export default {
 
 body
 {
-   /* background-image: url("@/assets/7.png"); */
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
