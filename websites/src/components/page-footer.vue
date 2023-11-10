@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <!-- 上面的组件放在这里 -->
+    <!-- 其他页面内容 -->
 
     <div class="footer-container">
       <div class="section footer fp-auto-height">
@@ -21,21 +21,17 @@ export default {
 
 <style scoped>
 .page-container {
-  
-  position: relative;
-  z-index: 1; /* 提高上面组件的层级，确保在底部元素之上 */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  z-index:-1;
 }
 
-/* 上面的组件样式 */
-
 .footer-container {
+  margin-top: auto;
   height: 50px;
   background-color: #383838;
   width: 100%;
-  position: fixed; /* 使用 fixed 保持在视口底部 */
-  bottom: 0;
-  left: 0;
-  z-index: 0; /* 底部元素的层级设置较低 */
 }
 
 .footer .foo {

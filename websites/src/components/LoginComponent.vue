@@ -188,6 +188,7 @@ header.sticky ul li a
     top: 20%;
     background-color:black;
     opacity: 0.7;
+    z-index: 1;
 }
 .box h1
 {
@@ -256,6 +257,7 @@ header.sticky ul li a
     /* overflow: hidden; */     
     cursor: move;
     display: none;
+    z-index: 2;
 }
 .head
 {

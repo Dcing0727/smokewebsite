@@ -5,6 +5,7 @@ import LoginComponent from '../components/LoginComponent.vue';
 import Statistics  from  '../components/smoking-statistics.vue';
 import Record from  '../components/smoking-record.vue';
 import Blog from '../components/blog-page.vue';
+import Home from '../components/home-page.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,6 +21,9 @@ const router = createRouter({
     },{
       path: '/record', 
       component: Record
+    },{
+      path: '/home', 
+      component: Home
     },
   
   ]
