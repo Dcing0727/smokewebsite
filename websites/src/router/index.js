@@ -6,6 +6,7 @@ import Statistics  from  '../components/smoking-statistics.vue';
 import Record from  '../components/smoking-record.vue';
 import Blog from '../components/blog-page.vue';
 import Home from '../components/home-page.vue';
+import Carousel from '../components/img-carousel.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -24,7 +25,10 @@ const router = createRouter({
     },{
       path: '/home', 
       component: Home
-    },
+    },{
+      path:'/img',
+      component:Carousel
+    }
   
   ]
   
