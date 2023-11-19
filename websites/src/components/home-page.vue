@@ -38,20 +38,21 @@
             </div>
         </div>
     </div>
-
-    
-
+     <knowledgePageVue></knowledgePageVue>
      <Footer></Footer>
 </template>
 
 <script>
     import Footer from './page-footer.vue'
     import Carousel from './img-carousel.vue';
+    import knowledgePageVue from './knowledge-page.vue';
+
     export default {
     name: 'home-page',
     components:{
         Footer,
-        Carousel
+        Carousel,
+        knowledgePageVue
     }
 };
 </script>
@@ -59,28 +60,28 @@
 <style scoped>
         .con{
             position: relative;
-            height: 1000px;
+            height: 800px;
+            /*此处边框为测试用*/
+            border: solid 1px black;
         }
-
-
         /*清除浮动的影响*/
 
         /*版心*/
         .inner_c{
             width: 1000px;
             margin: 0 auto; /*让导航条、内容区域等部分的版心在父亲里居中*/
+           /* background-color:rgb(238, 238,238);  */
+           /* border: solid 1px black; */
         }
-        /*导航条的logo*/
-        .banner{
-            height: 465px;
-            background: url(@/assets/background1.jpg) no-repeat center top;
-        }
+
         .content{
             padding-top: 50px;
+            /* background-color:rgb(238, 238,238);  */
         }
         .content .product{
             height: 229px;
             border-bottom: 1px solid #DBE1E7;
+            /* background-color: #fff; */
         }
         .content .product ul{
             list-style: none;

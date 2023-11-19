@@ -29,6 +29,7 @@ body
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color:rgb(238, 238,238);
 } 
 
 </style>
