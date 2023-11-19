@@ -1,7 +1,8 @@
 <template>
     <div class="con">
         <div class="cl"></div>
-        <div class="banner"></div>
+        <!-- <div class="banner"></div> -->
+        <Carousel></Carousel>
         <div class="content inner_c">
             <div class="product">
                 <ul>
@@ -45,10 +46,12 @@
 
 <script>
     import Footer from './page-footer.vue'
+    import Carousel from './img-carousel.vue';
     export default {
     name: 'home-page',
     components:{
         Footer,
+        Carousel
     }
 };
 </script>
@@ -115,7 +118,4 @@
             text-decoration: none;
             padding-right: 12px;
         }
-
-
-
 </style>

@@ -5,9 +5,9 @@
           <img :class="['imgCss',ShowImg==index?'ShowCss':'']"
           :src="item.imgUrl" v-for="(item,index) in imgList" :key="index" />
           <!-- 左箭头按钮 -->
-          <div class="leftBtn" @click="throttle(PrevFun)">&larr;</div>
+          <div class="leftBtn" @click="throttle(PrevFun)"><img class="leftattr" src="@/assets/left.png" alt=""></div>
           <!-- 右箭头按钮 -->
-          <div class="rightBtn" @click="throttle(NextFun)">&rarr;</div>
+          <div class="rightBtn" @click="throttle(NextFun)"><img class="rightattr" src="@/assets/right.png" alt=""></div>
           <!-- 下方指示点容器 -->
           <div class="instBox">
             <div v-for="(item,index) in imgList.length" :key="index"
@@ -26,14 +26,14 @@
        imgList: [
           // {imgUrl: '@/assets/pro1.jpg'},
           // {imgUrl: '@/assets/pro2.jpg'},
-          // {imgUrl: '@/assets/pro3.jpg'},     //这种方法无法显示图像
+          // {imgUrl: '@/assets/pro3.jpg'},     //这种方法无法显示图像,报错404
           // {imgUrl: '@/assets/pro4.jpg'},
           // {imgUrl: '@/assets/pro5.jpg'}
-          {imgUrl:require('@/assets/pro1.jpg')},
+          {imgUrl:require('@/assets/background1.jpg')},
           {imgUrl:require('@/assets/pro2.jpg')},
           {imgUrl:require('@/assets/pro3.jpg')},
           {imgUrl:require('@/assets/pro4.jpg')},
-          {imgUrl:require('@/assets/pro5.jpg')},
+          {imgUrl:require('@/assets/background2.png')},
         ],
         ShowImg:0,  // 表示当前显示的图片
         flag:true, // 用来节流防止重复点击
@@ -44,7 +44,6 @@
       this.setTimeoFun()
     },
     methods: {
-      // 这里定义一个鼠标移入移出事件，鼠标悬停时停止自动轮播，鼠标移出则重新执行自动轮播
       MouseFun(type){// 停止定时器            // 重新执行定时器
         type=='移入'?clearTimeout(this.start):this.setTimeoFun()
       },
@@ -86,8 +85,8 @@
    /* 图片容器样式 */
   .SwiperBox {
     position: relative;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    height: 500px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     cursor: pointer;
@@ -97,8 +96,8 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    height: 500px;
     opacity: 0;
     transition: 0.8s;  /* 淡入淡出过渡时间 */
   }
@@ -117,12 +116,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(109, 109, 109, 0.445);
-    color: #fff;
+    /* background: rgba(109, 109, 109, 0.445); */
+    /* color: #fff;
     border-radius: 50%;
     cursor: pointer;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 500; */
   }
   .leftBtn {
     left: 10px;
@@ -137,6 +136,10 @@
     transform: translateX(-50%);
     bottom: 10px;
     display: flex;
+  }
+  .leftattr,
+  .rightattr{
+    width: 30px;
   }
    /* 小圆点 */
   .inst{
@@ -157,7 +160,7 @@
   }
   #app{
     width: 100%;
-    padding: 120px;
+    /* padding: 120px; */
     display: flex;
     justify-content: center;
   }
