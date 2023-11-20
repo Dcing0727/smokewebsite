@@ -7,6 +7,7 @@ import Blog from '../components/blog-page.vue';
 import Home from '../components/home-page.vue';
 import Carousel from '../components/img-carousel.vue';
 import Knowledge from '../components/knowledge-page.vue';
+import User from '../components/user-statistics.vue';
 
 
 const router = createRouter({
@@ -32,6 +33,9 @@ const router = createRouter({
     },{
       path:'/kno',
       component:Knowledge
+    },{
+      path:'/us',
+      component:User
     }
   
   ]
