@@ -32,6 +32,7 @@ export default {
   height: 50px;
   background-color: #383838;
   width: 100%;
+  z-index: 100;
 }
 
 .footer .foo {

@@ -62,7 +62,7 @@
             position: relative;
             height: 800px;
             /*此处边框为测试用*/
-            border: solid 1px black;
+            /* border: solid 1px black; */
         }
         /*清除浮动的影响*/
 
