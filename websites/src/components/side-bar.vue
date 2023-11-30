@@ -21,7 +21,7 @@
         {
             title: "烟量周统计",
             icon: require("@/assets/周统计.png"),
-            url: "#",
+            url: "/week",
         },
         {
             title: "烟量月统计",

@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router' 
-//import NavBar from './components/nav-bar.vue'
-//import LoginComponent from './components/LoginComponent.vue'
 
+
+ import HighchartsVue from 'highcharts-vue';
 
 
 
@@ -12,4 +12,5 @@ import router from '@/router'
 
 createApp(App)
   .use(router)
+  .use(HighchartsVue)
   .mount('#app')

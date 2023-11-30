@@ -21,9 +21,9 @@
 <style scoped>
     .box{
         top: 100px;
-        border: 1px solid;
+        /* border: 1px solid;
         height: 500px;
-        width: 300px;
+        width: 300px; */
         position: relative;
         left: 15%;
         color: black;
