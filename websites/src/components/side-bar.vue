@@ -26,7 +26,7 @@
         {
             title: "烟量月统计",
             icon: require("@/assets/月统计.png"),
-            url: "#",
+            url: "/month",
         },
         {
             title: "烟量年统计",

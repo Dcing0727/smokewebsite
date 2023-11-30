@@ -2,7 +2,7 @@
   <div>
     <Side></Side>
     <div class="canv">
-      <h2>每周吸烟量</h2>
+      <h2>每月吸烟量</h2>
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -26,11 +26,12 @@ export default {
       var template = {
         title: {
           //去掉标题
-          text: "每周吸烟量"
+          text: "每月吸烟量"
         },
         xAxis: {
           //自定义x轴
-          categories:["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+          categories:["一月", "二月", "三月", "四月", "五月",
+           "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
         },
         yAxis: {
           //去掉y轴的value
@@ -43,16 +44,17 @@ export default {
         plotOptions: {
           line: {
             //设置颜色，显示点
-            color: "#0e6145",
+            color: "#9b59b6",
             dataLabels: {
               enabled: true
             }
           }
         },
         series: [
+            
           {
             name: "吸烟根数",
-            data: [12, 9, 10, 6, 19, 40, 9]
+            data: [300, 324, 241, 456, 123, 430, 978, 974, 675, 457, 342, 223]
           }
         ]
       };
@@ -77,7 +79,7 @@ export default {
 .canv h2 {
   margin: 10px;
   padding: 5px;
-  border-left: 10px solid seagreen;
+  border-left: 10px solid #9b59b6;
   width: 160px;
 }
 
