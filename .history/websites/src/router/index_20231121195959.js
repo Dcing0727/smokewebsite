@@ -8,9 +8,7 @@ import Home from '../components/home-page.vue';
 import Carousel from '../components/img-carousel.vue';
 import Knowledge from '../components/knowledge-page.vue';
 import User from '../components/user-statistics.vue';
-import Side from '../components/side-bar.vue';
-import Week from '../components/weekly-statistics.vue';
-import User_info from '../components/user-information.vue';
+import User_info from '../components/user-statistics.vue';
 import User_collect from '../components/user-collection.vue';
 
 
@@ -38,12 +36,6 @@ const router = createRouter({
       path:'/kno',
       component:Knowledge
     },{
-      path:'/side',
-      component:Side
-    },{
-      path:'/week',
-      component:Week
-    },{
       path:'/us',
       component:User,
       children: [
@@ -56,14 +48,13 @@ const router = createRouter({
             name: '个人简介',
             component:User_info
           },
-        
+        ]
       
           {
             path: 'user_collect',
             name: '我的合集',
             component:User_collect
-          }
-        ]
+          },
         }
     
       ]

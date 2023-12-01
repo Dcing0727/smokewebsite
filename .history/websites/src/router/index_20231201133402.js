@@ -9,7 +9,6 @@ import Carousel from '../components/img-carousel.vue';
 import Knowledge from '../components/knowledge-page.vue';
 import User from '../components/user-statistics.vue';
 import Side from '../components/side-bar.vue';
-import Week from '../components/weekly-statistics.vue';
 import User_info from '../components/user-information.vue';
 import User_collect from '../components/user-collection.vue';
 

@@ -1,6 +1,6 @@
 <template>
     <div class="root-page-container">
-      <h1>???</h1>
+      <h1>   </h1>
       <h2>   </h2>
       <p>    </p>
       <div class="mhy-main-page mhy-account-center">
@@ -90,8 +90,8 @@
       return {
         activeIndex: '/user-statistics',
         menus: [
-          {name:'个人简介',path:'/us/user-statistics/user_info',icon:'el-icon-document'},
-          {name:'我的合集',path:'/us/user-statistics/user_collect',icon:'el-icon-document'},
+          {name:'个人简介',path:'/us/user_info',icon:'el-icon-document'},
+          // {name:'我的合集',path:'/personal/myCollect',icon:'el-icon-document'},
         ]
       };
     },
@@ -107,7 +107,7 @@
         this.$router.push({path: item.path});
       },
       updateMyInfo(){
-        this.$router.push({path: '/us/user-statistics/user_info'});
+        this.$router.push({path: '/us/user_info'});
       }
     }
   };
