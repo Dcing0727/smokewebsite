@@ -3,6 +3,7 @@
     <Side></Side>
     <div class="canv">
       <h2>每月吸烟量</h2>
+      <Drag :MenuTitle="MenuTitle" :MenuItems="MenuItems"  @menu-item-click="selectYear"></Drag>
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -10,27 +11,61 @@
 
 <script>
 import Side from './side-bar.vue';
+import Drag from './Drop-downMenu.vue';
 
 export default {
   components: {
     Side,
+    Drag
   },
   data() {
     return {
       chartOptions: {},
+      MenuTitle: '近五年统计',
+      MenuItems: ['第一年统计', '第二年统计', '第三年统计', '第四年统计', '第五年统计'],
+      dataSet: {
+        data1: [300, 324, 241, 456, 123, 430, 978, 974, 675, 457, 342, 223],
+        data2: [320, 324, 341, 356, 379, 380, 438, 474, 575, 657, 742, 823],
+        data3: [320, 524, 541, 656, 979, 1380, 238, 774, 975, 157, 242, 223],
+        data4: [120, 224, 341, 456, 579, 6380, 738, 874, 975, 1057, 1142, 1223],
+        data5: [122, 324, 341, 456, 579, 580, 638, 874, 975, 1057, 1142, 1223],
+      },
+      select: [],   // 默认显示第五年数据
     };
   },
   mounted() {
-    this.getChart();
+    this.selectYear('第五年统计');  // 初始化选择第五年数据
   },
   methods: {
-    getChart() {
+    // 选中年份
+    selectYear(item) {
+      // 处理来自子组件的点击事件
+      console.log(item)
+      if (item === '第一年统计') {
+        this.select = this.dataSet.data1;
+      } else if (item === '第二年统计') {
+        this.select = this.dataSet.data2;
+      } else if (item === '第三年统计') {
+        this.select = this.dataSet.data3;
+      } else if (item === '第四年统计') {
+        this.select = this.dataSet.data4;
+      } else if (item === '第五年统计') {
+        this.select = this.dataSet.data5;
+      }
+       this.getChart(item);
+       return this.select;
+    },
+    getChart(item) {
       var template = {
         title: {
-          text: "每月吸烟量",
+          text: item + "每月吸烟量",
+        },
+         accessibility: {
+          enabled: false, // 将这里的值设置为 false
         },
         xAxis: {
-          categories:["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+          categories: ["一月", "二月", "三月", "四月", "五月", "六月", "七月",
+            "八月", "九月", "十月", "十一月", "十二月"],
           labels: {
             style: {
               color: '#333', // x轴标签颜色
@@ -77,7 +112,7 @@ export default {
         series: [
           {
             name: "吸烟根数",
-            data: [300, 324, 241, 456, 123, 430, 978, 974, 675, 457, 342, 223],
+            data: this.select,  // 修改这里
           },
         ],
       };
@@ -85,6 +120,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style scoped>

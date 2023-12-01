@@ -6,11 +6,7 @@
       <!-- 下拉菜单内容 -->
       <div class="dropdown-content">
         <div class="dropdown-menu">
-          <!-- <div class="menuItem">第一周</div>
-          <div class="menuItem">第二周</div>
-          <div class="menuItem">第三周</div>
-          <div class="menuItem">第四周</div> -->
-          <div v-for="item in MenuItems" :key="item" class="menuItem">{{ item }}</div>
+          <div v-for="item in MenuItems" :key="item" @click="MenuItemClick(item)" @menu-item-click="handleMenuItemClick" class="menuItem">{{ item }}</div>
         </div>
       </div>
     </div>
@@ -27,7 +23,12 @@ export default {
     return {};
   },
   mounted() {},
-  methods: {},
+  methods: {
+    MenuItemClick(item){
+      this.$emit('menu-item-click', item);  //发送给父组件
+    }
+
+  },
 };
 </script>
 
