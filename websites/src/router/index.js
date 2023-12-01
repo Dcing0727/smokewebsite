@@ -15,6 +15,7 @@ import User_collect from '../components/user-collection.vue';
 import Month from '../components/monthly-statistics.vue';
 import Annual from '../components/annual-statistics.vue';
 import Drag from '../components/Drop-downMenu.vue';
+import Spend from '../components/Spending-statistics.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -61,7 +62,6 @@ const router = createRouter({
           }
         ]
         }
-    
       ]
     },{
       path:'/side',
@@ -78,6 +78,9 @@ const router = createRouter({
     },{
       path:'/drag',
       component:Drag
+    },{
+      path:'/spend',
+      component: Spend
     }
    ]
  }

@@ -36,7 +36,7 @@
         {
             title: "花销统计",
             icon: require("@/assets/花销.png"),
-            url: "#",
+            url: "/spend",
         },
         {
             title: "记录今日",
