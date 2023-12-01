@@ -7,60 +7,84 @@
     </div>
   </div>
 </template>
+
 <script>
- import Side from './side-bar.vue';
+import Side from './side-bar.vue';
+
 export default {
   components: {
-     Side,
+    Side,
   },
   data() {
     return {
-      chartOptions: {}
+      chartOptions: {},
     };
   },
-  mounted(){
-  this.getChart()
+  mounted() {
+    this.getChart();
   },
-  methods:{
+  methods: {
     getChart() {
       var template = {
         title: {
-          //去掉标题
-          text: "每周吸烟量"
+          text: "每周吸烟量",
         },
         xAxis: {
-          //自定义x轴
-          categories:["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+          categories:["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          labels: {
+            style: {
+              color: '#333', // x轴标签颜色
+              fontSize: '14px', // x轴标签字体大小
+            },
+          },
         },
         yAxis: {
-          //去掉y轴的value
-          title: { text: "吸烟/根数" }
+          title: { text: "吸烟/根数" },
+          labels: {
+            style: {
+              color: '#333', // y轴标签颜色
+              fontSize: '14px', // y轴标签字体大小
+            },
+          },
         },
         credits: {
-          //去掉水印
-          enabled: false
+          enabled: false,
         },
         plotOptions: {
           line: {
-            //设置颜色，显示点
-            color: "#0e6145",
+            color: "#0e6145", // 线的颜色
+            lineWidth: 2, // 线的宽度
+            marker: {
+              enabled: true,
+              symbol: 'circle', // 数据点标记的形状
+              radius: 6, // 数据点标记的半径
+            },
             dataLabels: {
-              enabled: true
-            }
-          }
+              enabled: true,
+              color: '#333', // 数据标签颜色
+              fontSize: '12px', // 数据标签字体大小
+              y: -15, // 数据标签在点的上方
+            },
+            shadow: {
+              color: 'rgba(0, 0, 0, 0.3)', // 阴影颜色
+              offsetX: 4, // 阴影水平偏移量
+              offsetY: 4, // 阴影垂直偏移量
+              opacity: 0.7, // 阴影透明度
+              width: 4, // 阴影模糊范围
+            },
+          },
         },
         series: [
           {
             name: "吸烟根数",
-            data: [12, 9, 10, 6, 19, 40, 9]
-          }
-        ]
+            data: [12, 9, 10, 6, 19, 40, 9],
+          },
+        ],
       };
       this.chartOptions = template;
-    }
-  }
- }
-
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -80,6 +104,4 @@ export default {
   border-left: 10px solid seagreen;
   width: 160px;
 }
-
-
 </style>
