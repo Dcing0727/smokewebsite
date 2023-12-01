@@ -1,8 +1,5 @@
 <template>
     <div class="root-page-container">
-      <h1>???</h1>
-      <h2>   </h2>
-      <p>    </p>
       <div class="mhy-main-page mhy-account-center">
         <div class="mhy-layout">
           <!--顶部头像栏-->
@@ -79,19 +76,14 @@
     <Footer></Footer>
 </template>
  
-<script>
-  import Footer from './page-footer.vue'
+<!-- <script>
   export default {
-    name: "user-statistics",
-    components:{
-           Footer,
-      },
     data() {
       return {
-        activeIndex: '/user-statistics',
+        activeIndex: '/index',
         menus: [
-          {name:'个人简介',path:'/us/user-statistics/user_info',icon:'el-icon-document'},
-          {name:'我的合集',path:'/us/user-statistics/user_collect',icon:'el-icon-document'},
+          {name:'个人简介',path:'/personal/user_info',icon:'el-icon-document'},
+          {name:'我的合集',path:'/personal/myCollect',icon:'el-icon-document'},
         ]
       };
     },
@@ -107,21 +99,21 @@
         this.$router.push({path: item.path});
       },
       updateMyInfo(){
-        this.$router.push({path: '/us/user-statistics/user_info'});
+        this.$router.push({path: '/personal/user_info'});
       }
     }
   };
-</script>
-<!-- <script>
+</script> -->
+<script>
  import Footer from './page-footer.vue'
    export default {
-      name: "user-statistics",
+      name: "smoke-statistics",
       components:{
            Footer,
       }
   };
 
-</script> -->
+</script>
 
 <style scoped>
   .root-page-container {

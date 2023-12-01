@@ -10,11 +10,14 @@ import Knowledge from '../components/knowledge-page.vue';
 import User from '../components/user-statistics.vue';
 import Side from '../components/side-bar.vue';
 import Week from '../components/weekly-statistics.vue';
+<<<<<<< HEAD
 import User_info from '../components/user-information.vue';
 import User_collect from '../components/user-collection.vue';
+
+=======
 import Month from '../components/monthly-statistics.vue';
 import Annual from '../components/annual-statistics.vue';
-import Drag from '../components/Drop-downMenu.vue';
+>>>>>>> ca2e53043f0e036ef180708c0cd88bdd219aee10
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -75,9 +78,6 @@ const router = createRouter({
     },{
       path:'/annual',
       component:Annual
-    },{
-      path:'/drag',
-      component:Drag
     }
    ]
  }

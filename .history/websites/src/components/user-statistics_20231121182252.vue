@@ -1,8 +1,8 @@
 <template>
     <div class="root-page-container">
-      <h1>???</h1>
-      <h2>   </h2>
-      <p>    </p>
+      <h1>用户资料界面</h1>
+      <h2>欢迎来到烟量统计页面</h2>
+      <p>本功能将在后续进行开发</p>
       <div class="mhy-main-page mhy-account-center">
         <div class="mhy-layout">
           <!--顶部头像栏-->
@@ -83,15 +83,12 @@
   import Footer from './page-footer.vue'
   export default {
     name: "user-statistics",
-    components:{
-           Footer,
-      },
     data() {
       return {
         activeIndex: '/user-statistics',
         menus: [
-          {name:'个人简介',path:'/us/user-statistics/user_info',icon:'el-icon-document'},
-          {name:'我的合集',path:'/us/user-statistics/user_collect',icon:'el-icon-document'},
+          {name:'个人简介',path:'/components/user-information',icon:'el-icon-document'},
+          // {name:'我的合集',path:'/personal/myCollect',icon:'el-icon-document'},
         ]
       };
     },
@@ -107,7 +104,7 @@
         this.$router.push({path: item.path});
       },
       updateMyInfo(){
-        this.$router.push({path: '/us/user-statistics/user_info'});
+        this.$router.push({path: '/personal/user-information'});
       }
     }
   };

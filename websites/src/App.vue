@@ -1,7 +1,9 @@
 
 <template>
-    <NavBar></NavBar>
-    <router-view></router-view>
+  <div>
+      <NavBar></NavBar>
+      <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -30,7 +32,7 @@ body
     background-repeat: no-repeat;
     background-size: cover;
         /* 页面底色 */
-    background-color:rgb(238, 238,238);
+    background-color:rgb(238, 238, 238);
 
 } 
 

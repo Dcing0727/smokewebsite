@@ -1,8 +1,10 @@
 <template>
   <div>
     <Side></Side>
+    
     <div class="canv">
       <h2>每周吸烟量</h2>
+      <Drag :MenuTitle="MenuTitle" :MenuItems="MenuItems"></Drag>
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -10,14 +12,18 @@
 
 <script>
 import Side from './side-bar.vue';
+import Drag from './Drop-downMenu';
 
 export default {
   components: {
     Side,
+    Drag
   },
   data() {
     return {
       chartOptions: {},
+      MenuTitle: '近四周',
+      MenuItems: ['第一周', '第二周', '第三周', '第四周'],
     };
   },
   mounted() {

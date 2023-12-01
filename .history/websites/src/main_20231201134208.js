@@ -8,6 +8,8 @@ import HighchartsVue from 'highcharts-vue';
 //import LoginComponent from './components/LoginComponent.vue'
 
 
+ import HighchartsVue from 'highcharts-vue';
+
 
 
 
