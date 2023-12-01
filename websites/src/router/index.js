@@ -10,7 +10,8 @@ import Knowledge from '../components/knowledge-page.vue';
 import User from '../components/user-statistics.vue';
 import Side from '../components/side-bar.vue';
 import Week from '../components/weekly-statistics.vue';
-import Month from '../components/monthly-statistics.vue'
+import Month from '../components/monthly-statistics.vue';
+import Annual from '../components/annual-statistics.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -47,6 +48,9 @@ const router = createRouter({
     },{
       path:'/month',
       component:Month
+    },{
+      path:'/annual',
+      component:Annual
     }
   
   ]

@@ -31,7 +31,7 @@
         {
             title: "烟量年统计",
             icon: require("@/assets/美术历年统计.png"),
-            url: "#",
+            url: "/annual",
         },
         {
             title: "花销统计",

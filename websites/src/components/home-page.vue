@@ -1,45 +1,47 @@
 <template>
-    <div class="con">
-        <div class="cl"></div>
-        <!-- <div class="banner"></div> -->
-        <Carousel></Carousel>
-        <div class="content inner_c">
-            <div class="product">
-                <ul>
-                    <li>
-                        <p><img src="@/assets/pro5.jpg" alt="" /></p>
-                        <h3>史上最强的戒烟广告</h3>
-                        <p class="djbf">
-                            <a href="https://www.bilibili.com/video/BV1Za411W7yH/?spm_id_from=333.337.search-card.all.click">点击播放</a>
-                        </p>
-                    </li>
-                    <li>
-                        <p><img src="@/assets/pro2.jpg" alt="" /></p>
-                        <h3>最直观的戒烟宣传片</h3>
-                        <p class="djbf">
-                            <a href="https://www.bilibili.com/video/BV1BL4y1i7eJ/?spm_id_from=333.337.search-card.all.click">点击播放</a>
-                        </p>
-                    </li>
-                    <li>
-                        <p><img src="@/assets/pro3.jpg" alt="" /></p>
-                        <h3>学生制作的宣传短片</h3>
-                        <p class="djbf">
-                            <a href="https://www.bilibili.com/video/BV1hF411e7t1/?spm_id_from=333.337.search-card.all.click">点击播放</a>
-                        </p>
-                    </li>
-                    <li class="last">
-                        <p><img src="@/assets/pro1.jpg" alt="" /></p>
-                        <h3>戒烟科普</h3>
-                        <p class="djbf">
-                            <a href="https://www.bilibili.com/video/BV1ct4y1Y7Xi/?spm_id_from=333.337.search-card.all.click">点击播放</a>
-                        </p>
-                    </li>
-                </ul>
+    <div>
+        <div class="con">
+            <div class="cl"></div>
+            <!-- <div class="banner"></div> -->
+            <Carousel></Carousel>
+            <div class="content inner_c">
+                <div class="product">
+                    <ul>
+                        <li>
+                            <p><img src="@/assets/pro5.jpg" alt="" /></p>
+                            <h3>史上最强的戒烟广告</h3>
+                            <p class="djbf">
+                                <a href="https://www.bilibili.com/video/BV1Za411W7yH/?spm_id_from=333.337.search-card.all.click">点击播放</a>
+                            </p>
+                        </li>
+                        <li>
+                            <p><img src="@/assets/pro2.jpg" alt="" /></p>
+                            <h3>最直观的戒烟宣传片</h3>
+                            <p class="djbf">
+                                <a href="https://www.bilibili.com/video/BV1BL4y1i7eJ/?spm_id_from=333.337.search-card.all.click">点击播放</a>
+                            </p>
+                        </li>
+                        <li>
+                            <p><img src="@/assets/pro3.jpg" alt="" /></p>
+                            <h3>学生制作的宣传短片</h3>
+                            <p class="djbf">
+                                <a href="https://www.bilibili.com/video/BV1hF411e7t1/?spm_id_from=333.337.search-card.all.click">点击播放</a>
+                            </p>
+                        </li>
+                        <li class="last">
+                            <p><img src="@/assets/pro1.jpg" alt="" /></p>
+                            <h3>戒烟科普</h3>
+                            <p class="djbf">
+                                <a href="https://www.bilibili.com/video/BV1ct4y1Y7Xi/?spm_id_from=333.337.search-card.all.click">点击播放</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-     <knowledgePageVue></knowledgePageVue>
-     <Footer></Footer>
+        <knowledgePageVue></knowledgePageVue>
+        <Footer></Footer>
+     </div>
 </template>
 
 <script>
