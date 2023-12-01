@@ -4,7 +4,7 @@
     
     <div class="canv">
       <h2>每周吸烟量</h2>
-      <Drag :MenuTitle="MenuTitle" :MenuItems="MenuItems"></Drag>
+      <Drag :MenuTitle="MenuTitle" :MenuItems="MenuItems" @menu-item-click="selectWeek"></Drag>
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -22,18 +22,39 @@ export default {
   data() {
     return {
       chartOptions: {},
-      MenuTitle: '近四周',
+      MenuTitle: '选择近四周',
       MenuItems: ['第一周', '第二周', '第三周', '第四周'],
+      dataSet: {
+        data1: [120, 124, 141, 156, 123, 230, 278],
+        data2: [120, 224, 141, 156, 179, 180, 138],
+        data3: [220, 124, 141, 156, 179, 180, 138],
+        data4: [120, 124, 141, 156, 179, 180, 138]
+      },
+      select: [],   // 默认显示第4周数据
     };
   },
   mounted() {
-    this.getChart();
+    this.selectWeek("第四周");
   },
   methods: {
-    getChart() {
+    selectWeek(item) {
+       console.log(item) 
+        if (item === '第一周') {
+          this.select = this.dataSet.data1;
+        } else if (item === '第二周') {
+          this.select = this.dataSet.data2;
+        } else if (item === '第三周') {
+          this.select = this.dataSet.data3;
+        } else if (item === '第四周') {
+          this.select = this.dataSet.data4;
+        }
+        this.getChart(item);
+        return this.select;
+    },
+    getChart(item) {
       var template = {
         title: {
-          text: "每周吸烟量",
+          text: item  + "每周吸烟量",
         },
         xAxis: {
           categories:["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
@@ -83,7 +104,7 @@ export default {
         series: [
           {
             name: "吸烟根数",
-            data: [12, 9, 10, 6, 19, 40, 9],
+            data: this.select,
           },
         ],
       };
