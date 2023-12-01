@@ -102,7 +102,7 @@ export default {
           date: '2023-01-01',
           likes: 100,
           summary: '这是第一篇博客文章的简介...',
-          cover: '@/assets/o.jpg'
+          cover: url('@/assets/o.jpg')
         },
         {
           id: 2,

@@ -102,7 +102,7 @@ export default {
           date: '2023-01-01',
           likes: 100,
           summary: '这是第一篇博客文章的简介...',
-          cover: '@/assets/o.jpg'
+          cover: '封面图片URL'
         },
         {
           id: 2,
@@ -111,34 +111,7 @@ export default {
           date: '2023-01-02',
           likes: 150,
           summary: '这是第二篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
-        },
-        {
-          id: 3,
-          title: '博客文章 3',
-          author: '作者 C',
-          date: '2023-01-03',
-          likes: 151,
-          summary: '这是第三篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
-        },
-        {
-          id: 4,
-          title: '博客文章 4',
-          author: '作者 D',
-          date: '2023-01-04',
-          likes: 152,
-          summary: '这是第四篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
-        },
-        {
-          id: 5,
-          title: '博客文章 5',
-          author: '作者 E',
-          date: '2023-01-05',
-          likes: 153,
-          summary: '这是第五篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
+          cover: '封面图片URL'
         },
         // ...其他博客文章
       ]
@@ -160,7 +133,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-image: url('@/assets/o.jpg');
+  background-image: url('背景图片URL');
   background-size: cover;
   background-position: center;
 }

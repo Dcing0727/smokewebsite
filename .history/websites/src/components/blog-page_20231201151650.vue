@@ -102,7 +102,7 @@ export default {
           date: '2023-01-01',
           likes: 100,
           summary: '这是第一篇博客文章的简介...',
-          cover: '@/assets/o.jpg'
+          cover: 'https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E9%A3%8E%E6%99%AF%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=2&spn=0&di=7264239678495129601&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=4162644376%2C272796753&os=1577119026%2C2406740422&simid=4162644376%2C272796753&adpicid=0&lpn=0&ln=1963&fr=&fmq=1701413978894_R&fm=result&ic=&s=undefined&hd=&latest=&copyright=&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=https%3A%2F%2Flmg.jj20.com%2Fup%2Fallimg%2F512%2F0306121S615%2F1203061S615-16-1200.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B33da_z%26e3Bv54AzdH3FkzAzdH3Fz6u2AzdH3Fu2i3AzdH3F9caa_80_z%26e3Bip4s&gsm=1e&rpstart=0&rpnum=0&islist=&querylist=&nojc=undefined&dyTabStr=MCwyLDMsMSw0LDYsNSw4LDcsOQ%3D%3D&lid=8764171842572711941'
         },
         {
           id: 2,
