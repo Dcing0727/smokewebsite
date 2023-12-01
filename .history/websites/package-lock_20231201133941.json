@@ -9,9 +9,12 @@
       "version": "0.1.0",
       "dependencies": {
         "core-js": "^3.8.3",
+<<<<<<< HEAD
         "element-plus": "^2.4.3",
+=======
         "highcharts": "^11.2.0",
         "highcharts-vue": "^1.4.3",
+>>>>>>> ca2e53043f0e036ef180708c0cd88bdd219aee10
         "vue": "^3.2.13",
         "vue-router": "^4.2.5"
       },

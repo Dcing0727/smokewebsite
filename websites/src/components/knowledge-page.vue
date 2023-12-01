@@ -86,7 +86,7 @@
 
 
           /*此处边框为测试用*/
-        border:solid 1px black;
+        /* border:solid 1px black; */
     }   
     .homepagecontent3{
         width: 400px;
