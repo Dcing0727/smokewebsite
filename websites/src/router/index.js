@@ -52,7 +52,6 @@ const router = createRouter({
       path:'/annual',
       component:Annual
     }
-  
   ]
   
 })
