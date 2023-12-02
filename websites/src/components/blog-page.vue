@@ -102,7 +102,7 @@ export default {
           date: '2023-01-01',
           likes: 100,
           summary: '这是第一篇博客文章的简介...',
-          cover: '@/assets/o.jpg'
+          cover: require('@/assets/w.jpg')
         },
         {
           id: 2,
@@ -111,7 +111,7 @@ export default {
           date: '2023-01-02',
           likes: 150,
           summary: '这是第二篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
+          cover: require('@/assets/q.jpeg')
         },
         {
           id: 3,
@@ -120,7 +120,7 @@ export default {
           date: '2023-01-03',
           likes: 151,
           summary: '这是第三篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
+          cover: require('@/assets/i.jpg')
         },
         {
           id: 4,
@@ -129,7 +129,7 @@ export default {
           date: '2023-01-04',
           likes: 152,
           summary: '这是第四篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
+          cover: require('@/assets/pro1.jpg')
         },
         {
           id: 5,
@@ -138,7 +138,7 @@ export default {
           date: '2023-01-05',
           likes: 153,
           summary: '这是第五篇博客文章的简介...',
-          cover: '@/assets/pro5.jpg'
+          cover: require('@/assets/pro2.jpg')
         },
         // ...其他博客文章
       ]
