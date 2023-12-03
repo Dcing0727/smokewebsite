@@ -19,26 +19,26 @@
         data(){
             return {
                 dataPopOption : [{
-                    name: '年假',
-                    label: '年假'
+                    name: '利群',
+                    label: '利群'
                     }, {
-                    name: '事假',
-                    label: '事假'
+                    name: '红旗渠',
+                    label: '红旗渠'
                     }, {
-                    name: '病假',
-                    label: '病假'
+                    name: '黄鹤楼',
+                    label: '黄鹤楼'
                     }, {
-                    name: '倒休假',
-                    label: '倒休假'
+                    name: '云烟',
+                    label: '云烟'
                     }, {
-                    name: '婚假',
-                    label: '婚假'
+                    name: '中华烟',
+                    label: '中华烟'
                     }, {
-                    name: '产假',
-                    label: '产假'
+                    name: '南京',
+                    label: '南京'
                     }, {
-                    name: '产检假',
-                    label: '产检假'
+                    name: '玉溪',
+                    label: '玉溪'
                     },
                 ]
             };
