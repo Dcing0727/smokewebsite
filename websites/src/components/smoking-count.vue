@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <input class="numberbox" type="text" v-model="count">
+    <input class="numberbox" type="text" v-model="count" @input="edit">
     <div class="inBtn" @click="increase"></div>
     <div class="deBtn" @click="decrease"></div>
   </div>
@@ -8,23 +8,33 @@
 
 <script>
 export default {
+  props: {
+    num: {
+      type: Number,
+      // default: 0,
+    },
+  },
   data() {
     return {
-      count: 0,
+      count: this.num,
     };
   },
   methods: {
-    increase() {
+    increase() {              //增加按钮函数事件
       this.count++;
+      this.$emit('countChange', this.count);     
     },
-    decrease() {
+    decrease() {              //减少按钮函数事件
       if (this.count == 0){
         this.count = 0;
       }else{
         this.count--;
+        this.$emit('countChange', this.count);
       }
-
     },
+    edit() {                  //键盘输入函数事件
+      this.$emit('countChange', this.count);
+    }
   },
 };
 </script>

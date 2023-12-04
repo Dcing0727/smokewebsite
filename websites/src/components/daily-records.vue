@@ -24,13 +24,12 @@
     position: absolute;
     margin-left: 220px;
     margin-top: 80px;
-    background-color: rgb(248, 241, 228);
-    /* background-color: #fff; */
+    /* background-color: rgb(248, 241, 228); */
+    background-color: #fff;
     width: 83%;
     height: 85%;
     border-radius: 15px;
   }
-
   .canv h2 {
     margin: 10px;
     padding: 5px;
