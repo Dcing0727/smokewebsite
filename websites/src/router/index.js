@@ -18,6 +18,7 @@ import Drag from '../components/Drop-downMenu.vue';
 import Spend from '../components/Spending-statistics.vue';
 import Scroll from '../components/scroll-selector.vue';
 import Count from '../components/smoking-count.vue';
+import Daily from '../components/daily-records.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -89,6 +90,9 @@ const router = createRouter({
     },{
       path:'/count',
       component: Count
+    },{
+      path:'/daily',
+      component: Daily
     }
    ]
  }

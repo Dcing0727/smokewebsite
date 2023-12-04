@@ -41,7 +41,7 @@
         {
             title: "记录今日",
             icon: require("@/assets/记录.png"),
-            url: "#",
+            url: "/daily",
         },
     ]);
     function clickNav(e) {
@@ -72,6 +72,7 @@
 		width: 200px;
 		height: 100%;
 		background: #FFFFFF;
+		/* background-color: rgb(248, 241, 228); */
 		box-shadow: 3px 0px 6px 0px rgba(82, 82, 82, 0.14);
 	}
 

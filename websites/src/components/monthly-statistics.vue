@@ -124,20 +124,20 @@ export default {
 </script>
 
 <style scoped>
-.canv {
-  position: absolute;
-  margin-left: 220px;
-  margin-top: 80px;
-  background-color: white;
-  width: 83%;
-  height: 85%;
-  border-radius: 15px;
-}
+  .canv {
+    position: absolute;
+    margin-left: 220px;
+    margin-top: 80px;
+    background-color: white;
+    width: 83%;
+    height: 85%;
+    border-radius: 15px;
+  }
 
-.canv h2 {
-  margin: 10px;
-  padding: 5px;
-  border-left: 10px solid #9b59b6;
-  width: 160px;
-}
+  .canv h2 {
+    margin: 10px;
+    padding: 5px;
+    border-left: 10px solid #9b59b6;
+    width: 160px;
+  }
 </style>
