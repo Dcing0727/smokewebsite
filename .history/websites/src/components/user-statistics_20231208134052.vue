@@ -8,14 +8,14 @@
           <!--顶部头像栏-->
           <div class="mhy-container mhy-account-center-header">
             <div class="mhy-avatar mhy-account-center-header__avatar mhy-avatar__xxl">
-              <img src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" class="mhy-avatar__img">
+              <img src="https://img-static.mihoyo.com/communityweb/upload/c9d11674eac7631d2210a1ba20799958.png" class="mhy-avatar__img">
             </div>
             <div class="mhy-account-center-user">
               <div class="mhy-account-center-user__header">
                 <div class="mhy-account-center-user__title">
                   <span class="mhy-account-center-user__name">helloworld</span>
                   <!---->
-                  <img src="https://img-static.mihoyo.com/level/level1.png" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
+                  <img src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
                   <!---->
                 </div>
                 <div class="mhy-account-center-header__buttons">

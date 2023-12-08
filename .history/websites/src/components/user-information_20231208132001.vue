@@ -19,7 +19,7 @@
               头像
             </template>
             <div>
-              <el-image src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" style="width: 50px;height: 50px;"></el-image>
+              <el-image src="@/assets/i.jpg" style="width: 50px;height: 50px;"></el-image>
             </div>
           </el-descriptions-item>
           <el-descriptions-item>

@@ -13,7 +13,7 @@
       <div class="mhy-account-center-content-container__list">
         <div class="mhy-collection-card mhy-account-center-collection-card">
           <a class="mhy-router-link mhy-collection-card__link">
-            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
+            <div class="mhy-collection-card__cover" style="background-image: url('@/assets/i.jpg');">
             </div>
           </a>
           <div class="mhy-collection-card__info">
@@ -31,7 +31,7 @@
         </div>
         <div class="mhy-collection-card mhy-account-center-collection-card">
           <a class="mhy-router-link mhy-collection-card__link">
-            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
+            <div class="mhy-collection-card__cover" style="background-image: url('@/assets/z.png');">
             </div>
           </a>
           <div class="mhy-collection-card__info">

@@ -12,12 +12,7 @@
             </div>
             <div class="mhy-account-center-user">
               <div class="mhy-account-center-user__header">
-                <div class="mhy-account-center-user__title">
-                  <span class="mhy-account-center-user__name">helloworld</span>
-                  <!---->
-                  <img src="https://img-static.mihoyo.com/level/level1.png" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
-                  <!---->
-                </div>
+                
                 <div class="mhy-account-center-header__buttons">
                   <div class="mhy-button mhy-account-center-header__edit mhy-button-outlined mhy-button-md">
                     <button class="mhy-button__button" @click="updateMyInfo">编辑</button>
