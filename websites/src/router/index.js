@@ -19,6 +19,7 @@ import Spend from '../components/Spending-statistics.vue';
 import Scroll from '../components/scroll-selector.vue';
 import Count from '../components/smoking-count.vue';
 import Daily from '../components/daily-records.vue';
+import Background from '../components/background-vue.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -93,6 +94,9 @@ const router = createRouter({
     },{
       path:'/daily',
       component: Daily
+    },{
+      path:'/background',
+      component: Background
     }
    ]
  }
