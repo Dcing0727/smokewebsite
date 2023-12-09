@@ -20,6 +20,7 @@ import Scroll from '../components/scroll-selector.vue';
 import Count from '../components/smoking-count.vue';
 import Daily from '../components/daily-records.vue';
 import Background from '../components/background-vue.vue';
+import Button from '../components/button-usecase.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -97,6 +98,9 @@ const router = createRouter({
     },{
       path:'/background',
       component: Background
+    },{
+      path:'/btn',
+      component: Button
     }
    ]
  }
