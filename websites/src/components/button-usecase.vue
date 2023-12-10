@@ -64,8 +64,6 @@ export default {
   user-select: none;
   opacity: 1; 
 }
-
-
 .ripple {
   opacity: 1;
   position: absolute;
