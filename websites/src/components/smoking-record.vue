@@ -70,7 +70,7 @@ export default {
     background-position: center;
 }
 
-.canv h1 {
+.canv h1 {                                                                                                                                                              
     font-size: 4em; /* 调整字体大小 */
     text-align: center; /* 文本居中 */
     color: azure;

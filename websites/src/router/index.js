@@ -18,9 +18,10 @@ import Drag from '../components/Drop-downMenu.vue';
 import Spend from '../components/Spending-statistics.vue';
 import Scroll from '../components/scroll-selector.vue';
 import Count from '../components/smoking-count.vue';
-import Daily from '../components/daily-records.vue';
+import Daily from '../components/daily-records.vue';                                                          
 import Background from '../components/background-vue.vue';
-import Button from '../components/button-usecase.vue'
+import Button from '../components/button-usecase.vue';
+import Calendar from '../components/calendar-usecase.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -101,6 +102,9 @@ const router = createRouter({
     },{
       path:'/btn',
       component: Button
+    },{
+      path:'/calendar',
+      component: Calendar
     }
    ]
  }
