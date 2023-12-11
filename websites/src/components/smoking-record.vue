@@ -11,7 +11,7 @@
                 <CustomButton :buttonColor="'#e74c3c'" :rippleColor="'rgba(255, 255, 255, 0.7)'">挑战失败</CustomButton>
             </div>
         </div>
-        <calendar v-if="showCalendar"  @closeCalendar="handleCloseCalendar"></calendar>
+        <calendar v-show="showCalendar" :selList="selectedDates"  @closeCalendar="handleCloseCalendar"></calendar>
     </div>
   </div>
 </template>
@@ -29,6 +29,18 @@ export default {
         return {
             days: 30,
             showCalendar: false,
+            selectedDates: [
+                //戒烟打卡日期
+                { year: 2023, month: 12, day: 1 },
+                { year: 2023, month: 12, day: 2 },
+                { year: 2023, month: 12, day: 3 },
+                { year: 2023, month: 12, day: 4 },
+                { year: 2023, month: 12, day: 5 },
+                { year: 2023, month: 12, day: 6 },
+                { year: 2023, month: 12, day: 7 },
+                { year: 2023, month: 12, day: 8 },
+                // 可以根据需要提供更多日期
+            ],
         };
     },
     methods:{

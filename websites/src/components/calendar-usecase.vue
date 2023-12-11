@@ -35,12 +35,15 @@
         v-for='(item, index) in prevMDLen'
         :key='index + "p"'
         @click='handleSelPrevD(monthDays[prevM] - prevLD[thisW] + item)'>{{monthDays[prevM] - prevLD[thisW] + item}}</span>
+        
+      <!-- thisMDLen返回对应月份天数  -->
       <span class="thisMD sel-span"
-        :class='{"current": showSelected(index + 1), "range": showRange(index)  }'
-        v-for='(item, index) in thisMDLen'
+        v-for='(item, index) in thisMDLen'   
+        :class='{"current": showSelected(index + 1), "range": showRange(index)  }'       
         :key='index + "c"'
         @click='handleSelCurD(index + 1)'
         @mouseenter="handleMouseEnter(index + 1)">{{index + 1}}</span>
+
       <span class="nextMD sel-span"
         v-for='(item, index) in nextMDLen'
         :key='index + "n"'
@@ -81,7 +84,17 @@
       },
       selMode: {
         type: String,
-        default: 'singleSel',
+        default: 'mutiSel',
+      },
+    },
+    watch: {
+    selList: {
+        immediate: true,
+        handler(newVal, oldVal) {
+          // Do something when selList changes
+          console.log('selList changed:', newVal);
+          // You can update internal state or perform any necessary actions
+        },
       },
     },
     created() {
@@ -89,6 +102,13 @@
         item.month = item.month - 1
         return item
       })
+
+      // // 重新初始化 selDate、selDay、selDayList
+      // this.selDate = new Date(); // 或者使用其他合适的默认日期
+      // this.selDay = new Date();
+      // this.selDayList = [];
+
+
       if (this.curSel) {
         this.selDate = new Date(this.curSel.year, this.curSel.month - 1)
         this.selDay = new Date(this.curSel.year, this.curSel.month - 1, this.curSel.day)
@@ -104,8 +124,8 @@
         weeks: '一二三四五六日'.split(''),
         monthDays: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         prevLD: [6, 0, 1, 2, 3, 4, 5],
-        selDate: new Date(),
-        selDay: new Date(),
+        selDate: new Date(),          //获取当前
+        selDay: new Date(),           
         selDayList: [],
         showSelYear: false,
         rangeDayList: [],
@@ -122,15 +142,20 @@
         return this.selDay ? this.thisY == this.selDay.getFullYear() : false
       },
       thisY() {
+        //alert('今年是'+ this.selDate.getFullYear())
         return this.selDate.getFullYear()
       },
       thisM() {
+        //console.log('本月是' + this.selDate.getMonth() )
         return this.selDate.getMonth()
       },
       thisD() {
         if (this.selDay) {
-          if (this.selMode == 'mutiSel') {
+          //选择模式
+          if (this.selMode == 'mutiSel') {    
             this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
+            //今日
+            console.log(this.selDayList)
           }
           if (this.selMode == 'rangeSel') {
             switch (this.selDayList.length) {
@@ -171,7 +196,7 @@
       },
       thisMDLen() {
         const len = this.monthDays[this.thisRM - 1];   //原来：const len = this.monthDays[this.thisRM];
-        console.log('thisMDLen:', len);
+        //console.log('thisMDLen:', len);
         return len;
         //return this.monthDays[this.thisRM]
       },
@@ -187,6 +212,7 @@
       },
     },
     methods: {
+      //关闭日历组件
       closeCalendar(){
         this.$emit('closeCalendar');
       },
@@ -207,7 +233,7 @@
         let _that = this
         this.selDay = new Date(this.thisY, this.thisM, index)
 
-        // 多选模式
+        // 多选模式  取消选择
         if (this.selMode == 'mutiSel') {
           this.selDayList = this.selDayList.filter(item => {
             // debugger
@@ -219,7 +245,7 @@
           })
         }
 
-        // 范围选择模式
+        // 范围选择
         if (this.selMode == 'rangeSel') {
           console.log(this.rangeStartD)
           console.log(this.rangeEndD)
@@ -271,7 +297,7 @@
       // 控制选中状态的展示
       showSelected(index) {
         var sel = false
-        // console.log(this.selDayList)
+        //console.log(this.selDayList)
         this.selDayList.forEach(item => {
           if (item.day == index && item.month == this.thisM && item.year == this.thisY) {
             sel = true
@@ -280,6 +306,7 @@
         if (this.selMode == 'singleSel') {
           sel = false
         }
+
         return (this.thisD == index && this.isCurM && this.isCurY) || sel
       },
 
@@ -307,7 +334,6 @@
 
       showRange(index) {
         // debugger
-
         let startIndex = Math.min(this.rangeEndD, this.rangeStartD)
         let endIndex = Math.max(this.rangeEndD, this.rangeStartD)
         return (
@@ -324,8 +350,8 @@
   @import '@/assets/style/index.scss';
   .calendar {
     position: absolute;
-    top:120px;
-    left: 38%;
+    top: 50px;
+    left: 29%;
     display: inline-block;
     background-color: white;
     box-shadow: 1px 1px 6px #eee;
@@ -348,13 +374,14 @@
   .tools,
   .weeks,
   .days {
-    width: 280px;
+    width: 504px;
     display: flex;
     flex-wrap: wrap;
     span {
-      flex: 0 0 38px;
-      height: 38px;
-      line-height: 38px;
+     // flex: 0 0 38px;
+      flex: 0 0 70px;
+      height: 70px;
+      line-height: 70px;
       margin: 1px;
       cursor: pointer;
       // display: flex;
@@ -388,9 +415,10 @@
       flex-wrap: wrap;
       position: absolute;
       width: 100%;
-      top: 40px;
+      top: 50px;
       background: #fff;
-      height: 280px;
+      //height: 280px;
+      height: 440px;
       span {
         flex: 1 0 19%;
         
@@ -415,6 +443,6 @@
   }
   .btns{
     position: absolute;
-    left: 30%;
+    left: 39%;
   }
 </style>
