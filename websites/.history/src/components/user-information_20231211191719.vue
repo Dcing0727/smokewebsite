@@ -152,11 +152,10 @@
     export default {
       data() {
         return {
-          someValue: false,
           loading: false,
           box: false,
           form: {
-            avatar:'https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg',//回显头像
+            avatar:'https://img-static.mihoyo.com/communityweb/upload/c9d11674eac7631d2210a1ba20799958.png',//回显头像
             nickname: '',
             gender: '',
             file: null,
@@ -177,21 +176,21 @@
       mounted() {
       },
       methods: {
-        /* eslint-disable */
+        // eslint-disable-next-line
         beforeUpload(file) {
-        
+          // eslint-disable-next-line
           const isLt2M = file.size / 1024 / 1024 < 2;
           if (!isLt2M) {
             this.$message.error('上传头像图片大小不能超过 2MB!')
           }
           return isLt2M
         },
-      
+        // eslint-disable-next-line
         handleRemove(file, fileList) {
           this.form.file = null;
           console.info(this.form);
         },
-       
+        // eslint-disable-next-line
         handleChange(file, fileList){
           console.info(fileList);
           this.form.file = file;
@@ -210,7 +209,6 @@
       //     )
       //  },
       updateModal() { // 打开窗口
-        this.someValue = true;
         this.$nextTick(() => {
           if (this.$refs.form) {
             this.$refs.form.resetFields();
@@ -219,7 +217,7 @@
         this.form.gender = this.form.gender + '';
         console.info(this.form);
         this.box = true;
-        },
+      },
 
         submitFun(){//提交
           console.info(this.form);
