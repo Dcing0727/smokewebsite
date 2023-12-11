@@ -37,12 +37,18 @@
         @click='handleSelPrevD(monthDays[prevM] - prevLD[thisW] + item)'>{{monthDays[prevM] - prevLD[thisW] + item}}</span>
         
       <!-- thisMDLen返回对应月份天数  -->
+      <!-- 在模板中添加v-show绑定 --> 
       <span class="thisMD sel-span"
-        v-for='(item, index) in thisMDLen'   
-        :class='{"current": showSelected(index + 1), "range": showRange(index)  }'       
-        :key='index + "c"'
-        @click='handleSelCurD(index + 1)'
-        @mouseenter="handleMouseEnter(index + 1)">{{index + 1}}</span>
+            v-for='(item, index) in thisMDLen'   
+            :class='{"current": showSelected(index + 1), "range": showRange(index) }'       
+            :key='index + "c"'
+            @click='handleSelCurD(index + 1)'
+            @mouseenter="handleMouseEnter(index + 1)">
+        {{index + 1}}
+        <!-- 将对号的显示移到这里 -->
+        <span v-if="showSelected(index + 1)" class="checkmark">  &#10003; </span>
+      </span>
+
 
       <span class="nextMD sel-span"
         v-for='(item, index) in nextMDLen'
@@ -67,7 +73,7 @@
       msg: String,
       theme: {
         type: String,
-        default: 'red',
+        default: 'green',
       },
       selList: {
         type: Array,
@@ -87,16 +93,16 @@
         default: 'mutiSel',
       },
     },
-    watch: {
-    selList: {
-        immediate: true,
-        handler(newVal, oldVal) {
-          // Do something when selList changes
-          console.log('selList changed:', newVal);
-          // You can update internal state or perform any necessary actions
-        },
-      },
-    },
+    // watch: {
+    // selList: {
+    //     immediate: true,
+    //     handler(newVal, oldVal) {
+    //       // Do something when selList changes
+    //       //console.log('selList changed:', newVal);
+    //       // You can update internal state or perform any necessary actions
+    //     },
+    //   },
+    // },
     created() {
       this.selDayList = this.selList.map(item => {
         item.month = item.month - 1
@@ -154,29 +160,30 @@
           //选择模式
           if (this.selMode == 'mutiSel') {    
             this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
-            //今日
             console.log(this.selDayList)
+            //console.log({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
           }
-          if (this.selMode == 'rangeSel') {
-            switch (this.selDayList.length) {
-              case 0:
-                this.mouseEnterActive = true
+          // if (this.selMode == 'rangeSel') {
+          //   switch (this.selDayList.length) {
+          //     case 0:
+          //       this.mouseEnterActive = true
 
-                this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
-                break
-              case 1:
-                this.mouseEnterActive = false
+          //       this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
+          //       break
+          //     case 1:
+          //       this.mouseEnterActive = false
 
-                this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
-                break
-              case 2:
-                this.mouseEnterActive = true
-                this.selDayList = []
-                this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
-                break
-            }
-          }
-          return this.selDay.getDate()
+          //       this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
+          //       break
+          //     case 2:
+          //       this.mouseEnterActive = true
+          //       this.selDayList = []
+          //       this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
+          //       break
+          //   }
+          // }
+          //console.log(this.selDay.getDate())
+          return this.selDay.getDate()      //返回今天日期
         } else {
           return ''
         }
@@ -191,7 +198,6 @@
         return new Date(this.thisY, this.thisM, 1).getDay()
       },
       thisRM() {
-        //return this.thisM + 1
         return this.thisM + 1
       },
       thisMDLen() {
@@ -230,48 +236,48 @@
       },
       // 单选、多选当前月日期
       handleSelCurD(index) {
-        let _that = this
-        this.selDay = new Date(this.thisY, this.thisM, index)
 
+        // let _that = this
+        // this.selDay = new Date(this.thisY, this.thisM, index)
         // 多选模式  取消选择
-        if (this.selMode == 'mutiSel') {
-          this.selDayList = this.selDayList.filter(item => {
-            // debugger
-            if (item.year == _that.thisY && item.month == _that.thisM && item.day == _that.thisD) {
-              this.selDay = ''
-              return false
-            }
-            return true
-          })
-        }
+        // if (this.selMode == 'mutiSel') {
+        //   this.selDayList = this.selDayList.filter(item => {
+        //     // debugger
+        //     if (item.year == _that.thisY && item.month == _that.thisM && item.day == _that.thisD) {
+        //       this.selDay = ''
+        //       return false
+        //     }
+        //     return true
+        //   })
+        // }
 
         // 范围选择
-        if (this.selMode == 'rangeSel') {
-          console.log(this.rangeStartD)
-          console.log(this.rangeEndD)
-          switch (this.selDayList.length) {
-            case 0:
-              this.rangeStartD = this.selDay.getDate() - 1
-              break
-            case 1:
-              this.rangeEndD = this.selDay.getDate() - 1
-              break
-            case 2:
-              this.rangeStartD = ''
-              this.rangeEndD = ''
-              this.rangeStartD = this.selDay.getDate() - 1
-              break
-          }
+        // if (this.selMode == 'rangeSel') {
+        //   console.log(this.rangeStartD)
+        //   console.log(this.rangeEndD)
+        //   switch (this.selDayList.length) {
+        //     case 0:
+        //       this.rangeStartD = this.selDay.getDate() - 1
+        //       break
+        //     case 1:
+        //       this.rangeEndD = this.selDay.getDate() - 1
+        //       break
+        //     case 2:
+        //       this.rangeStartD = ''
+        //       this.rangeEndD = ''
+        //       this.rangeStartD = this.selDay.getDate() - 1
+        //       break
+        //   }
           // this.rangeStartD = index - 1
-          this.selDayList = this.selDayList.filter(item => {
-            // debugger
-            if (item.year == _that.thisY && item.month == _that.thisM && item.day == _that.thisD) {
-              this.selDay = ''
-              return false
-            }
-            return true
-          })
-        }
+          // this.selDayList = this.selDayList.filter(item => {
+          //   // debugger
+          //   if (item.year == _that.thisY && item.month == _that.thisM && item.day == _that.thisD) {
+          //     this.selDay = ''
+          //     return false
+          //   }
+          //   return true
+          // })
+        //}
       },
 
       // 单选下个月的日期
@@ -297,17 +303,17 @@
       // 控制选中状态的展示
       showSelected(index) {
         var sel = false
-        //console.log(this.selDayList)
+       // console.log(this.selDayList)
         this.selDayList.forEach(item => {
           if (item.day == index && item.month == this.thisM && item.year == this.thisY) {
             sel = true
           }
         })
-        if (this.selMode == 'singleSel') {
-          sel = false
-        }
-
-        return (this.thisD == index && this.isCurM && this.isCurY) || sel
+        // if (this.selMode == 'singleSel') {
+        //   sel = false
+        // }
+         return sel
+       //return (this.thisD == index && this.isCurM && this.isCurY) || sel     这行代码渲染今日的单元格
       },
 
       clearAllSel() {
@@ -348,6 +354,7 @@
 
 <style scoped lang='scss'>
   @import '@/assets/style/index.scss';
+
   .calendar {
     position: absolute;
     top: 50px;
@@ -356,60 +363,61 @@
     background-color: white;
     box-shadow: 1px 1px 6px #eee;
   }
+
   .weeks {
     border-bottom: 1px solid #eee;
   }
+
   .current {
     color: #fff;
   }
-  .close{
+
+  .close {
     position: absolute;
     right: 0%;
     cursor: pointer;
     width: 22px;
     height: 22px;
-    // border: 1px solid black;
-     z-index: 1000;
+    z-index: 1000;
   }
+
   .tools,
   .weeks,
   .days {
     width: 504px;
     display: flex;
     flex-wrap: wrap;
+
     span {
-     // flex: 0 0 38px;
       flex: 0 0 70px;
       height: 70px;
       line-height: 70px;
       margin: 1px;
       cursor: pointer;
-      // display: flex;
-      // align-items: center;
-      // justify-content: center;
     }
+
     .prevMD,
     .nextMD {
       background: #eee;
       color: #aaa;
     }
   }
-  .days span{
+
+  .days span,
+  .weeks span {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .weeks span{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
   .tools {
     position: relative;
     justify-content: space-around;
+
     span {
       cursor: pointer;
     }
+
     .selyear-wrap {
       display: flex;
       flex-wrap: wrap;
@@ -417,11 +425,10 @@
       width: 100%;
       top: 50px;
       background: #fff;
-      //height: 280px;
       height: 440px;
+
       span {
         flex: 1 0 19%;
-        
       }
     }
   }
@@ -430,18 +437,47 @@
     background: #ccc;
   }
 
-  // theme
   .red {
     .sel-span.current {
       background: $r-bg;
-      // outline: 2px solid $r-bg;
-      // border-radius: 50%;
     }
+
     .sel-span:hover {
       outline: 2px solid $r-bg;
     }
   }
-  .btns{
+
+  .green {
+    .sel-span.current {
+      background: #2ecc71;
+      outline: 2px solid #2ecc71;
+      position: relative;
+    }
+
+    .sel-span:hover {
+      outline: 2px solid #2ecc71;
+    }
+
+    // .sel-span::before {
+    //   position: absolute;
+    //   left: 20%;
+    //   top: 20%;
+    //   transform: translate(-50%, -50%);
+    //   width: 20px;
+    //   height: 2px;
+    //   background-color: #2ecc71;
+    // }
+
+    /* 新添加的样式用于对号的显示 */
+    .checkmark {
+      position: absolute;
+      bottom: -8px;
+      right: 25px;
+      color: #fff;
+      font-size: 20px;
+    }
+  }
+  .btns {
     position: absolute;
     left: 39%;
   }
