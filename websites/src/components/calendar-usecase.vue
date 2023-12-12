@@ -49,7 +49,7 @@
         
         <span v-show="showFail(index + 1)" class="checkmark2">×</span>
         <span v-show="showToday(index + 1)" class="checkmark3">今日</span>
-        <span v-if="showSelected(index + 1)" class="checkmark">  &#10003; </span>
+        <span v-show="showSelected(index + 1)" class="checkmark">  &#10003; </span>
       </span>
 
 
@@ -101,6 +101,11 @@
         type: String,
         default: 'mutiSel',
       },
+      sel1: false,
+      sel2: false,
+      sel3: false,
+
+
     },
    
    watch: {
@@ -110,7 +115,7 @@
           console.log('selList 变化了', newVal);
           this.selDayList = newVal.map(item => ({
             year: item.year,
-            month: item.month , // 减1以匹配 JavaScript 中的月份（0-11）
+            month: item.month , 
             day: item.day,
           }));
         });
@@ -118,6 +123,26 @@
       deep: true,
       immediate: true,
     },
+    FailList: {
+      handler(newVal) {
+        this.$nextTick(() => {
+          console.log('FailList 变化了', newVal);
+          this.failDayList = newVal.map(item => ({
+            year: item.year,
+            month: item.month , 
+            day: item.day,
+          }));
+        });
+      },
+      deep: true,
+      immediate: true,
+    },
+
+
+
+
+
+
   },
     created() {
       console.log('子组件创建了')
@@ -350,10 +375,12 @@
         var sel = false
         if (this.isDateInList(today, this.selDayList)) {
           sel = false;
+        }else if(this.isDateInList(today, this.failDayList)){
+          sel = false;
         }else{
           // console.log(today)
           console.log('新更新的值',this.selDayList)
-          sel =  (this.thisD === index && this.isCurM  && this.isCurY);
+          sel = (this.thisD === index && this.isCurM  && this.isCurY);
         }
         return sel;
     },

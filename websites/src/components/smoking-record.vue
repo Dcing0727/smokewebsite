@@ -4,11 +4,11 @@
         <div class="showcalendar" @click="showCalendar = !showCalendar" ></div>
         <h1>您已坚持戒烟{{days}}天</h1>
         <div class="button-container">
-            <div class="CustomButton1"  >
+            <div class="CustomButton1">
                 <CustomButton @click="recordToday">打卡!</CustomButton>
             </div>
             <div class="CustomButton2" >
-                <CustomButton :buttonColor="'#e74c3c'" :rippleColor="'rgba(255, 255, 255, 0.7)'">挑战失败</CustomButton>
+                <CustomButton @click="failRecord" :buttonColor="'#e74c3c'" :rippleColor="'rgba(255, 255, 255, 0.7)'">挑战失败</CustomButton>
             </div>
         </div>
         <calendar v-show="showCalendar"  :selList="selectedDates" :FailList="failDates"  v-if="Object.keys(selectedDates).length >0" @closeCalendar="handleCloseCalendar"></calendar>
@@ -53,15 +53,23 @@ export default {
             this.showCalendar = false;
         },
         recordToday() {
-        const newDate = {
-            year: this.todayDate.getFullYear(),
-            month: this.todayDate.getMonth(),
-            day: this.todayDate.getDate(),
-        };
-         // 使用解构赋值创建新对象，确保引用变化
-        this.selectedDates.push({ ...newDate });
-        //console.log("来自父组件的更改"+this.selectedDates)
-    },
+            const newDate = {
+                year: this.todayDate.getFullYear(),
+                month: this.todayDate.getMonth(),
+                day: this.todayDate.getDate(),
+            };
+            this.selectedDates.push({ ...newDate });
+            //console.log("来自父组件的更改"+this.selectedDates)
+        },
+        failRecord() {
+            const newDate = {
+                year: this.todayDate.getFullYear(),
+                month: this.todayDate.getMonth(),
+                day: this.todayDate.getDate(),
+            };
+            this.failDates.push({ ...newDate });
+        }
+
 
     },
 };
