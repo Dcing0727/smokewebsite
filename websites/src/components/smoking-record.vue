@@ -5,13 +5,13 @@
         <h1>您已坚持戒烟{{days}}天</h1>
         <div class="button-container">
             <div class="CustomButton1"  >
-                <CustomButton>打卡!</CustomButton>
+                <CustomButton @click="recordToday">打卡!</CustomButton>
             </div>
             <div class="CustomButton2" >
                 <CustomButton :buttonColor="'#e74c3c'" :rippleColor="'rgba(255, 255, 255, 0.7)'">挑战失败</CustomButton>
             </div>
         </div>
-        <calendar v-show="showCalendar" :selList="selectedDates"  @closeCalendar="handleCloseCalendar"></calendar>
+        <calendar v-show="showCalendar"  :selList="selectedDates" :FailList="failDates"  v-if="Object.keys(selectedDates).length >0" @closeCalendar="handleCloseCalendar"></calendar>
     </div>
   </div>
 </template>
@@ -39,14 +39,29 @@ export default {
                 { year: 2023, month: 12, day: 6 },
                 { year: 2023, month: 12, day: 7 },
                 { year: 2023, month: 12, day: 8 },
-                // 可以根据需要提供更多日期
             ],
+            failDates: [
+                //戒烟失败打卡日期
+                { year: 2023, month: 12, day: 9 },
+                { year: 2023, month: 12, day: 10 },
+            ],
+            todayDate: new Date(),
         };
     },
     methods:{
         handleCloseCalendar() {
             this.showCalendar = false;
         },
+        recordToday() {
+        const newDate = {
+            year: this.todayDate.getFullYear(),
+            month: this.todayDate.getMonth(),
+            day: this.todayDate.getDate(),
+        };
+         // 使用解构赋值创建新对象，确保引用变化
+        this.selectedDates.push({ ...newDate });
+        //console.log("来自父组件的更改"+this.selectedDates)
+    },
 
     },
 };

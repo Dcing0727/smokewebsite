@@ -40,12 +40,15 @@
       <!-- 在模板中添加v-show绑定 --> 
       <span class="thisMD sel-span"
             v-for='(item, index) in thisMDLen'   
-            :class='{"current": showSelected(index + 1), "range": showRange(index) }'       
+            :class='{"current": showSelected(index + 1), "current2": showFail(index + 1), "current3": showToday(index + 1)}'       
             :key='index + "c"'
             @click='handleSelCurD(index + 1)'
             @mouseenter="handleMouseEnter(index + 1)">
         {{index + 1}}
         <!-- 将对号的显示移到这里 -->
+        
+        <span v-show="showFail(index + 1)" class="checkmark2">×</span>
+        <span v-show="showToday(index + 1)" class="checkmark3">今日</span>
         <span v-if="showSelected(index + 1)" class="checkmark">  &#10003; </span>
       </span>
 
@@ -81,6 +84,12 @@
           return []
         },
       },
+      FailList: {
+        type: Array,
+        default() {
+          return []
+        },
+      },
       singleSel: {
         type: Boolean,
         default: true,
@@ -93,37 +102,51 @@
         default: 'mutiSel',
       },
     },
-    // watch: {
-    // selList: {
-    //     immediate: true,
-    //     handler(newVal, oldVal) {
-    //       // Do something when selList changes
-    //       //console.log('selList changed:', newVal);
-    //       // You can update internal state or perform any necessary actions
-    //     },
-    //   },
-    // },
+   
+   watch: {
+    selList: {
+      handler(newVal) {
+        this.$nextTick(() => {
+          console.log('selList 变化了', newVal);
+          this.selDayList = newVal.map(item => ({
+            year: item.year,
+            month: item.month , // 减1以匹配 JavaScript 中的月份（0-11）
+            day: item.day,
+          }));
+        });
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
     created() {
+      console.log('子组件创建了')
       this.selDayList = this.selList.map(item => {
         item.month = item.month - 1
         return item
       })
 
+      // this.selDayList = this.selList.map(item => {
+      //   item.month = item.month - 1
+      //   return item
+      // })
+
+      this.failDayList = this.FailList.map(item => {
+        item.month = item.month - 1
+        return item
+      })
       // // 重新初始化 selDate、selDay、selDayList
       // this.selDate = new Date(); // 或者使用其他合适的默认日期
       // this.selDay = new Date();
       // this.selDayList = [];
-
-
       if (this.curSel) {
         this.selDate = new Date(this.curSel.year, this.curSel.month - 1)
         this.selDay = new Date(this.curSel.year, this.curSel.month - 1, this.curSel.day)
       }
-
-      if (this.selMode == 'rangeSel') {
-        this.selDay = ''
-        this.selDayList = []
-      }
+      // if (this.selMode == 'rangeSel') {
+      //   this.selDay = ''
+      //   this.selDayList = []
+      // }
     },
     data() {
       return {
@@ -133,6 +156,8 @@
         selDate: new Date(),          //获取当前
         selDay: new Date(),           
         selDayList: [],
+
+        failDayList:[],
         showSelYear: false,
         rangeDayList: [],
         rangeStartD: '',
@@ -159,20 +184,18 @@
         if (this.selDay) {
           //选择模式
           if (this.selMode == 'mutiSel') {    
-            this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
-            console.log(this.selDayList)
+            //this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
+           // console.log(this.selDayList)
             //console.log({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
           }
           // if (this.selMode == 'rangeSel') {
           //   switch (this.selDayList.length) {
           //     case 0:
           //       this.mouseEnterActive = true
-
           //       this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
           //       break
           //     case 1:
           //       this.mouseEnterActive = false
-
           //       this.selDayList.push({ year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() })
           //       break
           //     case 2:
@@ -222,7 +245,6 @@
       closeCalendar(){
         this.$emit('closeCalendar');
       },
-
       // 下一个月
       handleNextM() {
         // debugger
@@ -236,7 +258,6 @@
       },
       // 单选、多选当前月日期
       handleSelCurD(index) {
-
         // let _that = this
         // this.selDay = new Date(this.thisY, this.thisM, index)
         // 多选模式  取消选择
@@ -315,10 +336,33 @@
          return sel
        //return (this.thisD == index && this.isCurM && this.isCurY) || sel     这行代码渲染今日的单元格
       },
-
-      clearAllSel() {
+      showFail(index) {
+         var sel = false
+         this.failDayList.forEach(item => {
+          if (item.day == index && item.month == this.thisM && item.year == this.thisY) {
+            sel = true
+          }
+        })
+         return sel
+      },
+      showToday(index) {
+        const today = { year: this.selDay.getFullYear(), month: this.selDay.getMonth(), day: this.selDay.getDate() };
+        var sel = false
+        if (this.isDateInList(today, this.selDayList)) {
+          sel = false;
+        }else{
+          // console.log(today)
+          console.log('新更新的值',this.selDayList)
+          sel =  (this.thisD === index && this.isCurM  && this.isCurY);
+        }
+        return sel;
+    },
+    isDateInList(date, list) {
+        return list.some(item => item.year === date.year && item.month === date.month && item.day === date.day);
+    },
+    clearAllSel() {
         this.selDayList = []
-        this.selDay = ''
+        //this.selDay = ''
       },
       // 添加鼠标移入事件
       handleMouseEnter(index) {
@@ -425,10 +469,13 @@
       width: 100%;
       top: 50px;
       background: #fff;
-      height: 440px;
-
+      height: 522px;
+      z-index: 1000;
       span {
         flex: 1 0 19%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }
@@ -437,15 +484,7 @@
     background: #ccc;
   }
 
-  .red {
-    .sel-span.current {
-      background: $r-bg;
-    }
-
-    .sel-span:hover {
-      outline: 2px solid $r-bg;
-    }
-  }
+ 
 
   .green {
     .sel-span.current {
@@ -453,11 +492,9 @@
       outline: 2px solid #2ecc71;
       position: relative;
     }
-
     .sel-span:hover {
       outline: 2px solid #2ecc71;
     }
-
     // .sel-span::before {
     //   position: absolute;
     //   left: 20%;
@@ -467,8 +504,24 @@
     //   height: 2px;
     //   background-color: #2ecc71;
     // }
-
     /* 新添加的样式用于对号的显示 */
+    .sel-span.current2 {
+      background: $r-bg;
+      outline: 2px solid $r-bg;
+      position: relative;
+    }
+    .sel-span.current3 {
+      background: #7FDBFF;
+      outline: 2px solid #7FDBFF;
+      position: relative;
+    }
+    .checkmark2 {
+      position: absolute;
+      bottom: -10px;
+      right: 25px;
+      color: #fff;
+      font-size: 20px;
+    }
     .checkmark {
       position: absolute;
       bottom: -8px;
@@ -476,9 +529,16 @@
       color: #fff;
       font-size: 20px;
     }
+     .checkmark3{
+      position: absolute;      //用于显示今天的日期
+      bottom: -18px;
+      right: 22px;
+      color: #fff;
+      font-size: 12px;
+    }
   }
   .btns {
-    position: absolute;
-    left: 39%;
-  }
+      position: absolute;
+      left: 39%;
+    }
 </style>
