@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'LoginComponent',
   data() {
@@ -89,6 +90,17 @@ export default {
       // 可以在这里添加逻辑来验证和处理注册
       // 之后可以关闭注册窗口，例如：this.closeBox();
     },
+  },
+   mounted() {
+    // 在组件挂载后调用后端 API
+    axios.get('http://localhost:3000/api/data')
+      .then(response => {
+        this.message = response.data.message;
+        console.log(this.message)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   },
 };
 </script>
