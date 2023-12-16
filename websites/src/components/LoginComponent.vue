@@ -4,13 +4,13 @@
         <h1>登录</h1>
         <div class="inputbox">
             <div class="inputText">
-            <img class="userImg" src="@/assets/user.png" alt="">  <input id="loginName" type="text" placeholder="Username" required/>
+            <img class="userImg" src="@/assets/user.png" alt="">  <input v-model="l_account" id="loginName" type="text" placeholder="Username" required/>
             </div>
             <div class="inputText">
-            <img class="passwordImg" src="@/assets/password.png" alt="">    <input id="loginPassword" type="password" placeholder="Password" required/>
+            <img class="passwordImg" src="@/assets/password.png" alt="">    <input v-model="l_password" id="loginPassword" type="password" placeholder="Password" required/>
             </div>
         </div>
-        <button id="loginButton" class="loginButton">LOGIN</button>
+        <button id="loginButton" class="loginButton" @click="login">LOGIN</button>
         <div id="register" @click="openBox()" >新用户，去注册！</div>
     </div>
     <div class="box2" @mousedown="dragElement" ref="box2">
@@ -36,7 +36,10 @@ export default {
   name: 'LoginComponent',
   data() {
     return {
-      account: '',
+      l_account: '',  //登录用
+      l_password: '',
+
+      account: '',    //注册用
       password: '',
       password2:'',
       loggedIn: false,
@@ -109,8 +112,6 @@ export default {
       const password = this.password;
       const password2 = this.password2;
       //const hashedPassword = this.hashPassword(password);
-
-
       // 步骤2：验证输入
       if (!account || !password || !password2) {
         alert("请填写所有字段");
@@ -147,6 +148,34 @@ export default {
         });
       }
       // 步骤3：发送注册请求
+    },
+    login() {
+      const l_account = this.l_account;
+      const l_password = this.l_password;
+
+      fetch('http://localhost:3000/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            account: l_account,
+            password: l_password,
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+        if (data.success) {
+          alert('登录成功')
+        } else {
+          console.error("登录失败");
+        }
+        })
+        .catch(error => {
+          console.error("发生错误:", error);
+        });
+
+
     },
   },
    mounted() {
