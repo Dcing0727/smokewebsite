@@ -1,6 +1,7 @@
 // controllers/userController.js
-
 const userService = require('../services/userService');
+const bcrypt = require('bcryptjs');  
+const saltRounds = 10;
 
 const register = async (req, res) => {
   try {
@@ -9,9 +10,10 @@ const register = async (req, res) => {
 
     // 在这里添加逻辑来验证和处理注册
     // 例如，检查密码是否一致，是否符合规范等
-
     // 调用用户服务处理注册逻辑
-    const newUser = await userService.registerUser(account, password);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // 对用户明文密码进行哈希处理
+    const newUser = await userService.registerUser(account, hashedPassword);  
 
     // 返回成功响应
     res.status(201).json({

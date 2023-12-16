@@ -9,7 +9,7 @@ app.use(cors());
 app.post('/api/user/register', userController.register);
 app.get('/api/data', (req, res) => {
   // Handle the request and return data
-  res.json({ message: 'Backend development plan initiated!' });
+  res.json({ message: '前后端连接成功' });
 });
 
 const port = 3000;

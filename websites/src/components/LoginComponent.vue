@@ -85,6 +85,20 @@ export default {
       document.onmousemove = moveElement;
       document.onmouseup = releaseElement;
     },
+    // async hashPassword() {
+    //   // 使用 Web Crypto API 的 SubtleCrypto 接口来生成哈希
+    //   const encoder = new TextEncoder();
+    //   const data = encoder.encode(this.password);
+
+    //   // 使用 SHA-256 算法生成哈希
+    //   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+    //   // 将哈希值转换为十六进制字符串
+    //   const hashArray = Array.from(new Uint8Array(hashBuffer));
+    //   const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
+    //   this.hashedPassword = hashedPassword;
+    // },
     register() {
       // 在这里处理注册逻辑
       // 使用 this.username, this.password 和 this.password2 来获取输入的值
@@ -94,6 +108,8 @@ export default {
       const account = this.account;
       const password = this.password;
       const password2 = this.password2;
+      //const hashedPassword = this.hashPassword(password);
+
 
       // 步骤2：验证输入
       if (!account || !password || !password2) {

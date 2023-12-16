@@ -5,7 +5,6 @@ const User = require('../models/user'); // 假设你有一个 User 模型
 const registerUser = async (account, password) => {
   try {
     // 在这里可以添加一些额外的逻辑，比如密码加密等
-
     // 创建新用户
     const newUser = await User.create({
       account,
