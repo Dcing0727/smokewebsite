@@ -145,7 +145,7 @@
 
   },
     created() {
-      console.log('子组件创建了')
+      //console.log('子组件创建了')
       this.selDayList = this.selList.map(item => {
         item.month = item.month - 1
         return item
@@ -379,7 +379,7 @@
           sel = false;
         }else{
           // console.log(today)
-          console.log('新更新的值',this.selDayList)
+          //console.log('新更新的值',this.selDayList)
           sel = (this.thisD === index && this.isCurM  && this.isCurY);
         }
         return sel;

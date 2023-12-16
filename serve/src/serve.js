@@ -1,14 +1,15 @@
-//const { sequelize, testConnection } = require('./models/db');
-//testConnection();
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const userController = require('./controllers/userController');  // Add this line
 
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
+app.post('/api/user/register', userController.register);
 app.get('/api/data', (req, res) => {
-  // 处理请求并返回数据
-  res.json({ message: '后端开发计划启动!' });
+  // Handle the request and return data
+  res.json({ message: 'Backend development plan initiated!' });
 });
 
 const port = 3000;
