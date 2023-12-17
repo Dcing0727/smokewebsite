@@ -30,22 +30,28 @@ const router = createRouter({
       component: LoginComponent 
     },{
       path: '/statistics', 
-      component: Statistics
+      component: Statistics,
+      meta: { requiresAuth: true }, // 表示需要身份验证
     },{
       path: '/blog', 
-      component: Blog
+      component: Blog,
+      meta: { requiresAuth: true }
     },{
       path: '/record', 
-      component: Record
+      component: Record,
+      meta: { requiresAuth: true }
     },{
       path: '/home', 
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true }
     },{
       path:'/img',
-      component:Carousel
+      component:Carousel,
+      meta: { requiresAuth: true }
     },{
       path:'/kno',
-      component:Knowledge
+      component:Knowledge,
+      meta: { requiresAuth: true }
     },{
       path:'/us',
       component:User,
@@ -68,43 +74,56 @@ const router = createRouter({
           }
         ]
         }
-      ]
+      ],
+      meta: { requiresAuth: true }
     },{
       path:'/side',
-      component:Side
+      component:Side,
+      meta: { requiresAuth: true }
     },{
       path:'/week',
-      component:Week
+      component:Week,
+      meta: { requiresAuth: true }
     },{
       path:'/month',
-      component:Month
+      component:Month,
+      meta: { requiresAuth: true }
     },{
       path:'/annual',
-      component:Annual
+      component:Annual,
+      meta: { requiresAuth: true }
     },{
       path:'/drag',
-      component:Drag
+      component:Drag,
+      meta: { requiresAuth: true }
     },{
       path:'/spend',
-      component: Spend
+      component: Spend,
+      meta: { requiresAuth: true }
     },{
       path:'/scroll',
-      component: Scroll
+      component: Scroll,
+      meta: { requiresAuth: true }
     },{
       path:'/count',
-      component: Count
+      component: Count,
+      meta: { requiresAuth: true }
     },{
       path:'/daily',
-      component: Daily
+      component: Daily,
+      meta: { requiresAuth: true }
     },{
       path:'/background',
-      component: Background
+      component: Background,
+      meta: { requiresAuth: true }
     },{
       path:'/btn',
-      component: Button
+      component: Button,
+      meta: { requiresAuth: true }
     },{
       path:'/calendar',
-      component: Calendar
+      component: Calendar,
+      meta: { requiresAuth: true }
     }
    ]
  }

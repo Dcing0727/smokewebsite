@@ -2,6 +2,14 @@
 const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');  
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
+//JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
+//常用于身份验证和信息传递。
+const secretKey = 'yourSecretKey';    //后期考虑加密处理
+
+
+
+
 
 const register = async (req, res) => {
   try {
@@ -31,7 +39,7 @@ const register = async (req, res) => {
 };
 
 
-//注册模块
+//登录模块
 const login = async (req, res) => {
     try {
       // 从请求中获取用户提供的登录信息
@@ -39,12 +47,16 @@ const login = async (req, res) => {
   
       // 调用用户服务处理登录逻辑
       const user = await userService.loginUser(account, password);
+
+       // 生成JWT令牌
+      const token = jwt.sign({ sub: user.id }, secretKey, { expiresIn: '1h' });
   
       // 返回成功登录的响应
       res.status(200).json({
         success: true,
         message: 'Login successful',
         user: user,
+        token: token,
       });
     } catch (error) {
       // 处理错误情况，返回适当的错误响应

@@ -1,7 +1,7 @@
 // db.js用于与数据库建立连接、设定一些数据库参数
 // 启动mysql服务 命令行 net start mysql
 // 停止mysql服务 命令行 net stop mysql 
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');     //ORM模型
 
 // 第一个参数：连接的数据库名
 // 第二个参数：数据库的用户名

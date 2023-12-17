@@ -188,7 +188,10 @@ export default {
         .then(response => response.json())
         .then(data => {
         if (data.success) {
-          alert('登录成功')
+          const token = data.token;
+          localStorage.setItem('token', token);
+          alert('登录成功,页面将跳转');
+          this.$router.push('/statistics');
         } else {
           //前端提示错误类型
           alert(data.message);
