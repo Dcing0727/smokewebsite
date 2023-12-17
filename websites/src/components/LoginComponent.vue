@@ -102,23 +102,37 @@ export default {
 
     //   this.hashedPassword = hashedPassword;
     // },
+     isValidInput(input) {
+      // 使用正则表达式检测是否包含非法字符
+      const illegalCharactersRegex = /[^a-zA-Z0-9]/;
+      return !illegalCharactersRegex.test(input);
+    },
+    isValidLength(value, minLength, maxLength) {
+      const trimmedValue = value.trim(); // 去除首尾空格
+      return trimmedValue.length >= minLength && trimmedValue.length <= maxLength;
+    },
     register() {
       // 在这里处理注册逻辑
       // 使用 this.username, this.password 和 this.password2 来获取输入的值
       // 可以在这里添加逻辑来验证和处理注册
-      // 之后可以关闭注册窗口，例如：this.closeBox();
-       // 步骤1：获取用户输入
+     
+      // 步骤1：获取用户输入
       const account = this.account;
       const password = this.password;
       const password2 = this.password2;
-      //const hashedPassword = this.hashPassword(password);
+
       // 步骤2：验证输入
       if (!account || !password || !password2) {
         alert("请填写所有字段");
         return;
-      }
-      else if (password !== password2) {
+      }else if (password !== password2) {
         alert("两次输入的密码不一致");
+        return;
+      }else if (!this.isValidLength(account, 6, 20) || !this.isValidLength(password, 8, 15) || !this.isValidLength(password2, 8, 20)) {
+        alert('用户名长度应在6-20,密码长度应在8-15');
+        return;
+      }else if (!this.isValidInput(account) || !this.isValidInput(password) || !this.isValidInput(password2)) {
+        alert('用户名或密码不能包含非法字符');
         return;
       }else{
         fetch('http://localhost:3000/api/user/register', {
@@ -137,7 +151,7 @@ export default {
         if (data.success) {
         //console.log("注册成功");
           alert('注册成功')
-        // 此处可以执行一些操作，比如关闭注册窗口
+          //关闭注册窗口
           this.closeBox();
         } else {
           console.error("注册失败，请重试");
@@ -147,14 +161,19 @@ export default {
           console.error("发生错误:", error);
         });
       }
-      // 步骤3：发送注册请求
     },
     login() {
       const l_account = this.l_account;
       const l_password = this.l_password;
-        if (!l_account || !l_password) {
-          alert('请输入用户名和密码');
-          return; // 阻止继续执行
+      if (!l_account || !l_password) {
+        alert('请输入用户名和密码');
+        return; // 阻止继续执行
+      }else if (!this.isValidLength(l_account, 6, 20) || !this.isValidLength(l_password, 8, 15) ) {
+        alert('用户名长度应在6-20,密码长度应在8-15');
+        return;
+      }else if (!this.isValidInput(l_account) || !this.isValidInput(l_password) ) {
+        alert('用户名或密码不能包含非法字符');
+        return;
       }
       fetch('http://localhost:3000/api/user/login', {
           method: 'POST',
@@ -171,7 +190,7 @@ export default {
         if (data.success) {
           alert('登录成功')
         } else {
-          //console.error("登录失败");
+          //前端提示错误类型
           alert(data.message);
         }
         })
