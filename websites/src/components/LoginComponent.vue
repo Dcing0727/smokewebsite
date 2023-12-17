@@ -168,7 +168,8 @@ export default {
         if (data.success) {
           alert('登录成功')
         } else {
-          console.error("登录失败");
+          //console.error("登录失败");
+          alert(data.message);
         }
         })
         .catch(error => {

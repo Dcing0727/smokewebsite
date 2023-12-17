@@ -48,12 +48,27 @@ const login = async (req, res) => {
       });
     } catch (error) {
       // 处理错误情况，返回适当的错误响应
-      console.error(error);
-      res.status(401).json({
+
+
+      // console.error(error);
+      let errorMessage = 'Login failed';
+      
+      // 如果是密码错误，可以添加特定的错误信息
+      if (error.name === '密码不正确') {
+        errorMessage = '密码不正确';
+      } else if (error.name === '用户不存在') {
+        errorMessage = '用户不存在';
+      }
+      res.status(200).json({
         success: false,
-        message: 'Login failed',
+        message: errorMessage,
         error: error.message,
       });
+
+
+
+
+
     }
   };
   
