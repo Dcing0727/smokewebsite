@@ -47,7 +47,6 @@ const login = async (req, res) => {
   
       // 调用用户服务处理登录逻辑
       const user = await userService.loginUser(account, password);
-
        // 生成JWT令牌
       const token = jwt.sign({ sub: user.id }, secretKey, { expiresIn: '1h' });
   
@@ -74,9 +73,29 @@ const login = async (req, res) => {
       });
     }
   };
+
+  const authenticateToken = (req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+    if (!token) {
+      // 未提供令牌
+      return res.status(401).json({ success: false, message: 'Unauthorized: No token provided' });
+    }
+    // 验证令牌
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        // 令牌无效
+        return res.status(401).json({ success: false, message: 'Unauthorized: Invalid token' });
+      }else{
+        req.user = decoded;
+        next();
+      }
+    });
+  };
+
   
 module.exports = {
   register,
   login,
+  authenticateToken
   // 可以添加其他用户相关的控制器方法
 };

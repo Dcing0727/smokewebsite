@@ -9,6 +9,11 @@ app.use(cors());
 
 app.post('/api/user/register', userController.register);  // 注册
 app.post('/api/user/login', userController.login);    //登录
+// 服务器端代码示例
+app.get('/api/auth/verify', userController.authenticateToken, (req, res) => {
+  // 令牌验证成功，可以在 req.user 中获取用户信息
+  res.status(200).json({ success: true, user: req.user });
+});
 
 app.get('/api/data', (req, res) => {
   // Handle the request and return data
