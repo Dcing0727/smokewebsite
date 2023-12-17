@@ -21,7 +21,6 @@ const registerUser = async (account, password) => {
 };
 
 // 可以添加其他用户服务方法，比如 loginUser、getUserInfo 等
-
 const loginUser = async (account, password) => {
   try {
     // 查找用户

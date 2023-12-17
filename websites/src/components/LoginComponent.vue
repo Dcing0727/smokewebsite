@@ -152,7 +152,10 @@ export default {
     login() {
       const l_account = this.l_account;
       const l_password = this.l_password;
-
+        if (!l_account || !l_password) {
+          alert('请输入用户名和密码');
+          return; // 阻止继续执行
+      }
       fetch('http://localhost:3000/api/user/login', {
           method: 'POST',
           headers: {
@@ -175,8 +178,6 @@ export default {
         .catch(error => {
           console.error("发生错误:", error);
         });
-
-
     },
   },
    mounted() {
