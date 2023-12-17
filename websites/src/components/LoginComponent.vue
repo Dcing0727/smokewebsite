@@ -31,189 +31,189 @@
 </template>
 
 <script>
-import axios from 'axios';
-export default {
-  name: 'LoginComponent',
-  data() {
-    return {
-      l_account: '',  //登录用
-      l_password: '',
+  import axios from 'axios';
+  export default {
+    name: 'LoginComponent',
+    data() {
+      return {
+        l_account: '',  //登录用
+        l_password: '',
 
-      account: '',    //注册用
-      password: '',
-      password2:'',
-      loggedIn: false,
-    };
-  },
-  methods: {
-    openBox()  {
-      this.$refs.box2.style.display = "block";
-    },
-    closeBox() {
-      this.$refs.box2.style.display = "none";
-    },
-    dragElement(event) {
-      const box = this.$refs.box2;
-      const diffX = event.clientX - box.offsetLeft;
-      const diffY = event.clientY - box.offsetTop;
-
-      const moveElement = (event) => {
-        let moveX = event.clientX - diffX;
-        let moveY = event.clientY - diffY;
-        if (moveX < 0) {
-          moveX = 0;
-        } else if (moveX > window.innerWidth - box.offsetWidth) {
-          moveX = window.innerWidth - box.offsetWidth;
-        }
-        if (moveY < 0) {
-          moveY = 0;
-        } else if (moveY > window.innerHeight - box.offsetHeight) {
-          moveY = window.innerHeight - box.offsetHeight;
-        }
-        box.style.left = moveX + 'px';
-        box.style.top = moveY + 'px';
+        account: '',    //注册用
+        password: '',
+        password2:'',
+        loggedIn: false,
       };
+    },
+    methods: {
+      openBox()  {
+        this.$refs.box2.style.display = "block";
+      },
+      closeBox() {
+        this.$refs.box2.style.display = "none";
+      },
+      dragElement(event) {
+        const box = this.$refs.box2;
+        const diffX = event.clientX - box.offsetLeft;
+        const diffY = event.clientY - box.offsetTop;
 
-      const releaseElement = () => {
-        document.onmousemove = null;
-        document.onmouseup = null;
-        if (box.releaseCapture) {
-          box.releaseCapture();
+        const moveElement = (event) => {
+          let moveX = event.clientX - diffX;
+          let moveY = event.clientY - diffY;
+          if (moveX < 0) {
+            moveX = 0;
+          } else if (moveX > window.innerWidth - box.offsetWidth) {
+            moveX = window.innerWidth - box.offsetWidth;
+          }
+          if (moveY < 0) {
+            moveY = 0;
+          } else if (moveY > window.innerHeight - box.offsetHeight) {
+            moveY = window.innerHeight - box.offsetHeight;
+          }
+          box.style.left = moveX + 'px';
+          box.style.top = moveY + 'px';
+        };
+
+        const releaseElement = () => {
+          document.onmousemove = null;
+          document.onmouseup = null;
+          if (box.releaseCapture) {
+            box.releaseCapture();
+          }
+        };
+
+        if (box.setCapture) {
+          box.setCapture();
         }
-      };
+        document.onmousemove = moveElement;
+        document.onmouseup = releaseElement;
+      },
+      // async hashPassword() {
+      //   // 使用 Web Crypto API 的 SubtleCrypto 接口来生成哈希
+      //   const encoder = new TextEncoder();
+      //   const data = encoder.encode(this.password);
 
-      if (box.setCapture) {
-        box.setCapture();
-      }
-      document.onmousemove = moveElement;
-      document.onmouseup = releaseElement;
-    },
-    // async hashPassword() {
-    //   // 使用 Web Crypto API 的 SubtleCrypto 接口来生成哈希
-    //   const encoder = new TextEncoder();
-    //   const data = encoder.encode(this.password);
+      //   // 使用 SHA-256 算法生成哈希
+      //   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
 
-    //   // 使用 SHA-256 算法生成哈希
-    //   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      //   // 将哈希值转换为十六进制字符串
+      //   const hashArray = Array.from(new Uint8Array(hashBuffer));
+      //   const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 
-    //   // 将哈希值转换为十六进制字符串
-    //   const hashArray = Array.from(new Uint8Array(hashBuffer));
-    //   const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      //   this.hashedPassword = hashedPassword;
+      // },
+      isValidInput(input) {
+        // 使用正则表达式检测是否包含非法字符
+        const illegalCharactersRegex = /[^a-zA-Z0-9]/;
+        return !illegalCharactersRegex.test(input);
+      },
+      isValidLength(value, minLength, maxLength) {
+        const trimmedValue = value.trim(); // 去除首尾空格
+        return trimmedValue.length >= minLength && trimmedValue.length <= maxLength;
+      },
+      register() {
+        // 在这里处理注册逻辑
+        // 使用 this.username, this.password 和 this.password2 来获取输入的值
+        // 可以在这里添加逻辑来验证和处理注册
+      
+        // 步骤1：获取用户输入
+        const account = this.account;
+        const password = this.password;
+        const password2 = this.password2;
 
-    //   this.hashedPassword = hashedPassword;
-    // },
-     isValidInput(input) {
-      // 使用正则表达式检测是否包含非法字符
-      const illegalCharactersRegex = /[^a-zA-Z0-9]/;
-      return !illegalCharactersRegex.test(input);
-    },
-    isValidLength(value, minLength, maxLength) {
-      const trimmedValue = value.trim(); // 去除首尾空格
-      return trimmedValue.length >= minLength && trimmedValue.length <= maxLength;
-    },
-    register() {
-      // 在这里处理注册逻辑
-      // 使用 this.username, this.password 和 this.password2 来获取输入的值
-      // 可以在这里添加逻辑来验证和处理注册
-     
-      // 步骤1：获取用户输入
-      const account = this.account;
-      const password = this.password;
-      const password2 = this.password2;
-
-      // 步骤2：验证输入
-      if (!account || !password || !password2) {
-        alert("请填写所有字段");
-        return;
-      }else if (password !== password2) {
-        alert("两次输入的密码不一致");
-        return;
-      }else if (!this.isValidLength(account, 6, 20) || !this.isValidLength(password, 8, 15) || !this.isValidLength(password2, 8, 20)) {
-        alert('用户名长度应在6-20,密码长度应在8-15');
-        return;
-      }else if (!this.isValidInput(account) || !this.isValidInput(password) || !this.isValidInput(password2)) {
-        alert('用户名或密码不能包含非法字符');
-        return;
-      }else{
-        fetch('http://localhost:3000/api/user/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            account: account,
-            password: password,
-          }),
-        })
-        .then(response => response.json())
-        .then(data => {
-        // 步骤4：处理注册响应
-        if (data.success) {
-        //console.log("注册成功");
-          alert('注册成功')
-          //关闭注册窗口
-          this.closeBox();
-        } else {
-          console.error("注册失败，请重试");
+        // 步骤2：验证输入
+        if (!account || !password || !password2) {
+          alert("请填写所有字段");
+          return;
+        }else if (password !== password2) {
+          alert("两次输入的密码不一致");
+          return;
+        }else if (!this.isValidLength(account, 6, 20) || !this.isValidLength(password, 8, 15) || !this.isValidLength(password2, 8, 20)) {
+          alert('用户名长度应在6-20,密码长度应在8-15');
+          return;
+        }else if (!this.isValidInput(account) || !this.isValidInput(password) || !this.isValidInput(password2)) {
+          alert('用户名或密码不能包含非法字符');
+          return;
+        }else{
+          fetch('http://localhost:3000/api/user/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              account: account,
+              password: password,
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+          // 步骤4：处理注册响应
+          if (data.success) {
+          //console.log("注册成功");
+            alert('注册成功')
+            //关闭注册窗口
+            this.closeBox();
+          } else {
+            console.error("注册失败，请重试");
+          }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
         }
+      },
+      login() {
+        const l_account = this.l_account;
+        const l_password = this.l_password;
+        if (!l_account || !l_password) {
+          alert('请输入用户名和密码');
+          return; // 阻止继续执行
+        }else if (!this.isValidLength(l_account, 6, 20) || !this.isValidLength(l_password, 8, 15) ) {
+          alert('用户名长度应在6-20,密码长度应在8-15');
+          return;
+        }else if (!this.isValidInput(l_account) || !this.isValidInput(l_password) ) {
+          alert('用户名或密码不能包含非法字符');
+          return;
+        }
+        fetch('http://localhost:3000/api/user/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              account: l_account,
+              password: l_password,
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+          if (data.success) {
+            const token = data.token;
+            localStorage.setItem('token', token);
+            alert('登录成功,页面将跳转');
+            this.$router.push('/statistics');
+          } else {
+            //前端提示错误类型
+            alert(data.message);
+          }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
+      },
+    },
+    mounted() {
+      // 在组件挂载后调用后端 API
+      axios.get('http://localhost:3000/api/data')
+        .then(response => {
+          this.message = response.data.message;
+          console.log(this.message)
         })
         .catch(error => {
-          console.error("发生错误:", error);
-        });
-      }
-    },
-    login() {
-      const l_account = this.l_account;
-      const l_password = this.l_password;
-      if (!l_account || !l_password) {
-        alert('请输入用户名和密码');
-        return; // 阻止继续执行
-      }else if (!this.isValidLength(l_account, 6, 20) || !this.isValidLength(l_password, 8, 15) ) {
-        alert('用户名长度应在6-20,密码长度应在8-15');
-        return;
-      }else if (!this.isValidInput(l_account) || !this.isValidInput(l_password) ) {
-        alert('用户名或密码不能包含非法字符');
-        return;
-      }
-      fetch('http://localhost:3000/api/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            account: l_account,
-            password: l_password,
-          }),
-        })
-        .then(response => response.json())
-        .then(data => {
-        if (data.success) {
-          const token = data.token;
-          localStorage.setItem('token', token);
-          alert('登录成功,页面将跳转');
-          this.$router.push('/statistics');
-        } else {
-          //前端提示错误类型
-          alert(data.message);
-        }
-        })
-        .catch(error => {
-          console.error("发生错误:", error);
+          console.error('Error fetching data:', error);
         });
     },
-  },
-   mounted() {
-    // 在组件挂载后调用后端 API
-    axios.get('http://localhost:3000/api/data')
-      .then(response => {
-        this.message = response.data.message;
-        console.log(this.message)
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  },
-};
+  };
 </script>
 
 <style scoped>

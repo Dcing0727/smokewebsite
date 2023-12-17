@@ -1,154 +1,159 @@
 <template>
-    <div class="mhy-container mhy-account-center-content">
-      <div class="mhy-account-center-content-container mhy-account-center-collection">
-        <div class="mhy-account-center__subheader">
-          <span>个人简介</span>
-          <div class="mhy-account-center-collection-menu">
-            <div class="mhy-button mhy-account-center-collection-menu__create mhy-button-outlined">
-              <button class="mhy-button__button" @click="updateModal">编辑</button>
+    <div>
+  
+        <div class="mhy-container mhy-account-center-content">
+          <div class="mhy-account-center-content-container mhy-account-center-collection">
+            <div class="mhy-account-center__subheader">
+              <span>个人简介</span>
+              <div class="mhy-account-center-collection-menu">
+                <div class="mhy-button mhy-account-center-collection-menu__create mhy-button-outlined">
+                  <button class="mhy-button__button" @click="updateModal">编辑</button>
+                </div>
+                <!---->
+              </div>
             </div>
-            <!---->
           </div>
-        </div>
-      </div>
-      <div style="margin: 20px;">
-        <el-descriptions class="margin-top" :column="3" border>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-user"></i>
-              头像
-            </template>
-            <div>
-              <el-image src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" style="width: 50px;height: 50px;"></el-image>
-            </div>
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-user"></i>
-              账户名
-            </template>
-            小明
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-user-solid"></i>
-              昵称
-            </template>
-            小明
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-tickets"></i>
-              年龄
-            </template>
-            <el-tag size="small">23</el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-tickets"></i>
-              性别
-            </template>
-            <el-tag size="small">男</el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-tickets"></i>
-              邮箱Email
-            </template>
-            123123@qq.com
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template v-slot:label>
-              <i class="el-icon-office-building"></i>
-              联系地址
-            </template>
-            地球村
-          </el-descriptions-item>
-        </el-descriptions>
-      </div>
-   
+          <div style="margin: 20px;">
+            <el-descriptions class="margin-top" :column="3" border>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-user"></i>
+                  头像
+                </template>
+                <div>
+                  <el-image src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" style="width: 50px;height: 50px;"></el-image>
+                </div>
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-user"></i>
+                  账户名
+                </template>
+                小明
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-user-solid"></i>
+                  昵称
+                </template>
+                小明
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-tickets"></i>
+                  年龄
+                </template>
+                <el-tag size="small">23</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-tickets"></i>
+                  性别
+                </template>
+                <el-tag size="small">男</el-tag>
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-tickets"></i>
+                  邮箱Email
+                </template>
+                123123@qq.com
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template v-slot:label>
+                  <i class="el-icon-office-building"></i>
+                  联系地址
+                </template>
+                地球村
+              </el-descriptions-item>
+            </el-descriptions>
+          </div>
       
-       <el-dialog
-        title="修改信息"
-        v-model="someValue"
-        v-loading="loading"
-        width="50%"
-        :close-on-click-modal="true"
-        center>
-        <div>
-          <el-form status-icon
-                   :rules="rules"
-                   ref="form"
-                   :model="form"
-                   label-width="120px">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="头像：">
-                  <el-upload
-                    class="avatar-uploader"
-                    action=""
-                    ref="upload"
-                    :show-file-list="false"
-                    :auto-upload="false"
-                    :before-upload="beforeUpload"
-                    :on-change="handleChange"
-                    :on-remove="handleRemove"
-                  >
-                    <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="">
-                    <i v-else class="el-icon-plus avatar-uploader-icon" />
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="昵称" prop="nickname">
-                  <el-input v-model="form.nickname" placeholder="请输入昵称" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="性别" prop="gender">
-                  <el-radio-group v-model="form.gender">
-                    <el-radio label="0">保密</el-radio>
-                    <el-radio label="1">男</el-radio>
-                    <el-radio label="2">女</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="爱好" prop="hobby">
-                  <el-input v-model="form.hobby" placeholder="请输入爱好" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="职业" prop="job">
-                  <el-input v-model="form.job" placeholder="请输入职业" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="个人简介" prop="remark">
-                  <el-input type="textarea" resize="none" v-model="form.remark" placeholder="请输入个人简介" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <div style="text-align: center;">
-              <el-button type="primary" style="width: 100px;" @click="submitFun">提交</el-button>
-              <el-button type="primary" plain style="width: 100px;" @click="box=false">取消</el-button>
+          
+          <el-dialog
+            title="修改信息"
+            v-model="someValue"
+            v-loading="loading"
+            width="50%"
+            :close-on-click-modal="true"
+            center>
+            <div>
+              <el-form status-icon
+                      :rules="rules"
+                      ref="form"
+                      :model="form"
+                      label-width="120px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="头像：">
+                      <el-upload
+                        class="avatar-uploader"
+                        action=""
+                        ref="upload"
+                        :show-file-list="false"
+                        :auto-upload="false"
+                        :before-upload="beforeUpload"
+                        :on-change="handleChange"
+                        :on-remove="handleRemove"
+                      >
+                        <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="">
+                        <i v-else class="el-icon-plus avatar-uploader-icon" />
+                      </el-upload>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="昵称" prop="nickname">
+                      <el-input v-model="form.nickname" placeholder="请输入昵称" clearable>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="性别" prop="gender">
+                      <el-radio-group v-model="form.gender">
+                        <el-radio label="0">保密</el-radio>
+                        <el-radio label="1">男</el-radio>
+                        <el-radio label="2">女</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="爱好" prop="hobby">
+                      <el-input v-model="form.hobby" placeholder="请输入爱好" clearable>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="职业" prop="job">
+                      <el-input v-model="form.job" placeholder="请输入职业" clearable>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="个人简介" prop="remark">
+                      <el-input type="textarea" resize="none" v-model="form.remark" placeholder="请输入个人简介" clearable>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <div style="text-align: center;">
+                  <el-button type="primary" style="width: 100px;" @click="submitFun">提交</el-button>
+                  <el-button type="primary" plain style="width: 100px;" @click="box=false">取消</el-button>
+                </div>
+              </el-form>
             </div>
-          </el-form>
+          </el-dialog>
+      
         </div>
-      </el-dialog>
-   
     </div>
+      
   </template>
    
   <script>
+  
     export default {
       data() {
         return {
@@ -229,6 +234,7 @@
   </script>
    
   <style scoped>
+  
     .mhy-account-center-content {
       width: 700px;
       float: right;

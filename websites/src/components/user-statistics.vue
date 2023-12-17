@@ -1,88 +1,92 @@
 <template>
-    <div class="root-page-container">
-      <h1>???</h1>
-      <h2>   </h2>
-      <p>    </p>
-      <div class="mhy-main-page mhy-account-center">
-        <div class="mhy-layout">
-          <!--顶部头像栏-->
-          <div class="mhy-container mhy-account-center-header">
-            <div class="mhy-avatar mhy-account-center-header__avatar mhy-avatar__xxl">
-              <img src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" class="mhy-avatar__img">
-            </div>
-            <div class="mhy-account-center-user">
-              <div class="mhy-account-center-user__header">
-                <div class="mhy-account-center-user__title">
-                  <span class="mhy-account-center-user__name">helloworld</span>
-                  <!---->
-                  <img src="https://img-static.mihoyo.com/level/level1.png" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
-                  <!---->
-                </div>
-                <div class="mhy-account-center-header__buttons">
-                  <div class="mhy-button mhy-account-center-header__edit mhy-button-outlined mhy-button-md">
-                    <button class="mhy-button__button" @click="updateMyInfo">编辑</button>
-                  </div>
-                  <!---->
-                </div>
-              </div>
-              <div class="mhy-account-center-user__audit">
-                <span class="mhy-account-center-user__uid">用户ID:18888888</span>
-                <!---->
-              </div>
-              <div class="mhy-account-center-user__intro">
-                <p><i class="el-icon-tickets" style="color: #ad4e69;margin-right: 10px;font-size: 18px;"></i>一个有个性的签名~</p>
-              </div>
-              <div class="mhy-account-center-user__intro">
-                <p><i class="el-icon-location-information" style="color: #00c3ff;margin-right: 10px;font-size: 18px;"></i>IP属地:上海</p>
-              </div>
-              <div class="mhy-account-center-header__data">
-                <div class="mhy-account-center-header__data-item">
-                  <a class="mhy-router-link mhy-account-center-header__data-num mhy-account-center-header__data-link">5</a>
-                  <div class="mhy-account-center-header__data-label">粉丝</div>
-                </div>
-                <div class="mhy-account-center-header__data-item">
-                  <a class="mhy-router-link mhy-account-center-header__data-num mhy-account-center-header__data-link">
-                    10
-                  </a>
-                  <div class="mhy-account-center-header__data-label">关注</div>
-                </div>
-                <div class="mhy-account-center-header__data-item">
-                  <div class="mhy-account-center-header__data-num">233</div>
-                  <div class="mhy-account-center-header__data-label">获赞</div>
-                </div>
-              </div>
-            </div>
-          </div>
- 
-          <!--左侧菜单栏-->
-          <div class="mhy-container mhy-side-menu mhy-account-center__menu">
-            <header class="mhy-side-menu__header">个人中心</header>
-            <ul class="mhy-side-menu__list">
-              <li v-for="(item,index) in menus" :key="index" @click="selMenu(item)">
-                <a :class="'mhy-router-link mhy-side-menu__item '+ (activeIndex === item.path?'nuxt-link-active':'')">
-                  <i :class="item.icon" style="font-size: 18px;margin-right: 10px;"></i>
-                  <span>{{item.name}}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
- 
-          <!-- 右侧内容-->
-          <div class="mhy-container mhy-account-center-content">
-            <router-view></router-view>
-          </div>
- 
-        </div>
- 
+    <div>
+      <div class="logout-button">
+        <CustomButton @click="logOut" :buttonColor="'#e74c3c'" :rippleColor="'rgba(255, 255, 255, 0.7)'">退出登录</CustomButton>
       </div>
-    </div>
+        <div class="root-page-container">
+          <h1>???</h1>
+          <h2>   </h2>
+          <p>    </p>
+          <div class="mhy-main-page mhy-account-center">
+            <div class="mhy-layout">
+              <!--顶部头像栏-->
+              <div class="mhy-container mhy-account-center-header">
+                <div class="mhy-avatar mhy-account-center-header__avatar mhy-avatar__xxl">
+                  <img src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" class="mhy-avatar__img">
+                </div>
+                <div class="mhy-account-center-user">
+                  <div class="mhy-account-center-user__header">
+                    <div class="mhy-account-center-user__title">
+                      <span class="mhy-account-center-user__name">helloworld</span>
+                      <!---->
+                      <img src="https://img-static.mihoyo.com/level/level1.png" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
+                      <!---->
+                    </div>
+                    <div class="mhy-account-center-header__buttons">
+                      <div class="mhy-button mhy-account-center-header__edit mhy-button-outlined mhy-button-md">
+                        <button class="mhy-button__button" @click="updateMyInfo">编辑</button>
+                      </div>
+                      <!---->
+                    </div>
+                  </div>
+                  <div class="mhy-account-center-user__audit">
+                    <span class="mhy-account-center-user__uid">用户ID:18888888</span>
+                    <!---->
+                  </div>
+                  <div class="mhy-account-center-user__intro">
+                    <p><i class="el-icon-tickets" style="color: #ad4e69;margin-right: 10px;font-size: 18px;"></i>一个有个性的签名~</p>
+                  </div>
+                  <div class="mhy-account-center-user__intro">
+                    <p><i class="el-icon-location-information" style="color: #00c3ff;margin-right: 10px;font-size: 18px;"></i>IP属地:上海</p>
+                  </div>
+                  <div class="mhy-account-center-header__data">
+                    <div class="mhy-account-center-header__data-item">
+                      <a class="mhy-router-link mhy-account-center-header__data-num mhy-account-center-header__data-link">5</a>
+                      <div class="mhy-account-center-header__data-label">粉丝</div>
+                    </div>
+                    <div class="mhy-account-center-header__data-item">
+                      <a class="mhy-router-link mhy-account-center-header__data-num mhy-account-center-header__data-link">
+                        10
+                      </a>
+                      <div class="mhy-account-center-header__data-label">关注</div>
+                    </div>
+                    <div class="mhy-account-center-header__data-item">
+                      <div class="mhy-account-center-header__data-num">233</div>
+                      <div class="mhy-account-center-header__data-label">获赞</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
     
+              <!--左侧菜单栏-->
+              <div class="mhy-container mhy-side-menu mhy-account-center__menu">
+                <header class="mhy-side-menu__header">个人中心</header>
+                <ul class="mhy-side-menu__list">
+                  <li v-for="(item,index) in menus" :key="index" @click="selMenu(item)">
+                    <a :class="'mhy-router-link mhy-side-menu__item '+ (activeIndex === item.path?'nuxt-link-active':'')">
+                      <i :class="item.icon" style="font-size: 18px;margin-right: 10px;"></i>
+                      <span>{{item.name}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- 右侧内容-->
+              <div class="mhy-container mhy-account-center-content">
+                <router-view></router-view>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 </template>
  
 <script>
-
+  import CustomButton from './button-usecase.vue';
   export default {
     name: "user-statistics",
+     components: {
+        CustomButton,
+    },
     
     data() {
       return {
@@ -106,7 +110,12 @@
       },
       updateMyInfo(){
         this.$router.push({path: '/us/user-statistics/user_info'});
-      }
+      },
+      logOut() {
+         localStorage.removeItem('token');
+         alert('退出登录成功，跳转至登陆页面');
+         this.$router.push('/');
+      },
     }
   };
 </script>
@@ -122,6 +131,12 @@
 </script> -->
 
 <style scoped>
+  .logout-button {
+      position: absolute;
+      top: 90px; /* 调整为适当的距离 */
+      right: 100px; /* 调整为适当的距离 */
+      z-index: 1000;
+    }
   .root-page-container {
     background: url(https://www.miyoushe.com/_nuxt/img/background.cd0a312.png) no-repeat 0 62px;
     background-size: 100%;
