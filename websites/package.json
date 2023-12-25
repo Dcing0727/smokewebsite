@@ -13,6 +13,7 @@
     "element-plus": "^2.4.3",
     "highcharts": "^11.2.0",
     "highcharts-vue": "^1.4.3",
+    "jwt-decode": "^4.0.0",
     "vue": "^3.2.13",
     "vue-router": "^4.2.5"
   },

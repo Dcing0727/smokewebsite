@@ -2,6 +2,7 @@
 
 const User = require('../models/user'); // 假设你有一个 User 模型
 const bcrypt = require('bcryptjs');
+const DailyRecord = require('../models/DailyRecord');
 
 const registerUser = async (account, password) => {
   try {
@@ -55,8 +56,33 @@ const loginUser = async (account, password) => {
   }
 };
 
+const recordDaily = async (account, date, smokingType, smokingAmount, smokingExpenses) => {
+  try {
+    // 创建新戒烟记录
+    const newRecord = await DailyRecord.create({
+      account,
+      date,
+      smokingType,
+      smokingAmount,
+      smokingExpenses
+      // 其他用户信息字段...
+    });
+    return newRecord;
+  } catch (error) {
+    // 处理错误，比如用户名重复等
+    console.error('Error in recordDaily from userService.js:', error);
+    throw new Error('Error in recordDaily from userService.js:');
+  }
+};
+
+
+
+
+
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  recordDaily
   // 其他用户服务方法的导出
 };
