@@ -16,6 +16,7 @@ app.get('/api/auth/verify', userController.authenticateToken, (req, res) => {
   // 令牌验证成功，可以在 req.user 中获取用户信息
   res.status(200).json({ success: true, user: req.user });
 });
+app.post('/api/user/record', userController.record);
 
 app.get('/api/data', (req, res) => {
   // Handle the request and return data

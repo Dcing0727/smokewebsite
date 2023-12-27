@@ -17,6 +17,7 @@
 </template>
 
 <script>
+    import { jwtDecode } from 'jwt-decode';
     import Count from './smoking-count.vue';
     export default{
         components: {
@@ -51,6 +52,7 @@
                 tag: 0,
                 initCount: 0,
                 changedCount: 0,
+                expense: 0,
             };
         },
         methods: {
@@ -88,30 +90,85 @@
                     this.changedCount = newCount;
                 },
                 handleButtonClick(){     //计算函数
-                    if(this.tag == 0){
-                        this.brand = '利群';
-                    }else if (this.tag == 1) {
-                        this.brand = '红旗渠';
-                    }else if (this.tag == 2) {
-                        this.brand = '黄鹤楼';
-                    }else if (this.tag == 3) {
-                        this.brand = '云烟';
-                    }else if (this.tag == 4) {
-                        this.brand = '中华烟';
-                    }else if (this.tag == 5) {
-                        this.brand = '南京';
-                    }else if (this.tag == 6) {
-                        this.brand = '玉溪';
+                    // 假设 token 是你从 localStorage 中获取的 JWT
+                    const token = localStorage.getItem("token");
+                    // 解码 JWT
+                    //console.log(token)
+                    const decodedToken = jwtDecode(token);
+                    // 获取用户账号
+                    console.log(decodedToken)
+                    const userAccount = decodedToken.sub;
+                    // 现在，userAccount 包含了JWT负载中的用户账号信息
+                    console.log("用户账号：", userAccount);
+                    const today = new Date();
+                    const formattedDate = today.toISOString().split('T')[0];
+                    console.log(this.changedCount)
+                    console.log(this.tag)
+                    
+                 switch (this.tag) {
+                            case 0:
+                                this.expense = this.changedCount * 14;
+                                break;
+                            case 1:
+                                this.expense = this.changedCount * 10;
+                                break;
+                            case 2:
+                                this.expense = this.changedCount * 19;
+                                break;
+                            case 3:
+                                this.expense = this.changedCount * 23;
+                                break;
+                            case 4:
+                                this.expense = this.changedCount * 65;
+                                break;
+                            case 5:
+                                this.expense = this.changedCount * 16;
+                                break;
+                            case 6:
+                                this.expense = this.changedCount * 23;
+                                break;
+                            default:
+                                // 在没有匹配的情况下，设置一个默认值或引发错误
+                                this.expense = 0; // 也可以是其他默认值
+                                // 或者 throw new Error('Unexpected tag value: ' + this.tag);
                     }
-                    alert(this.changedCount+'根'+this.brand);
-            },
-        },  
-        mounted() {
+                    console.log('花销' + this.expense)
+
+                     fetch('http://localhost:3000/api/user/record', {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            account: userAccount,
+                            date:  formattedDate,
+                            smokingType: this.tag,
+                            smokingAmount: this.changedCount,
+                            smokingExpenses: this.expense,
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                    // 步骤4：处理注册响应
+                    if (data.success) {
+                    //console.log("注册成功");
+                        alert('记录成功')
+                        //关闭注册窗口
+                    } else {
+                        console.error("记录失败");
+                    }
+                    })
+                    .catch(error => {
+                        console.error("发生错误:", error);
+                    });
+                    },
+                },  
+                mounted() {
 
 
-        },
+                },
 
-    };
+            };
 </script>
 
 <style scoped>
