@@ -19,7 +19,7 @@ const mysql = new Sequelize('smoking_website', 'root', 'root', {
 });
 module.exports = mysql;
 
-
+测试连接是否成功
 (async () => {
     try {
         await mysql.authenticate();

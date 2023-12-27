@@ -189,7 +189,6 @@
           .then(data => {
           if (data.success) {
             const token = data.token;
-            localStorage.setItem('account', l_account); // 存储账户名
             localStorage.setItem('token', token);
             alert('登录成功,页面将跳转');
             this.$router.push('/statistics');

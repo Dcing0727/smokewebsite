@@ -54,18 +54,23 @@ const loginUser = async (account, password) => {
     throw error; // Ensure the error is propagated after handling
   }
 };
-const getUserByAccount = async (account) => {
+const getUserById = async (userId) => {
   try {
-      const user = await User.findOne({ where: { account } });
-      return user;
-  } catch (error) {
-      throw error;
-  }
+    const user = await User.findOne({
+        where: { account: account },
+        attributes: ['account', 'nickname', 'bio', 'hobby', 'gender', 'avatar'] // 确保包括需要的字段
+    });
+    if (!user) {
+        throw new Error('用户未找到');
+    }
+    return user;
+} catch (error) {
+    throw error;
+}
 };
-
 module.exports = {
   registerUser,
   loginUser,
-  getUserByAccount
+  getUserById
   // 其他用户服务方法的导出
 };

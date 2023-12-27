@@ -24,13 +24,13 @@ const User = sequelize.define('users', {
     type: DataTypes.STRING,  //用户头像
   },
   nickname: {
-    type: DataTypes.STRING,  //用户昵称
+    type: DataTypes.STRING,  
   },
   hobby: {
-    type: DataTypes.STRING, //用户爱好
+    type: DataTypes.STRING,
   },
   bio: {
-    type: DataTypes.TEXT,//用户简介
+    type: DataTypes.TEXT,
   },
 });
 

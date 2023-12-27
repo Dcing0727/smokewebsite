@@ -92,25 +92,26 @@ const login = async (req, res) => {
     });
   };
 
-  const getUserByAccount = async (req, res) => {
+  const getUserById = async (req, res) => {
     try {
-        const account = req.params.account;
-        const user = await userService.getUserByAccount(account);
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).send('User not found');
+        const userId = req.params.userId;
+        const user = await User.findByPk(userId); // Sequelize用于查找主键
+  
+        if (!user) {
+            return res.status(404).json({ message: '用户未找到' });
         }
+  
+        res.json(user);
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ message: '服务器错误' });
     }
-};
+  };
+
   
 module.exports = {
   register,
   login,
   authenticateToken,
-  getUserByAccount
 
   // 可以添加其他用户相关的控制器方法
 };

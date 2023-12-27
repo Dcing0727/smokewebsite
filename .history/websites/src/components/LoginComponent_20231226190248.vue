@@ -149,10 +149,14 @@
           .then(data => {
           // 步骤4：处理注册响应
           if (data.success) {
+            const token = data.token;
+            localStorage.setItem('token', token);
+            localStorage.setItem('account', l_account); // 存储账户名
           //console.log("注册成功");
             alert('注册成功')
             //关闭注册窗口
             this.closeBox();
+            this.$router.push('/user-statistics');
           } else {
             console.error("注册失败，请重试");
           }
@@ -189,7 +193,6 @@
           .then(data => {
           if (data.success) {
             const token = data.token;
-            localStorage.setItem('account', l_account); // 存储账户名
             localStorage.setItem('token', token);
             alert('登录成功,页面将跳转');
             this.$router.push('/statistics');

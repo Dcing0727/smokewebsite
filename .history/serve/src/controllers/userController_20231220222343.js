@@ -92,25 +92,10 @@ const login = async (req, res) => {
     });
   };
 
-  const getUserByAccount = async (req, res) => {
-    try {
-        const account = req.params.account;
-        const user = await userService.getUserByAccount(account);
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).send('User not found');
-        }
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-};
   
 module.exports = {
   register,
   login,
-  authenticateToken,
-  getUserByAccount
-
+  authenticateToken
   // 可以添加其他用户相关的控制器方法
 };

@@ -17,7 +17,7 @@
                 <div class="mhy-account-center-user">
                   <div class="mhy-account-center-user__header">
                     <div class="mhy-account-center-user__title">
-                      <span class="mhy-account-center-user__name">{{ userInfo.account }}</span>
+                      <span class="mhy-account-center-user__name">{{message.account}}</span>
                       <!---->
                       <img src="https://img-static.mihoyo.com/level/level1.png" class="mhy-img-icon mhy-account-center-user__level mhy-account-center-user__level--self">
                       <!---->
@@ -100,8 +100,8 @@
         ]
       };
     },
-    created(){
-      this.fetchUserData();
+    created() {
+        this.fetchUserData();
     },
     methods: {
       selMenu(item){
@@ -113,28 +113,25 @@
       },
       logOut() {
          localStorage.removeItem('token');
-         localStorage.removeItem('account');
          alert('退出登录成功，跳转至登陆页面');
          this.$router.push('/');
       },
-      fetchUserData() {
-      const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
-      this.userInfo.account = account;
-      axios.get(`http://localhost:3000/api/user/${account}`)
-        .then(response => {
-          this.userInfo = response.data;
-          console.log(this.userInfo);
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
-        });
-      }
     },
     mounted() {
       let that = this;
       setInterval(function(){//定位当前菜单
         that.activeIndex = that.$router.currentRoute.path;
       },300);
+      fetchUserData() {
+        axios.get('http://localhost:3000/api/data')
+        .then(response => {
+          this.message = response.data.message;
+          console.log(this.message)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+      }
     }
   };
 </script>

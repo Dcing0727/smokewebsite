@@ -100,8 +100,8 @@
         ]
       };
     },
-    created(){
-      this.fetchUserData();
+    created() {
+    this.fetchUserData();
     },
     methods: {
       selMenu(item){
@@ -119,7 +119,7 @@
       },
       fetchUserData() {
       const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
-      this.userInfo.account = account;
+      //this.userInfo.account = account;
       axios.get(`http://localhost:3000/api/user/${account}`)
         .then(response => {
           this.userInfo = response.data;
@@ -135,6 +135,14 @@
       setInterval(function(){//定位当前菜单
         that.activeIndex = that.$router.currentRoute.path;
       },300);
+      axios.get('http://localhost:3000/api/data')
+        .then(response => {
+          this.message = response.data.message;
+          console.log(this.message)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     }
   };
 </script>

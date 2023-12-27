@@ -54,18 +54,9 @@ const loginUser = async (account, password) => {
     throw error; // Ensure the error is propagated after handling
   }
 };
-const getUserByAccount = async (account) => {
-  try {
-      const user = await User.findOne({ where: { account } });
-      return user;
-  } catch (error) {
-      throw error;
-  }
-};
 
 module.exports = {
   registerUser,
-  loginUser,
-  getUserByAccount
+  loginUser
   // 其他用户服务方法的导出
 };

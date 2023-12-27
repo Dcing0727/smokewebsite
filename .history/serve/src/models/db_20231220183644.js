@@ -19,13 +19,13 @@ const mysql = new Sequelize('smoking_website', 'root', 'root', {
 });
 module.exports = mysql;
 
-
-(async () => {
-    try {
-        await mysql.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-})();   // 多一个括号表示调用方法
+// 测试连接是否成功
+// (async () => {
+//     try {
+//         await mysql.authenticate();
+//         console.log('Connection has been established successfully.');
+//     } catch (error) {
+//         console.error('Unable to connect to the database:', error);
+//     }
+// })();   // 多一个括号表示调用方法
 

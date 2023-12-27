@@ -54,18 +54,23 @@ const loginUser = async (account, password) => {
     throw error; // Ensure the error is propagated after handling
   }
 };
-const getUserByAccount = async (account) => {
+const getUserById = async (req, res) => {
   try {
-      const user = await User.findOne({ where: { account } });
-      return user;
+      const userId = req.params.userId;
+      const user = await User.findByPk(userId); // Sequelize用于查找主键
+
+      if (!user) {
+          return res.status(404).json({ message: '用户未找到' });
+      }
+
+      res.json(user);
   } catch (error) {
-      throw error;
+      res.status(500).json({ message: '服务器错误' });
   }
 };
-
 module.exports = {
   registerUser,
   loginUser,
-  getUserByAccount
+  getUserById
   // 其他用户服务方法的导出
 };
