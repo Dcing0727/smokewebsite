@@ -128,18 +128,18 @@
       const decodedToken = jwtDecode(token);
                     // 获取用户账号
       console.log(decodedToken)
-      const userId = decodedToken.sub;
+      const userAccount = decodedToken.sub;
                     // 现在，userAccount 包含了JWT负载中的用户账号信息
-      axios.get(`http://localhost:3000/api/user/id/${userId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-            .then(response => {
-                this.userInfo = response.data;
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-        }
+      console.log("用户账号：", userAccount);
+      axios.get(`http://localhost:3000/api/user/${userAccount}`)
+        .then(response => {
+          this.userInfo = response.data;
+          console.log(this.userInfo);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+      }
     },
     mounted() {
       let that = this;

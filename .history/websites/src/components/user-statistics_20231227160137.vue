@@ -119,27 +119,27 @@
          this.$router.push('/');
       },
       fetchUserData() {
-      // const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
-      // this.userInfo.account = account;
-      // 假设 token 是你从 localStorage 中获取的 JWT
+        // 假设 token 是你从 localStorage 中获取的 JWT
       const token = localStorage.getItem("token");
                     // 解码 JWT
                     //console.log(token)
       const decodedToken = jwtDecode(token);
                     // 获取用户账号
-      console.log(decodedToken)
-      const userId = decodedToken.sub;
+                    console.log(decodedToken)
+                    const userAccount = decodedToken.sub;
                     // 现在，userAccount 包含了JWT负载中的用户账号信息
-      axios.get(`http://localhost:3000/api/user/id/${userId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-            .then(response => {
-                this.userInfo = response.data;
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-        }
+                    console.log("用户账号：", userAccount);
+      const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
+      this.userInfo.account = account;
+      axios.get(`http://localhost:3000/api/user/${account}`)
+        .then(response => {
+          this.userInfo = response.data;
+          console.log(this.userInfo);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+      }
     },
     mounted() {
       let that = this;
