@@ -12,8 +12,7 @@
               <!--顶部头像栏-->
               <div class="mhy-container mhy-account-center-header">
                 <div class="mhy-avatar mhy-account-center-header__avatar mhy-avatar__xxl">
-                  <img v-if="userInfo.avatar" :src="userInfo.avatar" class="mhy-avatar__img">
-                  <img v-else src="https://t9.baidu.com/it/u=100131377,2569675271&fm=193" class="mhy-avatar__img">
+                  <img src="https://t9.baidu.com/it/u=100131377,2569675271&fm=193" class="mhy-avatar__img">
                 </div>
                 <div class="mhy-account-center-user">
                   <div class="mhy-account-center-user__header">

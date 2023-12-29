@@ -12,8 +12,7 @@
               <!--顶部头像栏-->
               <div class="mhy-container mhy-account-center-header">
                 <div class="mhy-avatar mhy-account-center-header__avatar mhy-avatar__xxl">
-                  <img v-if="userInfo.avatar" :src="userInfo.avatar" class="mhy-avatar__img">
-                  <img v-else src="https://t9.baidu.com/it/u=100131377,2569675271&fm=193" class="mhy-avatar__img">
+                  <img src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" class="mhy-avatar__img">
                 </div>
                 <div class="mhy-account-center-user">
                   <div class="mhy-account-center-user__header">
@@ -35,15 +34,18 @@
                     <!---->
                   </div>
                   <div class="mhy-account-center-user__intro">
+                    <p><i class="el-icon-tickets" style="color: #ad4e69;margin-right: 10px;font-size: 18px;"></i>一个有个性的签名~</p>
+                  </div>
+                  <div>
                  <!-- 当 userInfo.bio 存在且不为 null 时显示 -->
                     <p v-if="userInfo.bio">
                       <i class="el-icon-tickets" style="color: #ad4e69;margin-right: 10px;font-size: 18px;"></i>
-                      简介：{{ userInfo.bio }}
+                      {{ userInfo.bio }}
                     </p>
     <!-- 当 userInfo.bio 不存在或为 null 时显示 -->
                     <p v-else>
                       <i class="el-icon-tickets" style="color: #ad4e69;margin-right: 10px;font-size: 18px;"></i>
-                      简介：这里空空如也~
+                      这里空空如也
                     </p>
                   </div>
 
