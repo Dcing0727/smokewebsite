@@ -21,22 +21,22 @@
                   头像
                 </template>
                 <div>
-                  <!-- <el-image v-if="userInfo.avatar" :src="userInfo.avatar" class="mhy-avatar__img"> -->
+                  <el-image v-if="userInfo.avatar" :src="userInfo.avatar" class="mhy-avatar__img">
                 </div>
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-user"></i>
-                  账户名
+                  {{ userInfo.account }}
                 </template>
-                {{ userInfo.account }}
+                小明
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-user-solid"></i>
                   昵称
                 </template>
-                {{ userInfo.nickname }}
+                小明
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>

@@ -21,7 +21,7 @@
                   头像
                 </template>
                 <div>
-                  <!-- <el-image v-if="userInfo.avatar" :src="userInfo.avatar" class="mhy-avatar__img"> -->
+                  <el-image src="https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg" style="width: 50px;height: 50px;"></el-image>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item>
@@ -29,14 +29,14 @@
                   <i class="el-icon-user"></i>
                   账户名
                 </template>
-                {{ userInfo.account }}
+                小明
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-user-solid"></i>
                   昵称
                 </template>
-                {{ userInfo.nickname }}
+                小明
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
@@ -229,12 +229,12 @@
         this.form.gender = this.form.gender + '';
         console.info(this.form);
         this.box = true;
-      },
+        },
 
-      submitFun() {//提交
-        console.info(this.form);
-      },
-      fetchUserData() {
+        submitFun(){//提交
+          console.info(this.form);
+        },
+        fetchUserData() {
         // const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
         // this.userInfo.account = account;
         // 假设 token 是你从 localStorage 中获取的 JWT
