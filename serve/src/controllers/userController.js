@@ -3,6 +3,8 @@ const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');  
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+const User = require('../models/user'); // 假设你有一个 User 模型
+const DailyRecord = require('../models/DailyRecord');
 //JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
 //常用于身份验证和信息传递。
 const secretKey = 'yourSecretKey';    //后期考虑加密处理
@@ -101,30 +103,84 @@ const login = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+// error: 用户在一天内只能吸一种烟
+// const record = async (req, res) => {
+//   try {
+//     // 从请求中获取用户提供的注册信息
+//     const { account, date, smokingType, smokingAmount, smokingExpenses} = req.body;
   
+//     const newRecord = await userService.recordDaily(account, date, smokingType, smokingAmount, smokingExpenses);  
+//     // 返回成功响应
+//     res.status(201).json({
+//       success: true,
+//       message: 'User record successfully',
+//       user: newRecord,
+//     });
+//   } catch (error) {
+//     // 处理错误情况，返回适当的错误响应
+//     console.error(error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'record failed',
+//       error: error.message,
+//     });
+//   }
+// };
+
 const record = async (req, res) => {
   try {
     // 从请求中获取用户提供的注册信息
-    const { account, date, smokingType, smokingAmount, smokingExpenses} = req.body;
-  
-    // 对用户明文密码进行哈希处理
-    const newRecord = await userService.recordDaily(account, date, smokingType, smokingAmount, smokingExpenses);  
-    // 返回成功响应
-    res.status(201).json({
-      success: true,
-      message: 'User record successfully',
-      user: newRecord,
+    const { account, date, smokingType, smokingAmount, smokingExpenses } = req.body;
+
+    // 查询是否存在具有相同 date 和 smokingType 的记录
+    const existingRecord = await DailyRecord.findOne({
+      where: { account, date, smokingType },
     });
+    // 转为整型变量
+    const smokingAmountInteger = parseInt(smokingAmount, 10); 
+    if (existingRecord) {
+      // 如果记录已存在，将新记录的 smokingAmount 和 smokingExpenses 添加到旧记录中
+      existingRecord.smokingAmount += smokingAmountInteger;
+      existingRecord.smokingExpenses += smokingExpenses;
+      // 保存更新后的记录
+      await existingRecord.save();
+      // 返回成功响应
+      return res.status(201).json({
+        success: true,
+        message: 'User record successfully',
+        user: existingRecord,
+      });
+    } else {
+      // 如果记录不存在，创建新记录
+      // 返回成功响应
+      const newRecord = await DailyRecord.create({
+        account,
+        date,
+        smokingType,
+        smokingAmount,
+        smokingExpenses,
+      });
+
+      res.status(201).json({
+        success: true,
+        message: 'User record successfully',
+        record: newRecord,
+      });
+    }
   } catch (error) {
     // 处理错误情况，返回适当的错误响应
     console.error(error);
     res.status(500).json({
       success: false,
-      message: 'record failed',
+      message: 'Record failed',
       error: error.message,
     });
   }
 };
+
+
+
 const getUserById = async (req, res) => {
   try {
       const userId = req.params.userId; // 或从令牌中获取ID

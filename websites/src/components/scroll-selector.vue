@@ -133,6 +133,7 @@
                                 // 或者 throw new Error('Unexpected tag value: ' + this.tag);
                     }
                     console.log('花销' + this.expense)
+                    console.log(formattedDate)
 
                      fetch('http://localhost:3000/api/user/record', {
                         method: 'POST',

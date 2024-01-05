@@ -56,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
       alert('token为空请登录');
     } else {
       // 已经验证过，继续导航
-      alert('已经验证过token，继续导航');
+      //alert('已经验证过token，继续导航');
       next();
     }
   } else {

@@ -1,6 +1,6 @@
 // services/userService.js
 
-const User = require('../models/user'); // 假设你有一个 User 模型
+const User = require('../models/user'); 
 const bcrypt = require('bcryptjs');
 const DailyRecord = require('../models/DailyRecord');
 
