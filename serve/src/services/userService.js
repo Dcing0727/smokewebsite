@@ -3,6 +3,7 @@
 const User = require('../models/user'); 
 const bcrypt = require('bcryptjs');
 const DailyRecord = require('../models/DailyRecord');
+const { Sequelize } = require('sequelize'); 
 
 const registerUser = async (account, password) => {
   try {
@@ -95,6 +96,118 @@ const getUserById = async (userId) => {
 };
 
 
+function getRecentFourWeeks() {
+  const today = new Date();
+  const recentFourWeeks = [];
+  for (let i = 0; i < 4; i++) {
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - (i * 7 + today.getDay())); // Start from Sunday of each week
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 6); // End on Saturday of each week
+
+    recentFourWeeks.push({
+      startDate: startDate.toISOString().split('T')[0], // 格式 'YYYY-MM-DD'
+      endDate: endDate.toISOString().split('T')[0],
+    });
+  }
+
+  return recentFourWeeks;
+}
+// const getWeeklyAmount = async (account, weekId) => {
+//   const recentFourWeeks = getRecentFourWeeks();
+//   const startDateOfRecentWeek = recentFourWeeks[weekId - 1].startDate;
+//   const endDateOfRecentWeek = recentFourWeeks[weekId - 1].endDate;
+
+//   try {
+//     const dailyAmounts = await DailyRecord.findAll({
+//       attributes: [
+//         'date',
+//         [Sequelize.fn('SUM', Sequelize.col('smokingAmount')), 'totalSmokingAmount'],
+//       ],
+//       where: {
+//         account: account,
+//         date: {
+//           [Sequelize.Op.between]: [startDateOfRecentWeek, endDateOfRecentWeek],
+//         },
+//       },
+//       group: ['date'],
+//       raw: true, // Make sure to get raw data
+//     }) || 0;
+
+//     const dailyAmountsList = dailyAmounts.map((entry) => entry.totalSmokingAmount);
+    
+//     return dailyAmountsList || [];
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+const getWeeklyAmount = async (account, weekId) => {
+  const recentFourWeeks = getRecentFourWeeks();
+  const startDateOfRecentWeek = recentFourWeeks[weekId - 1].startDate;
+  const endDateOfRecentWeek = recentFourWeeks[weekId - 1].endDate;
+
+  try {
+    const dailyAmounts = await DailyRecord.findAll({
+      attributes: [
+        'date',
+        [Sequelize.fn('SUM', Sequelize.col('smokingAmount')), 'totalSmokingAmount'],
+      ],
+      where: {
+        account: account,
+        date: {
+          [Sequelize.Op.between]: [startDateOfRecentWeek, endDateOfRecentWeek],
+        },
+      },
+      group: ['date'],
+      raw: true, 
+    }) || [];
+
+    const dailyAmountsList = getWeeklyAmountList(dailyAmounts, recentFourWeeks[weekId - 1]);
+
+    return dailyAmountsList;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getWeeklyAmountList = (dailyAmounts, week) => {
+  const daysInWeek = getDaysInWeek(week.startDate, week.endDate);
+  const dailyAmountsList = [];
+
+  for (const day of daysInWeek) {
+    const foundEntry = dailyAmounts.find((entry) => entry.date === day);
+
+    if (foundEntry) {
+      dailyAmountsList.push(foundEntry.totalSmokingAmount);
+    } else {
+      dailyAmountsList.push(0);
+    }
+  }
+
+  // 转换数组中的所有值为整数类型
+  const dailyAmountsListInt = dailyAmountsList.map(value => parseInt(value, 10));
+
+  return dailyAmountsListInt;
+};
+
+
+const getDaysInWeek = (startDate, endDate) => {
+  const daysInWeek = [];
+  let currentDate = new Date(startDate);
+  const finalDate = new Date(endDate); // 转换endDate为Date对象
+
+  while (currentDate <= finalDate) {
+    daysInWeek.push(currentDate.toISOString().split('T')[0]);
+    currentDate = new Date(currentDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return daysInWeek;
+};
+
+
+
 
 
 
@@ -104,6 +217,7 @@ module.exports = {
   loginUser,
   getUserByAccount,
   getUserById,
-  recordDaily
+  recordDaily,
+  getWeeklyAmount
   // 其他用户服务方法的导出
 };

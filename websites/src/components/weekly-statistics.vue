@@ -13,7 +13,7 @@
 <script>
 import Side from './side-bar.vue';
 import Drag from './Drop-downMenu';
-
+import { jwtDecode } from 'jwt-decode';
 export default {
   components: {
     Side,
@@ -34,22 +34,60 @@ export default {
     };
   },
   mounted() {
-    this.selectWeek("第四周");
+    this.selectWeek("第一周");
   },
   methods: {
+    // 接口
+     
     selectWeek(item) {
-       console.log(item) 
+
+      // 获取用户Account
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      const userAccount = decodedToken.sub;
+      var weekId = 4;
+
         if (item === '第一周') {
-          this.select = this.dataSet.data1;
+          //this.select = this.dataSet.data1;
+          weekId = 1;
         } else if (item === '第二周') {
-          this.select = this.dataSet.data2;
+          //this.select = this.dataSet.data2;
+          weekId = 2;
         } else if (item === '第三周') {
-          this.select = this.dataSet.data3;
+          //this.select = this.dataSet.data3;
+          weekId = 3;
         } else if (item === '第四周') {
-          this.select = this.dataSet.data4;
+          //this.select = this.dataSet.data4;
+          weekId = 4;
         }
-        this.getChart(item);
-        return this.select;
+        fetch('http://localhost:3000/api/user/weekly', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+             account: userAccount,
+             weekId: weekId             
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+ 
+            if (data.success) {
+              console.log(data.weeklySum)
+              this.select = data.weeklySum;
+              this.getChart(item);
+              return this.select;     // 返回数据库中记录
+            } else {
+              console.log(data.error);
+               console.error("失败");
+            }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
+
+        
     },
     getChart(item) {
       var template = {
@@ -57,7 +95,7 @@ export default {
           text: item  + "每周吸烟量",
         },
         xAxis: {
-          categories:["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          categories:["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
           labels: {
             style: {
               color: '#333', // x轴标签颜色

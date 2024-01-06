@@ -179,6 +179,26 @@ const record = async (req, res) => {
   }
 };
 
+const weeklyAmount = async (req, res) =>{
+  try {
+    const { account, weekId } = req.body;
+    // 返回一周内烟量
+    const weeklySum = await userService.getWeeklyAmount(account, weekId);
+
+    res.status(200).json({
+      success: true,
+      weekId: weekId,
+      weeklySum: weeklySum
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    });
+  }
+};
+
 
 
 const getUserById = async (req, res) => {
@@ -197,6 +217,7 @@ module.exports = {
   authenticateToken,
   getUserByAccount,
   getUserById,
-  record
-  // 可以添加其他用户相关的控制器方法
+  record,
+  weeklyAmount,   // 统计周烟量
+ 
 };

@@ -150,11 +150,8 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                    // 步骤4：处理注册响应
                     if (data.success) {
-                    //console.log("注册成功");
                         alert('记录成功')
-                        //关闭注册窗口
                     } else {
                         console.error("记录失败");
                     }
