@@ -6,7 +6,7 @@ const sequelize = require('./db');
 const User = require('./user');
 
 
-//可能存在冗余较多,暂不设置主键
+// account与smokingType联合主键
 const DailyRecord = sequelize.define('daily_record', {
   account: {
     type: DataTypes.INTEGER,
@@ -26,7 +26,7 @@ const DailyRecord = sequelize.define('daily_record', {
     defaultValue: 0,
   },
   smokingExpenses: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
     defaultValue: 0,
   },
@@ -58,4 +58,3 @@ module.exports = DailyRecord;
 // 	console.log('成功');
 // 	process.exit() // 成功之后退出，否则会一直在后台运行
 // }) //执行并写入数据库，force是如果数据库中有user表，则删除，重新写入数据。
-//force最好不写，容易报错 表不存在

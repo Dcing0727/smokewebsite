@@ -137,11 +137,11 @@ const record = async (req, res) => {
     const existingRecord = await DailyRecord.findOne({
       where: { account, date, smokingType },
     });
-    // 转为整型变量
-    const smokingAmountInteger = parseInt(smokingAmount, 10); 
+    // 转为浮点型变量
+    const smokingAmountFloat = parseFloat(smokingAmount); 
     if (existingRecord) {
       // 如果记录已存在，将新记录的 smokingAmount 和 smokingExpenses 添加到旧记录中
-      existingRecord.smokingAmount += smokingAmountInteger;
+      existingRecord.smokingAmount += smokingAmountFloat;
       existingRecord.smokingExpenses += smokingExpenses;
       // 保存更新后的记录
       await existingRecord.save();

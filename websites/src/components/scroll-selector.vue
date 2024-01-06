@@ -107,25 +107,25 @@
                     
                  switch (this.tag) {
                             case 0:
-                                this.expense = this.changedCount * 14;
+                                this.expense = this.changedCount * 0.7;
                                 break;
                             case 1:
-                                this.expense = this.changedCount * 10;
+                                this.expense = this.changedCount * 0.5;
                                 break;
                             case 2:
-                                this.expense = this.changedCount * 19;
+                                this.expense = this.changedCount * 0.95;
                                 break;
                             case 3:
-                                this.expense = this.changedCount * 23;
+                                this.expense = this.changedCount * 1.15;
                                 break;
                             case 4:
-                                this.expense = this.changedCount * 65;
+                                this.expense = this.changedCount * 3.25;
                                 break;
                             case 5:
-                                this.expense = this.changedCount * 16;
+                                this.expense = this.changedCount * 0.8;
                                 break;
                             case 6:
-                                this.expense = this.changedCount * 23;
+                                this.expense = this.changedCount * 1.15;
                                 break;
                             default:
                                 // 在没有匹配的情况下，设置一个默认值或引发错误
