@@ -101,7 +101,7 @@
                     // 现在，userAccount 包含了JWT负载中的用户账号信息
                     console.log("用户账号：", userAccount);
                     const today = new Date();
-                    const formattedDate = today.toISOString().split('T')[0];
+                    const formattedDate = today.toLocaleDateString(); // Get local date in 'YYYY-MM-DD' format
                     console.log(this.changedCount)
                     console.log(this.tag)
                     

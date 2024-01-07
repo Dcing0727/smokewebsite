@@ -36,7 +36,6 @@ const register = async (req, res) => {
   }
 };
 
-
 //登录模块
 const login = async (req, res) => {
     try {
@@ -103,30 +102,6 @@ const login = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
-
-// error: 用户在一天内只能吸一种烟
-// const record = async (req, res) => {
-//   try {
-//     // 从请求中获取用户提供的注册信息
-//     const { account, date, smokingType, smokingAmount, smokingExpenses} = req.body;
-  
-//     const newRecord = await userService.recordDaily(account, date, smokingType, smokingAmount, smokingExpenses);  
-//     // 返回成功响应
-//     res.status(201).json({
-//       success: true,
-//       message: 'User record successfully',
-//       user: newRecord,
-//     });
-//   } catch (error) {
-//     // 处理错误情况，返回适当的错误响应
-//     console.error(error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'record failed',
-//       error: error.message,
-//     });
-//   }
-// };
 
 const record = async (req, res) => {
   try {

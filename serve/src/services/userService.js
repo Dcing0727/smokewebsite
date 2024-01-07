@@ -56,6 +56,7 @@ const loginUser = async (account, password) => {
     throw error; // Ensure the error is propagated after handling
   }
 };
+
 const getUserByAccount = async (account) => {
   try {
       const user = await User.findOne({ where: { account } });
@@ -83,6 +84,7 @@ const recordDaily = async (account, date, smokingType, smokingAmount, smokingExp
     throw new Error('Error in recordDaily from userService.js:');
   }
 };
+
 const getUserById = async (userId) => {
   try {
       const user = await User.findByPk(userId);
@@ -95,52 +97,56 @@ const getUserById = async (userId) => {
   }
 };
 
+// function getRecentFourWeeks() {
+//   //const today = new Date();
+//   const date = new Date();
+//   const today = date.toLocaleDateString();
+//   const recentFourWeeks = [];
 
+//   for (let i = 0; i < 4; i++) {
+//     const startDate = new Date(today);
+//     startDate.setDate(today.getDate() - (i * 7 + today.getDay())); // Start from Sunday of each week
+
+//     const endDate = new Date(startDate);
+//     endDate.setDate(startDate.getDate() + 6); // End on Saturday of each week
+
+//     recentFourWeeks.push({
+//       startDate: startDate.toISOString().split('T')[0], // Format as 'YYYY-MM-DD'
+//       endDate: endDate.toISOString().split('T')[0],
+//     });
+//   }
+
+//   return recentFourWeeks.reverse();  // Reverse the order to have Sunday to Saturday
+// }
 function getRecentFourWeeks() {
-  const today = new Date();
+  const formattedDate = new Date();
+  const year = formattedDate.getFullYear();
+  const month = String(formattedDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(formattedDate.getDate()).padStart(2, '0');
+
+  const date = `${year}-${month}-${day}`;
+  const today = new Date(date)
+    
+  // 测试接口
+  //const today = new Date(specificDate)
   const recentFourWeeks = [];
+
   for (let i = 0; i < 4; i++) {
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - (i * 7 + today.getDay())); // Start from Sunday of each week
+
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 6); // End on Saturday of each week
 
     recentFourWeeks.push({
-      startDate: startDate.toISOString().split('T')[0], // 格式 'YYYY-MM-DD'
+      startDate: startDate.toISOString().split('T')[0], // Format as 'YYYY-MM-DD'
       endDate: endDate.toISOString().split('T')[0],
     });
   }
 
-  return recentFourWeeks;
+  return recentFourWeeks.reverse();  // Reverse the order to have Sunday to Saturday
 }
-// const getWeeklyAmount = async (account, weekId) => {
-//   const recentFourWeeks = getRecentFourWeeks();
-//   const startDateOfRecentWeek = recentFourWeeks[weekId - 1].startDate;
-//   const endDateOfRecentWeek = recentFourWeeks[weekId - 1].endDate;
 
-//   try {
-//     const dailyAmounts = await DailyRecord.findAll({
-//       attributes: [
-//         'date',
-//         [Sequelize.fn('SUM', Sequelize.col('smokingAmount')), 'totalSmokingAmount'],
-//       ],
-//       where: {
-//         account: account,
-//         date: {
-//           [Sequelize.Op.between]: [startDateOfRecentWeek, endDateOfRecentWeek],
-//         },
-//       },
-//       group: ['date'],
-//       raw: true, // Make sure to get raw data
-//     }) || 0;
-
-//     const dailyAmountsList = dailyAmounts.map((entry) => entry.totalSmokingAmount);
-    
-//     return dailyAmountsList || [];
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 const getWeeklyAmount = async (account, weekId) => {
   const recentFourWeeks = getRecentFourWeeks();
@@ -207,10 +213,10 @@ const getDaysInWeek = (startDate, endDate) => {
 };
 
 
-
-
-
-
+// 单元测试代码
+// const specificDate = new Date('2024-12-08'); 
+// const result = getRecentFourWeeks(specificDate);
+// console.log(result);
 
 module.exports = {
   registerUser,

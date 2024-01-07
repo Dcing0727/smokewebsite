@@ -11,14 +11,17 @@ const DailyRecord = sequelize.define('daily_record', {
   account: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    primaryKey: false,
   },
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
+    primaryKey: false,
   },
   smokingType: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    primaryKey: false,
   },
   smokingAmount: {
     type: DataTypes.INTEGER,
@@ -38,18 +41,18 @@ const DailyRecord = sequelize.define('daily_record', {
   indexes: [
     {
       unique: true,
-      fields: ['account', 'smokingType'],
+      fields: ['account', 'date', 'smokingType'],
     },
   ],
-});
+}
+
+);
 
 // 在 User 和 DailyRecord 之间建立外键关系
 // 在 User 模型中
 User.hasMany(DailyRecord, { foreignKey: 'account', sourceKey: 'id' });
 // 在 DailyRecord 模型中
 DailyRecord.belongsTo(User, { foreignKey: 'account', targetKey: 'id' });
-
-
 module.exports = DailyRecord;
 
 

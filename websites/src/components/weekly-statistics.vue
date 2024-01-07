@@ -34,7 +34,7 @@ export default {
     };
   },
   mounted() {
-    this.selectWeek("第一周");
+    this.selectWeek("第四周");
   },
   methods: {
     // 接口
