@@ -5,6 +5,7 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user'); // 假设你有一个 User 模型
 const DailyRecord = require('../models/DailyRecord');
+const res = require('express/lib/response');
 //JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
 //常用于身份验证和信息传递。
 const secretKey = 'yourSecretKey';    //后期考虑加密处理
@@ -174,6 +175,26 @@ const weeklyAmount = async (req, res) =>{
   }
 };
 
+const monthlyAmount = async (req, res) =>{
+  try {
+    const { account, yearId } = req.body;
+    const monthlySum = await userService.getMonthlyAmount(account, yearId);
+
+    res.status(200).json({
+      success: true,
+      yearId: yearId,
+      monthlySum: monthlySum
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+  }
+};
+
 
 
 const getUserById = async (req, res) => {
@@ -194,5 +215,6 @@ module.exports = {
   getUserById,
   record,
   weeklyAmount,   // 统计周烟量
+  monthlyAmount
  
 };

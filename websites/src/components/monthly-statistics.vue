@@ -12,7 +12,7 @@
 <script>
 import Side from './side-bar.vue';
 import Drag from './Drop-downMenu.vue';
-
+import { jwtDecode } from 'jwt-decode';
 export default {
   components: {
     Side,
@@ -39,21 +39,51 @@ export default {
   methods: {
     // 选中年份
     selectYear(item) {
+          // 获取用户Account
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      const userAccount = decodedToken.sub;
+      var yearId = 5;
       // 处理来自子组件的点击事件
       console.log(item)
       if (item === '第一年统计') {
-        this.select = this.dataSet.data1;
+        yearId = 1;
       } else if (item === '第二年统计') {
-        this.select = this.dataSet.data2;
+        yearId = 2;
       } else if (item === '第三年统计') {
-        this.select = this.dataSet.data3;
+        yearId = 3;
       } else if (item === '第四年统计') {
-        this.select = this.dataSet.data4;
+        yearId = 4;
       } else if (item === '第五年统计') {
-        this.select = this.dataSet.data5;
+        yearId = 5;
       }
-       this.getChart(item);
-       return this.select;
+      fetch('http://localhost:3000/api/user/monthly', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+             account: userAccount,
+             yearId: yearId             
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+ 
+            if (data.success) {
+              console.log('monthlySum:');
+              console.log(data.monthlySum);
+              this.select = data.monthlySum;
+              this.getChart(item);
+              return this.select;     // 返回数据库中记录
+            } else {
+              console.log(data.error);
+              console.error("失败");
+            }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
     },
     getChart(item) {
       var template = {

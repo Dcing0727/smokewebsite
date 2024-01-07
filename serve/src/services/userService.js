@@ -212,6 +212,145 @@ const getDaysInWeek = (startDate, endDate) => {
   return daysInWeek;
 };
 
+// 月统计代码
+// 获取最近五年内每月的起始和结束日期
+const getRecentFiveYearsMonths = () => {
+  const today = new Date();
+  const recentFiveYearsMonths = [];
+
+  for (let i = 0; i < 5; i++) {
+    const year = today.getFullYear() - i;
+
+    for (let month = 1; month <= 12; month++) {
+      const startDate = new Date(year, month-1, 1);
+      const endDate = new Date(year, month, 0);
+
+      recentFiveYearsMonths.push({
+        startMonth: startDate.toISOString().split('T')[0], // Format 'YYYY-MM-DD'
+        endMonth: endDate.toISOString().split('T')[0],
+      });
+    }
+  }
+
+  return recentFiveYearsMonths.sort((a, b) => {
+    return a.startMonth.localeCompare(b.startMonth);
+  });
+};
+
+
+// 获取指定年份的每月起始日期
+const getMonthsInYear = (yearObject) => {
+  console.log('Start Month in getMonthsInYear:', yearObject.startMonth);
+
+  const monthsInYear = [];
+
+  console.log('Year Object in getMonthsInYear:', yearObject);
+
+  for (let month = 0; month < 12; month++) {
+    const startDate = new Date(yearObject.startMonth);
+
+    console.log('Month:', month + 1);
+    console.log('Start Date:', startDate);
+
+    const newDate = new Date(
+      yearObject.startMonth && yearObject.startMonth.getFullYear(),
+      (yearObject.startMonth && yearObject.startMonth.getMonth()) + month,
+      1
+    );
+
+    console.log('New Date:', newDate);
+
+    if (!isNaN(newDate.getTime())) {
+      const formattedDate = `${newDate.getFullYear()}-${(newDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
+      monthsInYear.push(formattedDate);
+    } else {
+      console.error('Invalid date:', newDate);
+    }
+  }
+
+  return monthsInYear;
+};
+
+
+
+
+// 获取每月吸烟量列表
+// 获取每月吸烟量列表
+const getMonthlyAmount = async (account, yearId) => {
+  const recentFiveYears = getRecentFiveYearsMonths();
+
+  // 确保 yearId 在有效范围内
+  if (yearId < 1 || yearId > 5) {
+    throw new Error("Invalid yearId");
+  }
+
+  // 获取指定年份的记录
+  const startIndex = (yearId - 1) * 12;
+  const endIndex = startIndex + 11;
+  const yearObjects = recentFiveYears.slice(startIndex, endIndex + 1);
+
+  try {
+    const monthlyAmountsList = [];
+
+    // 遍历 yearObjects，对每个记录进行查询并相加
+    for (const yearObject of yearObjects) {
+      const monthlyAmount = await DailyRecord.findOne({
+        attributes: [
+          [Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m-01'), 'formattedDate'], // Use formatted date in SELECT
+          [Sequelize.fn('SUM', Sequelize.col('smokingAmount')), 'totalSmokingAmount'],
+        ],
+        where: {
+          account: account,
+          date: {
+            [Sequelize.Op.between]: [yearObject.startMonth, yearObject.endMonth],
+          },
+        },
+        group: [Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m-01')], // Group by the formatted date
+        raw: true,
+      });
+
+      // 将每月的吸烟量添加到列表中，并转换为整数
+      monthlyAmountsList.push(monthlyAmount ? parseInt(monthlyAmount.totalSmokingAmount) : 0);
+    }
+
+    return monthlyAmountsList;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+
+const getMonthlyAmountList = (dailyAmounts, yearObjects) => {
+  // 初始化月统计列表，全部置为0
+  const monthlyAmountsList = Array.from({ length: 12 }, () => 0);
+
+  // 遍历数据库中的结果，将统计结果放到对应的月份位置
+  for (const dailyAmount of dailyAmounts) {
+    const monthIndex = findMonthIndex(yearObjects, dailyAmount.date);
+    if (monthIndex !== -1) {
+      monthlyAmountsList[monthIndex] = dailyAmount.totalSmokingAmount;
+    }
+  }
+
+  return monthlyAmountsList;
+};
+
+const findMonthIndex = (yearObjects, date) => {
+  // 根据日期查找在yearObjects中的索引
+  const index = yearObjects.findIndex(obj => obj.startMonth === date);
+  return index;
+};
+
+
+
+
+
+// const recentMonths = getMonthlyAmount(1, 5);
+// console.log(recentMonths);
+
+//console.log(getRecentFiveYearsMonths());
 
 // 单元测试代码
 // const specificDate = new Date('2024-12-08'); 
@@ -224,6 +363,7 @@ module.exports = {
   getUserByAccount,
   getUserById,
   recordDaily,
-  getWeeklyAmount
+  getWeeklyAmount,
+  getMonthlyAmount
   // 其他用户服务方法的导出
 };
