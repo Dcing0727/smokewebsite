@@ -12,6 +12,8 @@ app.post('/api/user/login', userController.login);    // 登录
 app.get('/api/user/id/:userId', userController.getUserById); // 新增路由
 app.post('/api/user/weekly', userController.weeklyAmount);
 app.post('/api/user/monthly', userController.monthlyAmount);
+app.post('/api/user/yearly', userController.yearlyAmount);
+
 // 服务器端代码示例
 app.get('/api/user/:account', userController.getUserByAccount);
 app.get('/api/auth/verify', userController.authenticateToken, (req, res) => {

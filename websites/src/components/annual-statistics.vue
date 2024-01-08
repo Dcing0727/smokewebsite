@@ -10,6 +10,7 @@
 
 <script>
 import Side from './side-bar.vue';
+import { jwtDecode } from 'jwt-decode';
 
 export default {
   components: {
@@ -21,16 +22,56 @@ export default {
     };
   },
   mounted() {
-    this.getChart();
+    this.show();
   },
   methods: {
-    getChart() {
+    show() {
+      // 获取用户Account
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      const userAccount = decodedToken.sub;
+
+       fetch('http://localhost:3000/api/user/yearly', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+             account: userAccount,         
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+ 
+            if (data.success) {
+
+              console.log(data.yearlySum)
+              //this.select = data.yearlySum;
+              this.getChart(data.yearlySum);
+            } else {
+              console.log(data.error);
+               console.error("失败");
+            }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
+
+      
+    },
+    getChart(yearlySum) {
       var template = {
         title: {
           text: "每年吸烟量",
         },
         xAxis: {
-          categories: ["2018", "2019", "2020", "2021", "2022"],
+          categories: [
+            yearlySum[4].year, 
+            yearlySum[3].year,
+            yearlySum[2].year, 
+            yearlySum[1].year, 
+            yearlySum[0].year
+            ],
           labels: {
             style: {
               color: '#333', // x轴标签颜色
@@ -72,12 +113,19 @@ export default {
           {
             type: 'bar',
             name: "根数",
+            // data: [
+            //   {y: 1680, color: '#d35400'},
+            //   {y: 1700, color: '#3498db'},
+            //   {y: 1450, color: '#2ecc71'},
+            //   {y: 1456, color: '#e74c3c'},
+            //   {y: 2000, color: '#f39c12'},
+            // ],
             data: [
-              {y: 1680, color: '#d35400'},
-              {y: 1700, color: '#3498db'},
-              {y: 1450, color: '#2ecc71'},
-              {y: 1456, color: '#e74c3c'},
-              {y: 2000, color: '#f39c12'},
+              {y:yearlySum[4].totalSmokingAmount, color: '#d35400'},
+              {y:yearlySum[3].totalSmokingAmount, color: '#3498db'},
+              {y:yearlySum[2].totalSmokingAmount, color: '#2ecc71'},
+              {y:yearlySum[1].totalSmokingAmount, color: '#e74c3c'},
+              {y:yearlySum[0].totalSmokingAmount, color: '#f39c12'},
             ],
           },
         ],

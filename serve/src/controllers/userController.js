@@ -195,6 +195,24 @@ const monthlyAmount = async (req, res) =>{
   }
 };
 
+const yearlyAmount = async (req, res) => {
+  try {
+    const account = req.body.account;
+    const yearlySum = await userService.getYearlyAmount(account);
+
+    res.status(200).json({
+      success: true,
+      yearlySum: yearlySum
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+  }
+};
+
 
 
 const getUserById = async (req, res) => {
@@ -215,6 +233,6 @@ module.exports = {
   getUserById,
   record,
   weeklyAmount,   // 统计周烟量
-  monthlyAmount
- 
+  monthlyAmount,
+  yearlyAmount    // 年统计量
 };

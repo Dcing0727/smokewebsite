@@ -319,9 +319,6 @@ const getMonthlyAmount = async (account, yearId) => {
   }
 };
 
-
-
-
 const getMonthlyAmountList = (dailyAmounts, yearObjects) => {
   // 初始化月统计列表，全部置为0
   const monthlyAmountsList = Array.from({ length: 12 }, () => 0);
@@ -343,8 +340,75 @@ const findMonthIndex = (yearObjects, date) => {
   return index;
 };
 
+const getRecentFiveYears = () => {
+  const currentYear = new Date().getFullYear();
+  const recentFiveYears = [];
 
+  for (let i = 0; i < 5; i++) {
+    const startOfYear = new Date(currentYear - i, 0, 1); // 月份是从 0 开始的，0 表示一月
+    const endOfYear = new Date(currentYear - i, 11, 31);
 
+    const startDateString = startOfYear.toISOString().split('T')[0];
+    const endDateString = endOfYear.toISOString().split('T')[0];
+
+    recentFiveYears.push({
+      year: currentYear - i,
+      startDate: startDateString,
+      endDate: endDateString
+    });
+  }
+
+  return recentFiveYears;
+};
+
+// 统计一整年的吸烟量
+const getYearlyAmount = async (account) => {
+  const recentFiveYears = getRecentFiveYears();
+
+  try {
+    const yearlyAmountsList = [];
+
+    // 遍历过去的五年
+    for (const yearObject of recentFiveYears) {
+      console.log(`Querying for year ${yearObject.year}...`);
+      const yearlyAmount = await DailyRecord.findOne({
+        attributes: [
+          [Sequelize.fn('YEAR', Sequelize.col('date')), 'year'], // 从日期中提取年份
+          [Sequelize.fn('SUM', Sequelize.col('smokingAmount')), 'totalSmokingAmount'],
+        ],
+        where: {
+          account: account,
+          date: {
+            [Sequelize.Op.between]: [yearObject.startDate, yearObject.endDate],
+          },
+        },
+        group: [Sequelize.fn('YEAR', Sequelize.col('date'))], // 添加 GROUP BY 子句
+        raw: true,
+      });
+
+      // 检查 yearlyAmount 是否为 null
+      const year = yearlyAmount ? parseInt(yearlyAmount.year) : parseInt(yearObject.year);
+      const totalSmokingAmount = yearlyAmount ? parseInt(yearlyAmount.totalSmokingAmount) : 0;
+
+      // 将年度吸烟量添加到列表中
+      yearlyAmountsList.push({
+        year,
+        totalSmokingAmount,
+      });
+    }
+
+    return yearlyAmountsList;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 使用示例
+// const yearsRange = getRecentFiveYears();
+// console.log(yearsRange);
+
+// const result = getYearlyAmount(1);
+// console.log(result);
 
 
 // const recentMonths = getMonthlyAmount(1, 5);
@@ -364,6 +428,7 @@ module.exports = {
   getUserById,
   recordDaily,
   getWeeklyAmount,
-  getMonthlyAmount
+  getMonthlyAmount,
+  getYearlyAmount
   // 其他用户服务方法的导出
 };
