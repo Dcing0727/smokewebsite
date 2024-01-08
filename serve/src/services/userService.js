@@ -4,6 +4,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const DailyRecord = require('../models/DailyRecord');
 const { Sequelize } = require('sequelize'); 
+const { type } = require('express/lib/response');
+const res = require('express/lib/response');
 
 const registerUser = async (account, password) => {
   try {
@@ -97,27 +99,6 @@ const getUserById = async (userId) => {
   }
 };
 
-// function getRecentFourWeeks() {
-//   //const today = new Date();
-//   const date = new Date();
-//   const today = date.toLocaleDateString();
-//   const recentFourWeeks = [];
-
-//   for (let i = 0; i < 4; i++) {
-//     const startDate = new Date(today);
-//     startDate.setDate(today.getDate() - (i * 7 + today.getDay())); // Start from Sunday of each week
-
-//     const endDate = new Date(startDate);
-//     endDate.setDate(startDate.getDate() + 6); // End on Saturday of each week
-
-//     recentFourWeeks.push({
-//       startDate: startDate.toISOString().split('T')[0], // Format as 'YYYY-MM-DD'
-//       endDate: endDate.toISOString().split('T')[0],
-//     });
-//   }
-
-//   return recentFourWeeks.reverse();  // Reverse the order to have Sunday to Saturday
-// }
 function getRecentFourWeeks() {
   const formattedDate = new Date();
   const year = formattedDate.getFullYear();
@@ -275,7 +256,6 @@ const getMonthsInYear = (yearObject) => {
 
 
 // 获取每月吸烟量列表
-// 获取每月吸烟量列表
 const getMonthlyAmount = async (account, yearId) => {
   const recentFiveYears = getRecentFiveYearsMonths();
 
@@ -403,12 +383,94 @@ const getYearlyAmount = async (account) => {
   }
 };
 
-// 使用示例
-// const yearsRange = getRecentFiveYears();
-// console.log(yearsRange);
+//获取当前月份的起始日期和结束日期
+const getCurrentMonthDates = () => {
+  const currentDate = new Date();
+  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-// const result = getYearlyAmount(1);
-// console.log(result);
+  const startDateString = firstDayOfMonth.toISOString().split('T')[0];
+  const endDateString = lastDayOfMonth.toISOString().split('T')[0];
+
+  return {
+    startDate: startDateString,
+    endDate: endDateString,
+  };
+};
+
+const getAllSmokingTypes = () => {
+  // 返回所有烟的类型的数组
+  return [0, 1, 2, 3, 4, 5, 6];
+};
+
+// 7种烟
+const getSpending = async(account, type) =>{
+  try {
+      var startDate;
+      var endDate;
+      if (type == 1){
+        // 近一年的烟量统计
+        const recentFiveYears = getRecentFiveYears();
+        startDate = recentFiveYears[0].startDate;
+        endDate = recentFiveYears[0].endDate;
+        
+      }else if (type == 2){
+        // 近一个月
+        const result = getCurrentMonthDates()
+        startDate = result.startDate;
+        endDate = result.endDate;
+      }else{
+        // 近一周
+        const result = getRecentFourWeeks();
+        startDate = result[3].startDate;
+        endDate = result[3].endDate;
+      }
+      const allSmokingTypes = getAllSmokingTypes();
+
+      const smokingExpensesList = await DailyRecord.findAll({
+        attributes: [
+          'smokingType',
+          [Sequelize.fn('SUM', Sequelize.col('smokingExpenses')), 'totalExpenses'],
+        ],
+        where: {
+          account: account,
+          date: {
+            [Sequelize.Op.between]: [startDate, endDate],
+          },
+        },
+        group: ['smokingType'],
+        raw: true,
+      });
+
+      const expensesMap = new Map();
+
+      // 初始化 map，将所有烟的类型放入 map 中，初始花销设为 0
+      allSmokingTypes.forEach((type) => {
+        expensesMap.set(type, 0);
+      });
+
+      // 遍历查询结果，更新 map 中对应烟的花销
+      smokingExpensesList.forEach((item) => {
+        expensesMap.set(item.smokingType, parseInt(item.totalExpenses));
+      });
+
+      // 将 map 转换为数组，作为最终结果返回
+      return Array.from(expensesMap, ([smokingType, totalExpenses]) => ({
+        smokingType,
+        totalExpenses,
+      }));
+
+  } catch (error) {
+    throw error;
+  }
+
+};
+
+// 使用示例
+
+
+
+
 
 
 // const recentMonths = getMonthlyAmount(1, 5);
@@ -418,7 +480,7 @@ const getYearlyAmount = async (account) => {
 
 // 单元测试代码
 // const specificDate = new Date('2024-12-08'); 
-// const result = getRecentFourWeeks(specificDate);
+// const result = getRecentFourWeeks();
 // console.log(result);
 
 module.exports = {
@@ -429,6 +491,7 @@ module.exports = {
   recordDaily,
   getWeeklyAmount,
   getMonthlyAmount,
-  getYearlyAmount
+  getYearlyAmount,
+  getSpending
   // 其他用户服务方法的导出
 };

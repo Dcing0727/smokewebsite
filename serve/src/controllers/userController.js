@@ -213,6 +213,26 @@ const yearlyAmount = async (req, res) => {
   }
 };
 
+const Spending = async (req, res) => {
+  try {
+    const {account, type} = req.body;
+    const SpendingNumber = await userService.getSpending(account, type);
+
+    res.status(200).json({
+      success: true,
+      SpendingNumber: SpendingNumber
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+    
+  }
+}
+
 
 
 const getUserById = async (req, res) => {
@@ -233,6 +253,7 @@ module.exports = {
   getUserById,
   record,
   weeklyAmount,   // 统计周烟量
-  monthlyAmount,
-  yearlyAmount    // 年统计量
+  monthlyAmount,   
+  yearlyAmount,   // 年统计量
+  Spending        //  花销统计
 };
