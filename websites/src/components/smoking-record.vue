@@ -19,7 +19,8 @@
 <script>
 import CustomButton from './button-usecase.vue';
 import Calendar from './calendar-usecase.vue';
-
+import { jwtDecode } from 'jwt-decode';
+//import  vue  from 'vue';
 export default {
     components: {
         CustomButton,
@@ -31,24 +32,70 @@ export default {
             showCalendar: false,
             selectedDates: [
                 //戒烟打卡日期
-                { year: 2023, month: 12, day: 1 },
-                { year: 2023, month: 12, day: 2 },
-                { year: 2023, month: 12, day: 3 },
-                { year: 2023, month: 12, day: 4 },
-                { year: 2023, month: 12, day: 5 },
-                { year: 2023, month: 12, day: 6 },
-                { year: 2023, month: 12, day: 7 },
-                { year: 2024, month: 1, day: 8 },
+                // { year: 2023, month: 12, day: 1 },
+                // { year: 2023, month: 12, day: 2 },
+                // { year: 2023, month: 12, day: 3 },
+                // { year: 2023, month: 12, day: 4 },
+                // { year: 2023, month: 12, day: 5 },
+                // { year: 2023, month: 12, day: 6 },
+                // { year: 2023, month: 12, day: 7 },
+                 { year: 2024, month: 1, day: 8 },
             ],
             failDates: [
-                //戒烟失败打卡日期
-                { year: 2023, month: 12, day: 9 },
-                { year: 2024, month: 1, day: 1 },
+                { year: 2023, month: 1, day: 8 },
+                
             ],
             todayDate: new Date(),
         };
     },
     methods:{
+        parseDateString(dateString) {       // 日期类型转换
+            const [year, month, day] = dateString.split('-').map(Number);
+            return { year, month:month-1, day };
+        },
+        showResults(){
+            const token = localStorage.getItem("token");
+            const decodedToken = jwtDecode(token);
+            const userAccount = decodedToken.sub;
+
+            fetch('http://localhost:3000/api/user/checkin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    account: userAccount,       
+                }),
+          })
+          .then(response => response.json())
+          .then(data => {
+ 
+            if (data.success) {
+                // const successRecords = [];
+                // const failRecords = [];
+
+                for (const record of data.checkinRecords) {
+                    if (record.status === 1) {
+                        this.selectedDates.push(this.parseDateString(record.checkinDate));
+                    } else if (record.status === 0) {
+                        this.failDates.push(this.parseDateString(record.checkinDate));
+                    }
+                }
+               
+                 // 打印结果
+                console.log('成功',this.selectedDates);
+                console.log('失败',this.failDates);
+
+             
+            } else {
+              console.log(data.error);
+               console.error("失败");
+            }
+          })
+          .catch(error => {
+            console.error("发生错误:", error);
+          });
+        },
         handleCloseCalendar() {
             this.showCalendar = false;
         },
@@ -71,6 +118,9 @@ export default {
         }
 
 
+    },
+    mounted(){
+        this.showResults();
     },
 };
 </script>
