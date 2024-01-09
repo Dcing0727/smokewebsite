@@ -45,7 +45,7 @@
                   <i class="el-icon-tickets"></i>
                   年龄
                 </template>
-                {{ userInfo.age ? userInfo.age : 'NULL' }}
+                23
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
@@ -59,14 +59,14 @@
                   <i class="el-icon-tickets"></i>
                   邮箱Email
                 </template>
-                {{ userInfo.email ? userInfo.email : 'NULL' }}
+                123123@qq.com
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-office-building"></i>
-                  个人简介
+                  联系地址
                 </template>
-                {{ userInfo.bio ? userInfo.bio : 'NULL' }}
+                地球村
               </el-descriptions-item>
             </el-descriptions>
           </div>

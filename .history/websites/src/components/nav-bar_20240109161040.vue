@@ -8,7 +8,7 @@
       <li><router-link to="/statistics" class="custom-link">烟量统计</router-link></li>
       <li><router-link to="/blog" class="custom-link">博客页面</router-link></li>
       <li><router-link to="/record" class="custom-link">戒烟打卡</router-link></li> 
-      <li><router-link to="/user" class="custom-link">用户资料</router-link></li>
+      <li><router-link to="/us" class="custom-link">个人中心</router-link></li>
     </ul>
   </nav>
 </template>

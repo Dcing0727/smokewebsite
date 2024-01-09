@@ -20,16 +20,13 @@ const User = sequelize.define('users', {
     //allowNull: false,       //加上注册时会报错
   },
   // 非必须项，可后续添加
-  age: {
-    type: DataTypes.STRING,  //用户年龄
-  },
   avatar: {
     type: DataTypes.STRING,  //用户头像
   },
   nickname: {
     type: DataTypes.STRING,  //用户昵称
   },
-  email: {
+  hobby: {
     type: DataTypes.STRING, //用户邮箱
   },
   bio: {
