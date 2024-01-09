@@ -58,9 +58,9 @@
         :key='index + "n"'
         @click='handleSelnextD(index + 1)'>{{index + 1}}</span>
     </div>
-    <div class="btns">
+    <!-- <div class="btns">
       <CustomButton @click='clearAllSel'>清除选择</CustomButton>
-    </div>
+    </div> -->
   </div>
 </template>
 

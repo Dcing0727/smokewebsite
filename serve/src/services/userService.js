@@ -530,7 +530,7 @@ const showCheckin = async (account) => {
       where: {
         account,
         checkinDate: {
-          [Sequelize.Op.between]: [period.startDate, period.endDate],
+          [Sequelize.Op.between]: ['2000-01-01', period.endDate],
         },
       },
       raw: true,
@@ -542,6 +542,29 @@ const showCheckin = async (account) => {
     throw error;
   }
 };
+
+const showSumofMonth = async (account) => {
+  const period = getCurrentMonthDates();
+
+  try {
+    const recordCount = await CheckinRecord.count({
+      where: {
+        account: account,
+        checkinDate: {
+          [Sequelize.Op.between]: [period.startDate, period.endDate]
+        },
+        status: 1
+      }
+    });
+
+    return recordCount;
+  } catch (error) {
+    console.error('查询出错：', error);
+    throw error;
+  }
+};
+
+
 
 // 使用示例
 const updateUser = async (userId, data) => {
@@ -557,6 +580,76 @@ const updateUser = async (userId, data) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 失败打卡
+const failedRecord = async (account, date) => {
+  try {
+    // 尝试查询 CheckinRecord 表中是否有记录
+    const existingRecord = await CheckinRecord.findOne({
+      where: {
+        account: account,
+        checkinDate: date,
+      },
+    });
+
+    if (existingRecord) {
+      // 如果存在记录，则更新 status 字段为 0
+      await existingRecord.update({ status: 0 });
+    } else {
+      // 如果不存在记录，则创建新记录
+      await CheckinRecord.create({
+        account: account,
+        checkinDate: date,
+        status: 0,
+      });
+    }
+
+    console.log('操作成功');
+  } catch (error) {
+    console.error('操作失败', error);
+  }
+};
+
+const successRecoed = async (account, date) =>{
+  try {
+    // 尝试查询 CheckinRecord 表中是否有记录
+    const existingRecord = await CheckinRecord.findOne({
+      where: {
+        account: account,
+        checkinDate: date,
+      },
+    });
+
+    if (existingRecord) {
+      return 0;
+    }else{
+      const successrecord = await CheckinRecord.create({
+        account: account,
+        checkinDate: date,
+        status: 1,
+      });
+      return successrecord;
+
+    }
+    
+  } catch (error) {
+    console.error('操作失败', error);
+  }
+};
 
 
 
@@ -582,7 +675,14 @@ module.exports = {
   getYearlyAmount,
   getSpending,
   showCheckin,
-  updateUser
+  updateUser,
+
+
+
+
+  failedRecord,
+  successRecoed,
+  showSumofMonth
 
   // 其他用户服务方法的导出
 };

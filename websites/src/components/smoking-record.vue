@@ -2,7 +2,7 @@
   <div class="page-container">
     <div class="canv">
         <div class="showcalendar" @click="showCalendar = !showCalendar" ></div>
-        <h1>您已坚持戒烟{{days}}天</h1>
+        <h1>本月您已打卡成功{{days}}天</h1>
         <div class="button-container">
             <div class="CustomButton1">
                 <CustomButton @click="recordToday">打卡!</CustomButton>
@@ -28,7 +28,7 @@ export default {
     },
     data() {
         return {
-            days: 30,
+            days: 0,
             showCalendar: false,
             selectedDates: [
                 //戒烟打卡日期
@@ -39,10 +39,10 @@ export default {
                 // { year: 2023, month: 12, day: 5 },
                 // { year: 2023, month: 12, day: 6 },
                 // { year: 2023, month: 12, day: 7 },
-                 { year: 2024, month: 1, day: 8 },
+                 { year: 1928, month: 1, day: 8 },
             ],
             failDates: [
-                { year: 2023, month: 1, day: 8 },
+                { year: 1929, month: 1, day: 8 },
                 
             ],
             todayDate: new Date(),
@@ -100,27 +100,138 @@ export default {
             this.showCalendar = false;
         },
         recordToday() {
+            const token = localStorage.getItem("token");
+            const decodedToken = jwtDecode(token);
+            const userAccount = decodedToken.sub;
+
             const newDate = {
                 year: this.todayDate.getFullYear(),
                 month: this.todayDate.getMonth(),
                 day: this.todayDate.getDate(),
             };
-            this.selectedDates.push({ ...newDate });
-            //console.log("来自父组件的更改"+this.selectedDates)
+            
+            const todayDate = new Date();
+
+            const year = todayDate.getFullYear();
+            const month = (todayDate.getMonth() + 1).toString().padStart(2, '0'); // 月份是从 0 开始的，所以要加 1
+            const day = todayDate.getDate().toString().padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+
+            fetch('http://localhost:3000/api/user/success', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    account: userAccount,
+                    date: formattedDate          
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+        
+                    if (data.success) {
+                        if(data.result == 0){
+                            alert('今日已打卡失败，无法再次打卡');
+                        }else{
+                            alert('恭喜记录成功！');
+                            this.selectedDates.push({ ...newDate });
+                        }
+
+                 
+                    } else {
+                    console.log(data.error);
+                    console.error("失败");
+                    }
+                })
+                .catch(error => {
+                    console.error("发生错误:", error);
+                });
+            
+            this.showResults();
+            this.showSum();
         },
         failRecord() {
+            const token = localStorage.getItem("token");
+            const decodedToken = jwtDecode(token);
+            const userAccount = decodedToken.sub;
+
+            const todayDate = new Date();
+            const year = todayDate.getFullYear();
+            const month = (todayDate.getMonth() + 1).toString().padStart(2, '0'); // 月份是从 0 开始的，所以要加 1
+            const day = todayDate.getDate().toString().padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+
             const newDate = {
                 year: this.todayDate.getFullYear(),
                 month: this.todayDate.getMonth(),
                 day: this.todayDate.getDate(),
             };
             this.failDates.push({ ...newDate });
-        }
+
+             fetch('http://localhost:3000/api/user/failed', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    account: userAccount,
+                    date: formattedDate          
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+        
+                    if (data.success) {
+                       alert('记录成功');
+                    } else {
+                    console.log(data.error);
+                    console.error("失败");
+                    }
+                })
+                .catch(error => {
+                    console.error("发生错误:", error);
+                });
+            this.showResults();
+            this.showSum();
+
+        },
+        showSum(){
+            const token = localStorage.getItem("token");
+            const decodedToken = jwtDecode(token);
+            const userAccount = decodedToken.sub;
+
+             fetch('http://localhost:3000/api/user/sum', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    account: userAccount,        
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+        
+                    if (data.success) {
+                        console.log('本月成功打卡天数',data.sum);
+                        this.days = data.sum;
+                    } else {
+                    console.log(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("发生错误:", error);
+                });
+        },
 
 
     },
     mounted(){
         this.showResults();
+        this.showSum();
     },
 };
 </script>

@@ -15,7 +15,13 @@ app.post('/api/user/monthly', userController.monthlyAmount);
 app.post('/api/user/yearly', userController.yearlyAmount);
 app.post('/api/user/spend', userController.Spending);
 app.post('/api/user/checkin', userController.getshowCheckin);
+app.post('/api/user/sum', userController.getsumofMonth);
 app.put('/api/user/update/:userId', userController.updateUser);
+
+
+
+app.post('/api/user/failed', userController.getfailedRecord);
+app.post('/api/user/success', userController.getsuccessRecord);
 
 // 服务器端代码示例
 app.get('/api/user/:account', userController.getUserByAccount);

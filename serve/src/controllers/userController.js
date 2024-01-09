@@ -286,6 +286,55 @@ const getshowCheckin = async (req, res) => {
 
 };
 
+const getfailedRecord = async(req, res) =>{
+  try {
+    const {account, date} = req.body;
+    const result = await userService.failedRecord(account, date);
+    res.status(200).json({
+      success: true,
+      result:result
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+    
+  }
+};
+
+const getsuccessRecord = async(req, res) =>{
+  try {
+    const {account, date} = req.body;
+    const result = await userService.successRecoed(account, date);
+    if(result == 0){
+      res.status(200).json({
+        success: true,
+        result:0
+      });
+    }else{
+      res.status(200).json({
+        success: true,
+        result:1
+      });
+
+    }
+    
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+    
+  }
+};
+
+
+
+
 
 const getUserById = async (req, res) => {
   try {
@@ -307,6 +356,26 @@ const updateUser = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+const getsumofMonth = async (req, res) => {
+  try {
+    const account = req.body.account;
+    const sum = await userService.showSumofMonth(account);
+
+    res.status(200).json({
+      success: true,
+      sum: sum
+    });
+    
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Record failed',
+      error: error.message, 
+    }); 
+    
+  }
+};
   
 module.exports = {
   register,
@@ -319,6 +388,13 @@ module.exports = {
   monthlyAmount,   
   yearlyAmount,   // 年统计量
   Spending,
-  updateUser,        //  花销统计
-  getshowCheckin
+  updateUser,        
+  getshowCheckin,
+
+
+
+  getfailedRecord,
+  getsuccessRecord,
+  getsumofMonth
+
 };
