@@ -62,7 +62,7 @@
       </el-form-item>
       <el-form-item label="博客封面">
         <el-upload
-                        class="upload-demo"
+                       class="upload-demo"
                         action=""
                         ref="upload"
                         :show-file-list="false"
@@ -76,10 +76,10 @@
           <i class="el-icon-plus"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="博客简介">
+      <el-form-item label="简介">
         <el-input type="textarea" v-model="blogForm.description"></el-input>
       </el-form-item>
-      <el-form-item label="博客内容">
+      <el-form-item label="内容">
         <el-input type="textarea" v-model="blogForm.content"></el-input>
       </el-form-item>
     </el-form>
@@ -109,8 +109,8 @@
         title: '',
         description: '',
         content: '',
-        coverImage: 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'
-      },
+        coverImage: ''
+      }
      };
     },
     mounted() {
@@ -143,7 +143,7 @@
         console.info(fileList);
         this.file = file;
         let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
+        blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };

@@ -62,7 +62,7 @@
       </el-form-item>
       <el-form-item label="博客封面">
         <el-upload
-                        class="upload-demo"
+                       class="upload-demo"
                         action=""
                         ref="upload"
                         :show-file-list="false"
@@ -71,16 +71,11 @@
                         :on-change="handleChange"
                         :on-remove="handleRemove"
           >
-          <img v-if="blogForm.coverImage" :src="blogForm.coverImage" class="coverImage" alt="" style="width: 100px; height: 100px; object-fit: cover;">
-          <i v-else class="el-icon-plus avatar-uploader-icon" />
           <i class="el-icon-plus"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="博客简介">
-        <el-input type="textarea" v-model="blogForm.description"></el-input>
-      </el-form-item>
-      <el-form-item label="博客内容">
-        <el-input type="textarea" v-model="blogForm.content"></el-input>
+      <el-form-item label="博客内容"> 
+         <!-- <mavon-editor v-model="blogForm.content"></mavon-editor> -->
       </el-form-item>
     </el-form>
     <template v-slot:footer>
@@ -94,13 +89,13 @@
 </template>
  
 <script>
-// import { mavonEditor } from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
   export default {
-  //   components: {
-  //   mavonEditor,
-  // },
+    components: {
+    mavonEditor,
+  },
     data() {
     return {
       dialogVisible: false,
@@ -109,8 +104,8 @@
         title: '',
         description: '',
         content: '',
-        coverImage: 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'
-      },
+        coverImage: ''
+      }
      };
     },
     mounted() {
@@ -143,30 +138,13 @@
         console.info(fileList);
         this.file = file;
         let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
+        blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };
 </script>
  
 <style scoped>
-.upload-demo i {
-  font-size: 20px;
-  color: #999;
-}
-.upload-demo .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.upload-demo .el-upload:hover {
-  border-color: #2db7f5;
-}
-.dialog-footer {
-  text-align: center;
-}
   .mhy-account-center-content {
     width: 700px;
     float: right;

@@ -55,6 +55,8 @@
       </div>
     </div>
 
+
+  
   <el-dialog title="创建博客" v-model="dialogVisible" width="70%">
     <el-form :model="blogForm">
       <el-form-item label="博客标题">
@@ -62,25 +64,16 @@
       </el-form-item>
       <el-form-item label="博客封面">
         <el-upload
-                        class="upload-demo"
-                        action=""
-                        ref="upload"
-                        :show-file-list="false"
-                        :auto-upload="false"
-                        :before-upload="beforeUpload"
-                        :on-change="handleChange"
-                        :on-remove="handleRemove"
-          >
-          <img v-if="blogForm.coverImage" :src="blogForm.coverImage" class="coverImage" alt="" style="width: 100px; height: 100px; object-fit: cover;">
-          <i v-else class="el-icon-plus avatar-uploader-icon" />
+          class="upload-demo"
+          action="/* 你的图片上传接口 */"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove">
           <i class="el-icon-plus"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="博客简介">
-        <el-input type="textarea" v-model="blogForm.description"></el-input>
-      </el-form-item>
       <el-form-item label="博客内容">
-        <el-input type="textarea" v-model="blogForm.content"></el-input>
+        <mavon-editor v-model="blogForm.content"></mavon-editor>
       </el-form-item>
     </el-form>
     <template v-slot:footer>
@@ -90,33 +83,33 @@
     </span>
    </template>
   </el-dialog>
+
   </div>
+  
 </template>
  
 <script>
-// import { mavonEditor } from 'mavon-editor'
-// import 'mavon-editor/dist/css/index.css'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
   export default {
-  //   components: {
-  //   mavonEditor,
-  // },
+    components: {
+    mavonEditor
+  },
     data() {
     return {
       dialogVisible: false,
       blogForm: {
-        file: null,
         title: '',
         description: '',
         content: '',
-        coverImage: 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'
-      },
+        coverImage: ''
+      }
      };
     },
     mounted() {
     },
     methods: {
-       /* eslint-disable */
       openDialog() {
       this.dialogVisible = true; // 打开对话框
       },
@@ -125,48 +118,12 @@
       // 示例：axios.post('/api/blog', this.blogForm)
       // ...处理响应...
       this.dialogVisible = false; // 关闭对话框
-      },
-      beforeUpload(file) {
-        
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!')
-        }
-        return isLt2M
-      },
-    
-      handleRemove(file, fileList) {
-        this.blogForm.file = null;
-        this.blogForm.coverImage = '';
-      },   
-      handleChange(file, fileList){
-        console.info(fileList);
-        this.file = file;
-        let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };
 </script>
  
 <style scoped>
-.upload-demo i {
-  font-size: 20px;
-  color: #999;
-}
-.upload-demo .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.upload-demo .el-upload:hover {
-  border-color: #2db7f5;
-}
-.dialog-footer {
-  text-align: center;
-}
   .mhy-account-center-content {
     width: 700px;
     float: right;

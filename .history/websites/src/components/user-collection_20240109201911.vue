@@ -143,7 +143,7 @@
         console.info(fileList);
         this.file = file;
         let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
+        blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };
