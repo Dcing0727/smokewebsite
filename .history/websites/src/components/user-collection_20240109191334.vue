@@ -2,10 +2,10 @@
   <div class="mhy-container mhy-account-center-content">
     <div class="mhy-account-center-content-container mhy-account-center-collection">
       <div class="mhy-account-center__subheader">
-        <span>我的合集</span>
+        <span>我的博客</span>
         <div class="mhy-account-center-collection-menu">
           <div class="mhy-button mhy-account-center-collection-menu__create mhy-button-outlined">
-            <button class="mhy-button__button">创建合集</button>
+            <button class="mhy-button__button">创建博客</button>
           </div>
           <!---->
         </div>
@@ -13,7 +13,7 @@
       <div class="mhy-account-center-content-container__list">
         <div class="mhy-collection-card mhy-account-center-collection-card">
           <a class="mhy-router-link mhy-collection-card__link">
-            <div class="mhy-collection-card__cover" style="background-image: url(https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg);">
+            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
             </div>
           </a>
           <div class="mhy-collection-card__info">
@@ -22,9 +22,27 @@
               <p class="mhy-collection-card__desc">hello word</p>
             </a>
             <div class="mhy-collection-card__stats">
-              <span>0篇作品</span>
               <span>0浏览</span>
-              <span>49分钟前</span>
+              <span>0点赞</span>
+              <span>1分钟前</span>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="mhy-collection-card mhy-account-center-collection-card">
+          <a class="mhy-router-link mhy-collection-card__link">
+            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
+            </div>
+          </a>
+          <div class="mhy-collection-card__info">
+            <a class="mhy-router-link mhy-collection-card__link" target="_blank">
+              <p class="mhy-collection-card__name">hello</p>
+              <p class="mhy-collection-card__desc">hello word</p>
+            </a>
+            <div class="mhy-collection-card__stats">
+              <span>0浏览</span>
+              <span>0点赞</span>
+              <span>1分钟前</span>
             </div>
           </div>
           <!---->
@@ -36,7 +54,27 @@
         </div>
       </div>
     </div>
+    <el-dialog title="创建博客" v-model="dialogVisible" width="50%">
+    <el-form :model="blogForm">
+      <el-form-item label="博客标题">
+        <el-input v-model="blogForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="简介">
+        <el-input type="textarea" v-model="blogForm.description"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input type="textarea" v-model="blogForm.content"></el-input>
+      </el-form-item>
+    </el-form>
+    <template v-slot:footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitBlog">发布</el-button>
+      </span>
+    </template>
+  </el-dialog>
   </div>
+  
 </template>
  
 <script>

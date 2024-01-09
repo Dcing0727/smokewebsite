@@ -31,7 +31,7 @@
         </div>
         <div class="mhy-collection-card mhy-account-center-collection-card">
           <a class="mhy-router-link mhy-collection-card__link">
-            <div class="mhy-collection-card__cover" style="background-image: url(@/assets/w.jpg)">
+            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
             </div>
           </a>
           <div class="mhy-collection-card__info">
@@ -54,18 +54,50 @@
         </div>
       </div>
     </div>
+    <el-dialog title="创建博客" v-model="dialogVisible" width="50%">
+    <el-form :model="blogForm">
+      <el-form-item label="博客标题">
+        <el-input v-model="blogForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="简介">
+        <el-input type="textarea" v-model="blogForm.description"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input type="textarea" v-model="blogForm.content"></el-input>
+      </el-form-item>
+    </el-form>
+    <template v-slot:footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitBlog">发布</el-button>
+      </span>
+    </template>
+  </el-dialog>
   </div>
+  
 </template>
  
 <script>
   export default {
     data() {
-      return {
-      };
+    return {
+      dialogVisible: false,
+      blogForm: {
+        title: '',
+        description: '',
+        content: ''
+      }
+     };
     },
     mounted() {
     },
     methods: {
+      submitBlog() {
+      // 发送请求到后端API
+      // 示例：axios.post('/api/blog', this.blogForm)
+      // ...处理响应...
+      this.dialogVisible = false; // 关闭对话框
+      }
     }
   };
 </script>

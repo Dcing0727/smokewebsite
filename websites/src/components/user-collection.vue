@@ -5,7 +5,7 @@
         <span>我的博客</span>
         <div class="mhy-account-center-collection-menu">
           <div class="mhy-button mhy-account-center-collection-menu__create mhy-button-outlined">
-            <button class="mhy-button__button">创建博客</button>
+            <button class="mhy-button__button" @click="openDialog">创建博客</button>
           </div>
           <!---->
         </div>
@@ -54,18 +54,55 @@
         </div>
       </div>
     </div>
+
+
+    <el-dialog title="创建博客" v-model="dialogVisible" width="50%">
+    <el-form :model="blogForm">
+      <el-form-item label="博客标题">
+        <el-input v-model="blogForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="简介">
+        <el-input type="textarea" v-model="blogForm.description"></el-input>
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input type="textarea" v-model="blogForm.content"></el-input>
+      </el-form-item>
+    </el-form>
+    <template v-slot:footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitBlog">发布</el-button>
+      </span>
+    </template>
+  </el-dialog>
   </div>
+  
 </template>
  
 <script>
   export default {
     data() {
-      return {
-      };
+    return {
+      dialogVisible: false,
+      blogForm: {
+        title: '',
+        description: '',
+        content: ''
+      }
+     };
     },
     mounted() {
     },
     methods: {
+      openDialog() {
+      this.dialogVisible = true; // 打开对话框
+      },
+      submitBlog() {
+      // 发送请求到后端API
+      // 示例：axios.post('/api/blog', this.blogForm)
+      // ...处理响应...
+      this.dialogVisible = false; // 关闭对话框
+      }
     }
   };
 </script>
