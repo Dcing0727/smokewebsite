@@ -59,12 +59,11 @@ const User = sequelize.define('users', {
 //   }
 // })();
 
-
-// User.sync({force:true}).then(()=>{
-// 	console.log('成功');
-// 	process.exit() // 成功之后退出，否则会一直在后台运行
-// }) //执行并写入数据库，force是如果数据库中有user表，则删除，重新写入数据。
-//force最好不写，容易报错 表不存在
+User.sync({force:true}).then(()=>{
+	console.log('成功');
+	process.exit() // 成功之后退出，否则会一直在后台运行
+}) //执行并写入数据库，force是如果数据库中有user表，则删除，重新写入数据。
+// force最好不写，容易报错 表不存在
 
 module.exports = User;
 

@@ -62,7 +62,7 @@
       </el-form-item>
       <el-form-item label="博客封面">
         <el-upload
-                        class="upload-demo"
+                       class="upload-demo"
                         action=""
                         ref="upload"
                         :show-file-list="false"
@@ -109,8 +109,8 @@
         title: '',
         description: '',
         content: '',
-        coverImage: 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'
-      },
+        coverImage: ''
+      }
      };
     },
     mounted() {
@@ -143,7 +143,7 @@
         console.info(fileList);
         this.file = file;
         let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
+        blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };

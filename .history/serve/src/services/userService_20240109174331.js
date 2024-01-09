@@ -6,8 +6,6 @@ const DailyRecord = require('../models/DailyRecord');
 const { Sequelize } = require('sequelize'); 
 const { type } = require('express/lib/response');
 const res = require('express/lib/response');
-const CheckinRecord = require('../models/CheckinRecord');
-//const sequelize = require('./db');
 
 const registerUser = async (account, password) => {
   try {
@@ -70,76 +68,24 @@ const getUserByAccount = async (account) => {
   }
 };
 
-// const recordDaily = async (account, date, smokingType, smokingAmount, smokingExpenses) => {
-//   try {
-//     // 创建新戒烟记录
-//     const newRecord = await DailyRecord.create({
-//       account,
-//       date,
-//       smokingType,
-//       smokingAmount,
-//       smokingExpenses
-//       // 其他用户信息字段...
-//     });
-//     return newRecord;
-//   } catch (error) {
-//     // 处理错误，比如用户名重复等
-//     console.error('Error in recordDaily from userService.js:', error);
-//     throw new Error('Error in recordDaily from userService.js:');
-//   }
-// };
-
-// const recordDaily = async (account, date, smokingType, smokingAmount, smokingExpenses) => {
-//   const t = await sequelize.transaction();
-
-//   try {
-//     // 在 DailyRecord 表中创建新戒烟记录
-//     const newRecord = await DailyRecord.create({
-//       account,
-//       date,
-//       smokingType,
-//       smokingAmount,
-//       smokingExpenses,
-//     }, { transaction: t });
-
-//     // 查询 CheckinRecord 表中是否存在记录
-//     const checkinRecord = await CheckinRecord.findOne({
-//       where: {
-//         account,
-//         checkinDate: date,
-//       },
-//       transaction: t,
-//     });
-
-//     if (checkinRecord) {
-//       // 如果记录存在，更新 status
-//       await checkinRecord.update({ status: false }, { transaction: t });
-//     } else {
-//       // 如果记录不存在，创建新记录
-//       await CheckinRecord.create({
-//         account,
-//         checkinDate: date,
-//         status: false,
-//       }, { transaction: t });
-//     }
-
-//     // 提交事务
-//     await t.commit();
-
-//     return newRecord;
-//   } catch (error) {
-//     // 如果发生错误，回滚事务
-//     await t.rollback();
-//     console.error('Error in recordDaily from userService.js:', error);
-//     throw new Error('Error in recordDaily from userService.js:');
-//   }
-// };
-
-
-
-
-
-
+const recordDaily = async (account, date, smokingType, smokingAmount, smokingExpenses) => {
+  try {
+    // 创建新戒烟记录
+    const newRecord = await DailyRecord.create({
+      account,
+      date,
+      smokingType,
+      smokingAmount,
+      smokingExpenses
+      // 其他用户信息字段...
+    });
+    return newRecord;
+  } catch (error) {
+    // 处理错误，比如用户名重复等
+    console.error('Error in recordDaily from userService.js:', error);
+    throw new Error('Error in recordDaily from userService.js:');
+  }
+};
 
 const getUserById = async (userId) => {
   try {
@@ -520,29 +466,6 @@ const getSpending = async(account, type) =>{
 
 };
 
-// 在日历上显示打卡记录
-const showCheckin = async (account) => {
-  const period = getCurrentMonthDates();
-
-  try {
-    const checkinRecords = await CheckinRecord.findAll({
-      attributes: ['checkinDate', 'status'],
-      where: {
-        account,
-        checkinDate: {
-          [Sequelize.Op.between]: [period.startDate, period.endDate],
-        },
-      },
-      raw: true,
-    });
-
-    return checkinRecords;
-  } catch (error) {
-    console.error('Error in showCheckin:', error);
-    throw error;
-  }
-};
-
 // 使用示例
 const updateUser = async (userId, data) => {
   try {
@@ -576,13 +499,11 @@ module.exports = {
   loginUser,
   getUserByAccount,
   getUserById,
-  //recordDaily,
+  recordDaily,
   getWeeklyAmount,
   getMonthlyAmount,
   getYearlyAmount,
   getSpending,
-  showCheckin,
   updateUser
-
   // 其他用户服务方法的导出
 };

@@ -6,10 +6,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user'); // 假设你有一个 User 模型
 const DailyRecord = require('../models/DailyRecord');
 const res = require('express/lib/response');
-const CheckinRecord = require('../models/CheckinRecord');
-const sequelize = require('../models/db');
-const req = require('express/lib/request');
-
 //JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
 //常用于身份验证和信息传递。
 const secretKey = 'yourSecretKey';    //后期考虑加密处理
@@ -109,8 +105,6 @@ const login = async (req, res) => {
 };
 
 const record = async (req, res) => {
-  const t = await sequelize.transaction();
-
   try {
     // 从请求中获取用户提供的注册信息
     const { account, date, smokingType, smokingAmount, smokingExpenses } = req.body;
@@ -118,7 +112,7 @@ const record = async (req, res) => {
     // 查询是否存在具有相同 date 和 smokingType 的记录
     const existingRecord = await DailyRecord.findOne({
       where: { account, date, smokingType },
-    }, { transaction: t });
+    });
     // 转为浮点型变量
     const smokingAmountFloat = parseFloat(smokingAmount); 
     if (existingRecord) {
@@ -128,7 +122,7 @@ const record = async (req, res) => {
       // 保存更新后的记录
       await existingRecord.save();
       // 返回成功响应
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         message: 'User record successfully',
         user: existingRecord,
@@ -142,7 +136,7 @@ const record = async (req, res) => {
         smokingType,
         smokingAmount,
         smokingExpenses,
-      }, { transaction: t });
+      });
 
       res.status(201).json({
         success: true,
@@ -150,30 +144,6 @@ const record = async (req, res) => {
         record: newRecord,
       });
     }
-
-    // 查询 CheckinRecord 表中是否存在记录
-    const checkinRecord = await CheckinRecord.findOne({
-      where: {
-        account,
-        checkinDate: date,
-      },
-      transaction: t,
-    });
-
-    if (checkinRecord) {
-      // 如果记录存在，更新 status
-      await checkinRecord.update({ status: false }, { transaction: t });
-    } else {
-      // 如果记录不存在，创建新记录
-      await CheckinRecord.create({
-        account,
-        checkinDate: date,
-        status: false,
-      }, { transaction: t });
-    }
-
-    // 提交事务
-    await t.commit();
   } catch (error) {
     // 处理错误情况，返回适当的错误响应
     console.error(error);
@@ -182,10 +152,8 @@ const record = async (req, res) => {
       message: 'Record failed',
       error: error.message,
     });
-    await t.rollback();
   }
 };
-
 
 const weeklyAmount = async (req, res) =>{
   try {
@@ -265,26 +233,6 @@ const Spending = async (req, res) => {
   }
 }
 
-const getshowCheckin = async (req, res) => {
-
-  try {
-    const account = req.body.account;
-    const checkinRecords = await userService.showCheckin(account);
-    res.status(200).json({
-      success: true,
-      checkinRecords: checkinRecords
-    });
-
-  } catch (error) {
-    res.status(500).json({ 
-      success: false,
-      message: 'Record failed',
-      error: error.message, 
-    }); 
-    
-  }
-
-};
 
 
 const getUserById = async (req, res) => {
@@ -319,6 +267,5 @@ module.exports = {
   monthlyAmount,   
   yearlyAmount,   // 年统计量
   Spending,
-  updateUser,        //  花销统计
-  getshowCheckin
+  updateUser        //  花销统计
 };

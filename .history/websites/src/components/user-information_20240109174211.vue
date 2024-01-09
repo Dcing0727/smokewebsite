@@ -114,9 +114,9 @@
                   <el-col :span="12">
                     <el-form-item label="性别" prop="gender">
                       <el-radio-group v-model="form.gender">
-                        <el-radio label="保密">保密</el-radio>
-                        <el-radio label="男">男</el-radio>
-                        <el-radio label="女">女</el-radio>
+                        <el-radio label="0">保密</el-radio>
+                        <el-radio label="1">男</el-radio>
+                        <el-radio label="2">女</el-radio>
                       </el-radio-group>
                     </el-form-item>
                   </el-col>
@@ -165,7 +165,7 @@
           loading: false,
           box: false,
           form: {
-            avatar:'https://t9.baidu.com/it/u=100131377,2569675271&fm=193',//回显头像
+            avatar:'{{userInfo.avatar}}',//回显头像
             nickname: '',
             gender: '',
             file: null,

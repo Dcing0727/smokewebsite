@@ -165,7 +165,7 @@
           loading: false,
           box: false,
           form: {
-            avatar:'https://t9.baidu.com/it/u=100131377,2569675271&fm=193',//回显头像
+            avatar:'{{userInfo.avatar}}',//回显头像
             nickname: '',
             gender: '',
             file: null,

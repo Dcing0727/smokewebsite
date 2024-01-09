@@ -14,7 +14,6 @@ app.post('/api/user/weekly', userController.weeklyAmount);
 app.post('/api/user/monthly', userController.monthlyAmount);
 app.post('/api/user/yearly', userController.yearlyAmount);
 app.post('/api/user/spend', userController.Spending);
-app.post('/api/user/checkin', userController.getshowCheckin);
 app.put('/api/user/update/:userId', userController.updateUser);
 
 // 服务器端代码示例

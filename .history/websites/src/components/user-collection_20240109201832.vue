@@ -110,7 +110,7 @@
         description: '',
         content: '',
         coverImage: 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'
-      },
+      }
      };
     },
     mounted() {
@@ -143,7 +143,7 @@
         console.info(fileList);
         this.file = file;
         let URL = window.URL || window.webkitURL;
-        this.blogForm.coverImage = URL.createObjectURL(file.raw);
+        blogForm.coverImage = URL.createObjectURL(file.raw);
       }
     }
   };

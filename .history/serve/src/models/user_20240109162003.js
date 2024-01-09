@@ -20,16 +20,13 @@ const User = sequelize.define('users', {
     //allowNull: false,       //加上注册时会报错
   },
   // 非必须项，可后续添加
-  age: {
-    type: DataTypes.STRING,  //用户年龄
-  },
   avatar: {
     type: DataTypes.STRING,  //用户头像
   },
   nickname: {
     type: DataTypes.STRING,  //用户昵称
   },
-  email: {
+  hobby: {
     type: DataTypes.STRING, //用户邮箱
   },
   bio: {
@@ -59,12 +56,11 @@ const User = sequelize.define('users', {
 //   }
 // })();
 
-
 // User.sync({force:true}).then(()=>{
 // 	console.log('成功');
 // 	process.exit() // 成功之后退出，否则会一直在后台运行
 // }) //执行并写入数据库，force是如果数据库中有user表，则删除，重新写入数据。
-//force最好不写，容易报错 表不存在
+// // force最好不写，容易报错 表不存在
 
 module.exports = User;
 

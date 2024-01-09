@@ -22,8 +22,7 @@
                 </template>
                 <div>
                   <el-image
-                    :src="userInfo.avatar || 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'" 
-                    style="width: 50px; height: 50px;"></el-image>
+                    :src="userInfo.avatar || 'https://t9.baidu.com/it/u=100131377,2569675271&fm=193'" ></el-image>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item>
@@ -38,35 +37,35 @@
                   <i class="el-icon-user-solid"></i>
                   昵称
                 </template>
-                {{ userInfo.nickname ? userInfo.nickname : 'NULL' }}
+                {{ userInfo.nickname }}
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-tickets"></i>
                   年龄
                 </template>
-                {{ userInfo.age ? userInfo.age : 'NULL' }}
+                <el-tag size="small">23</el-tag>
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-tickets"></i>
                   性别
                 </template>
-                {{ userInfo.gender ? userInfo.gender : 'NULL' }}
+                <el-tag size="small">男</el-tag>
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-tickets"></i>
                   邮箱Email
                 </template>
-                {{ userInfo.email ? userInfo.email : 'NULL' }}
+                123123@qq.com
               </el-descriptions-item>
               <el-descriptions-item>
                 <template v-slot:label>
                   <i class="el-icon-office-building"></i>
-                  个人简介
+                  联系地址
                 </template>
-                {{ userInfo.bio ? userInfo.bio : 'NULL' }}
+                地球村
               </el-descriptions-item>
             </el-descriptions>
           </div>
@@ -98,7 +97,7 @@
                         :on-change="handleChange"
                         :on-remove="handleRemove"
                       >
-                        <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="" style="width: 100px; height: 100px; object-fit: cover;">
+                        <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="">
                         <i v-else class="el-icon-plus avatar-uploader-icon" />
                       </el-upload>
                     </el-form-item>
@@ -114,29 +113,29 @@
                   <el-col :span="12">
                     <el-form-item label="性别" prop="gender">
                       <el-radio-group v-model="form.gender">
-                        <el-radio label="保密">保密</el-radio>
-                        <el-radio label="男">男</el-radio>
-                        <el-radio label="女">女</el-radio>
+                        <el-radio label="0">保密</el-radio>
+                        <el-radio label="1">男</el-radio>
+                        <el-radio label="2">女</el-radio>
                       </el-radio-group>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item label="邮箱" prop="email">
-                      <el-input v-model="form.email" placeholder="请输入邮箱" clearable>
+                    <el-form-item label="爱好" prop="hobby">
+                      <el-input v-model="form.hobby" placeholder="请输入爱好" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="12">
-                    <el-form-item label="年龄" prop="age">
-                      <el-input v-model="form.age" placeholder="请输入年龄" clearable>
+                    <el-form-item label="职业" prop="job">
+                      <el-input v-model="form.job" placeholder="请输入职业" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item label="个人简介" prop="bio">
-                      <el-input type="textarea" resize="none" v-model="form.bio" placeholder="请输入个人简介" clearable>
+                    <el-form-item label="个人简介" prop="remark">
+                      <el-input type="textarea" resize="none" v-model="form.remark" placeholder="请输入个人简介" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -165,13 +164,13 @@
           loading: false,
           box: false,
           form: {
-            avatar:'https://t9.baidu.com/it/u=100131377,2569675271&fm=193',//回显头像
+            avatar:'https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg',//回显头像
             nickname: '',
             gender: '',
             file: null,
-            email:'',
-            age:'',
-            bio: ''
+            hobby:'',
+            job:'',
+            remark: ''
           },
           rules: {
             nickname: [
@@ -235,21 +234,6 @@
 
       submitFun() {//提交
         console.info(this.form);
-        const token = localStorage.getItem("token");
-        const userId = jwtDecode(token).sub;
-        axios.put(`http://localhost:3000/api/user/update/${userId}`, this.form, {
-            headers: { 'Authorization': `Bearer ${token}` }
-         })
-        .then(response => {
-              // 处理响应，例如显示成功消息
-           this.$message.success('用户信息更新成功');
-           this.someValue = false; // 关闭对话框
-        })
-        .catch(error => {
-          console.error('Error updating user data:', error);
-            // 显示错误消息
-        this.$message.error('更新失败');
-        });
       },
       fetchUserData() {
         // const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
