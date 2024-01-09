@@ -38,12 +38,12 @@ export default {
                 { year: 2023, month: 12, day: 5 },
                 { year: 2023, month: 12, day: 6 },
                 { year: 2023, month: 12, day: 7 },
-                { year: 2023, month: 12, day: 8 },
+                { year: 2024, month: 1, day: 8 },
             ],
             failDates: [
                 //戒烟失败打卡日期
                 { year: 2023, month: 12, day: 9 },
-                { year: 2023, month: 12, day: 10 },
+                { year: 2024, month: 1, day: 1 },
             ],
             todayDate: new Date(),
         };
