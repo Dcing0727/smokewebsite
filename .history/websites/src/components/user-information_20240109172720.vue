@@ -237,6 +237,7 @@
         console.info(this.form);
         const token = localStorage.getItem("token");
         const userId = jwtDecode(token).sub;
+
         axios.put(`http://localhost:3000/api/user/update/${userId}`, this.form, {
             headers: { 'Authorization': `Bearer ${token}` }
          })

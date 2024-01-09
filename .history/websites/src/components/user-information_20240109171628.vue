@@ -235,21 +235,6 @@
 
       submitFun() {//提交
         console.info(this.form);
-        const token = localStorage.getItem("token");
-        const userId = jwtDecode(token).sub;
-        axios.put(`http://localhost:3000/api/user/update/${userId}`, this.form, {
-            headers: { 'Authorization': `Bearer ${token}` }
-         })
-        .then(response => {
-              // 处理响应，例如显示成功消息
-           this.$message.success('用户信息更新成功');
-           this.someValue = false; // 关闭对话框
-        })
-        .catch(error => {
-          console.error('Error updating user data:', error);
-            // 显示错误消息
-        this.$message.error('更新失败');
-        });
       },
       fetchUserData() {
         // const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名

@@ -98,7 +98,7 @@
                         :on-change="handleChange"
                         :on-remove="handleRemove"
                       >
-                        <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="" style="width: 100px; height: 100px; object-fit: cover;">
+                        <img v-if="form.avatar" :src="form.avatar" class="avatar" alt="">
                         <i v-else class="el-icon-plus avatar-uploader-icon" />
                       </el-upload>
                     </el-form-item>
@@ -135,8 +135,8 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item label="个人简介" prop="bio">
-                      <el-input type="textarea" resize="none" v-model="form.bio" placeholder="请输入个人简介" clearable>
+                    <el-form-item label="个人简介" prop="remark">
+                      <el-input type="textarea" resize="none" v-model="form.remark" placeholder="请输入个人简介" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
@@ -165,13 +165,13 @@
           loading: false,
           box: false,
           form: {
-            avatar:'{{userInfo.avatar}}',//回显头像
+            avatar:'https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg',//回显头像
             nickname: '',
             gender: '',
             file: null,
             email:'',
             age:'',
-            bio: ''
+            remark: ''
           },
           rules: {
             nickname: [
@@ -235,21 +235,6 @@
 
       submitFun() {//提交
         console.info(this.form);
-        const token = localStorage.getItem("token");
-        const userId = jwtDecode(token).sub;
-        axios.put(`http://localhost:3000/api/user/update/${userId}`, this.form, {
-            headers: { 'Authorization': `Bearer ${token}` }
-         })
-        .then(response => {
-              // 处理响应，例如显示成功消息
-           this.$message.success('用户信息更新成功');
-           this.someValue = false; // 关闭对话框
-        })
-        .catch(error => {
-          console.error('Error updating user data:', error);
-            // 显示错误消息
-        this.$message.error('更新失败');
-        });
       },
       fetchUserData() {
         // const account = localStorage.getItem('account');// 动态获取或者硬编码您的用户账户名
