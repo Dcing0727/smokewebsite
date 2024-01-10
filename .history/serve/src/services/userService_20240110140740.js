@@ -687,24 +687,12 @@ const getUserBlogs = async (userId) => {
   }
 };
 
-const getAllBlogs = async () => {
-  try {
-    const blogs = await Blog.findAll({
-      order: [['blogId', 'ASC']] // 按照博客ID正序排序
-    });
-    return blogs;
-  } catch (error) {
-    throw error;
-  }
-};
-
 module.exports = {
   registerUser,
   loginUser,
   getUserByAccount,
   getUserById,
   createBlog,
-  getAllBlogs,
   //recordDaily,
   getWeeklyAmount,
   getMonthlyAmount,

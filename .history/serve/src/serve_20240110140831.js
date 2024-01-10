@@ -19,7 +19,7 @@ app.post('/api/user/sum', userController.getsumofMonth);
 app.put('/api/user/update/:userId', userController.updateUser);
 app.post('/api/blog', userController.createBlogPost);
 app.get('/api/user-blogs/:userId', userController.getUserBlogs);
-app.get('/api/blogs', userController.getAllBlogs);
+
 
 
 app.post('/api/user/failed', userController.getfailedRecord);

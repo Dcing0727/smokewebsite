@@ -173,10 +173,6 @@ import { jwtDecode } from 'jwt-decode';
         let URL = window.URL || window.webkitURL;
         this.blogForm.coverImage = URL.createObjectURL(file.raw);
       },
-      formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-      },
       fetchUserBlogs() {
       const token = localStorage.getItem("token");
       const decodedToken = jwtDecode(token);
@@ -422,9 +418,4 @@ import { jwtDecode } from 'jwt-decode';
     color: #ccc;
     font-size: 16px;
   }
-  .blog-time {
-  font-size: 0.8em; /* 较小的字号 */
-  color: #999;
-  margin-right: 10px; /* 适当的间距 */
-  } 
 </style>

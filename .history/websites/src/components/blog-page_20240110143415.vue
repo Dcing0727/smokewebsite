@@ -71,15 +71,15 @@
   <div class="blog-page">
     <h1 class="page-title">社区博客</h1>
     <div class="blog-list">
-      <div v-for="blog in blogs" :key="blog.id" class="blog-post">
+      <div v-for="blog in blogs" :key="blog.blogId" class="blog-post">
         <div class="blog-cover">
-          <img :src="blog.cover" alt="博客封面">
+          <img :src="blog.coverImage" alt="博客封面">
         </div>
         <div class="blog-content">
           <h2 class="blog-title">{{ blog.title }}</h2>
           <div class="blog-meta">
             <span>作者: {{ blog.author }}</span>
-            <span>发表时间: {{ blog.date }}</span>
+            <span>发表时间: {{ blog.createdAt }}</span>
             <span class="likes">点赞数: {{ blog.likes }}</span>
           </div>
           <p class="blog-summary">{{ blog.summary }}</p>
@@ -91,66 +91,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      blogs: [
-        {
-          id: 1,
-          title: '博客文章 1',
-          author: '作者 A',
-          date: '2023-01-01',
-          likes: 100,
-          summary: '这是第一篇博客文章的简介...',
-          cover: require('@/assets/w.jpg')
-        },
-        {
-          id: 2,
-          title: '博客文章 2',
-          author: '作者 B',
-          date: '2023-01-02',
-          likes: 150,
-          summary: '这是第二篇博客文章的简介...',
-          cover: require('@/assets/q.jpg')
-        },
-        {
-          id: 3,
-          title: '博客文章 3',
-          author: '作者 C',
-          date: '2023-01-03',
-          likes: 151,
-          summary: '这是第三篇博客文章的简介...',
-          cover: require('@/assets/i.jpg')
-        },
-        {
-          id: 4,
-          title: '博客文章 4',
-          author: '作者 D',
-          date: '2023-01-04',
-          likes: 152,
-          summary: '这是第四篇博客文章的简介...',
-          cover: require('@/assets/pro1.jpg')
-        },
-        {
-          id: 5,
-          title: '博客文章 5',
-          author: '作者 E',
-          date: '2023-01-05',
-          likes: 153,
-          summary: '这是第五篇博客文章的简介...',
-          cover: require('@/assets/pro2.jpg')
-        },
-        // ...其他博客文章
-      ]
+      blogs: []
     };
   },
+  mounted() {
+    this.fetchBlogs();
+  },
   methods: {
+    fetchBlogs() {
+      axios.get('http://localhost:3000/api/blogs')
+        .then(response => {
+          this.blogs = response.data.blogs;
+        })
+        .catch(error => {
+          console.error('Error fetching blogs:', error);
+        });
+    },
     viewBlog(blog) {
       alert('查看博客：' + blog.title);
     }
   }
 };
 </script>
+
 
 <style>
 .blog-page {

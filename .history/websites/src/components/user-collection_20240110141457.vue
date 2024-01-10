@@ -424,7 +424,7 @@ import { jwtDecode } from 'jwt-decode';
   }
   .blog-time {
   font-size: 0.8em; /* 较小的字号 */
-  color: #999;
+  color: #666; /* 较浅的字体颜色 */
   margin-right: 10px; /* 适当的间距 */
   } 
 </style>

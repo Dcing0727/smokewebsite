@@ -10,40 +10,50 @@
           <!---->
         </div>
       </div>
-      
-    <div class="mhy-account-center-content-container__list">
-      <div 
-        class="mhy-collection-card mhy-account-center-collection-card"
-        v-for="blog in userBlogs"
-        :key="blog.blogId"
-      >
-        <a class="mhy-router-link mhy-collection-card__link">
-          <div class="mhy-collection-card__cover" :style="{ backgroundImage: `url('${blog.coverImage}')` }">
-          </div>
-        </a>
-        <div class="mhy-collection-card__info">
-          <a class="mhy-router-link mhy-collection-card__link" target="_blank">
-            <p class="mhy-collection-card__name">{{ blog.title }}</p>
-            <p class="mhy-collection-card__desc">{{ blog.description }}</p>
-            <span class="blog-time">创建时间: {{ formatDate(blog.createdAt) }}</span>
-            <span class="blog-time">最后修改: {{ formatDate(blog.updatedAt) }}</span>
+      <div class="mhy-account-center-content-container__list">
+        <div class="mhy-collection-card mhy-account-center-collection-card">
+          <a class="mhy-router-link mhy-collection-card__link">
+            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
+            </div>
           </a>
-          <div class="mhy-collection-card__stats">
-            <!-- 这里可以添加浏览量、点赞量等信息 -->
+          <div class="mhy-collection-card__info">
+            <a class="mhy-router-link mhy-collection-card__link" target="_blank">
+              <p class="mhy-collection-card__name">hello</p>
+              <p class="mhy-collection-card__desc">hello word</p>
+            </a>
+            <div class="mhy-collection-card__stats">
+              <span>0浏览</span>
+              <span>0点赞</span>
+              <span>1分钟前</span>
+            </div>
           </div>
+          <!---->
         </div>
-      </div>
-      <!-- 用于显示没有更多数据的消息 -->
-      <div v-if="userBlogs.length === 0" class="mhy-container__footer">
-        <div class="mhy-loadmore mhy-loadmore-scroll">
-          <div class="mhy-loadmore__nomore">没有更多数据了</div>
+        <div class="mhy-collection-card mhy-account-center-collection-card">
+          <a class="mhy-router-link mhy-collection-card__link">
+            <div class="mhy-collection-card__cover" style="background-image: url('https://upload-bbs.miyoushe.com/upload/2023/04/13/378888828/76171646a64fa87d316f7d7ddbfb8efd_4456710405302802792.jpg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg');">
+            </div>
+          </a>
+          <div class="mhy-collection-card__info">
+            <a class="mhy-router-link mhy-collection-card__link" target="_blank">
+              <p class="mhy-collection-card__name">hello</p>
+              <p class="mhy-collection-card__desc">hello word</p>
+            </a>
+            <div class="mhy-collection-card__stats">
+              <span>0浏览</span>
+              <span>0点赞</span>
+              <span>1分钟前</span>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="mhy-container__footer">
+          <div class="mhy-loadmore mhy-loadmore-scroll">
+            <div class="mhy-loadmore__nomore">没有更多数据了</div>
+          </div>
         </div>
       </div>
     </div>
-
-
-
-  </div>
 
   <el-dialog title="创建博客" v-model="dialogVisible" width="70%">
     <el-form :model="blogForm">
@@ -172,10 +182,6 @@ import { jwtDecode } from 'jwt-decode';
         this.file = file;
         let URL = window.URL || window.webkitURL;
         this.blogForm.coverImage = URL.createObjectURL(file.raw);
-      },
-      formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
       },
       fetchUserBlogs() {
       const token = localStorage.getItem("token");
@@ -422,9 +428,4 @@ import { jwtDecode } from 'jwt-decode';
     color: #ccc;
     font-size: 16px;
   }
-  .blog-time {
-  font-size: 0.8em; /* 较小的字号 */
-  color: #999;
-  margin-right: 10px; /* 适当的间距 */
-  } 
 </style>

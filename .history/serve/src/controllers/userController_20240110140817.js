@@ -395,15 +395,6 @@ const getUserBlogs = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
-const getAllBlogs = async (req, res) => {
-  try {
-    const blogs = await userService.getAllBlogs();
-    res.json({ success: true, blogs: blogs });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
   
 module.exports = {
   register,
@@ -420,7 +411,6 @@ module.exports = {
   createBlogPost,  
   getshowCheckin,
   getUserBlogs,
-  getAllBlogs,
 
 
 

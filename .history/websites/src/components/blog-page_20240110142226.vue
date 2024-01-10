@@ -73,13 +73,13 @@
     <div class="blog-list">
       <div v-for="blog in blogs" :key="blog.id" class="blog-post">
         <div class="blog-cover">
-          <img :src="blog.cover" alt="博客封面">
+          <img :src="blog.coverImage" alt="博客封面">
         </div>
         <div class="blog-content">
           <h2 class="blog-title">{{ blog.title }}</h2>
           <div class="blog-meta">
             <span>作者: {{ blog.author }}</span>
-            <span>发表时间: {{ blog.date }}</span>
+            <span>发表时间: {{ blog.createdAt }}</span>
             <span class="likes">点赞数: {{ blog.likes }}</span>
           </div>
           <p class="blog-summary">{{ blog.summary }}</p>
@@ -91,39 +91,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      blogs: [
-        {
-          id: 1,
-          title: '博客文章 1',
-          author: '作者 A',
-          date: '2023-01-01',
-          likes: 100,
-          summary: '这是第一篇博客文章的简介...',
-          cover: '封面图片URL'
-        },
-        {
-          id: 2,
-          title: '博客文章 2',
-          author: '作者 B',
-          date: '2023-01-02',
-          likes: 150,
-          summary: '这是第二篇博客文章的简介...',
-          cover: '封面图片URL'
-        },
-        // ...其他博客文章
-      ]
+      blogs: []
     };
   },
+  mounted() {
+    this.fetchBlogs();
+  },
   methods: {
+    fetchBlogs() {
+      axios.get('http://localhost:3000/api/blogs')
+        .then(response => {
+          this.blogs = response.data.blogs;
+        })
+        .catch(error => {
+          console.error('Error fetching blogs:', error);
+        });
+    },
     viewBlog(blog) {
       alert('查看博客：' + blog.title);
     }
   }
 };
 </script>
+
 
 <style>
 .blog-page {
@@ -133,7 +128,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-image: url('背景图片URL');
+  background-image: url('@/assets/o.jpg');
   background-size: cover;
   background-position: center;
 }
