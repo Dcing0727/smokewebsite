@@ -121,8 +121,7 @@ import { jwtDecode } from 'jwt-decode';
        viewBlog(blog) {
       // 实现查看博客的逻辑，比如导航到博客详情页面
       // 例如：this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      // alert('查看博客：' + blog.title);
+      alert('查看博客：' + blog.title);
     },
 
     editBlog(blog) {

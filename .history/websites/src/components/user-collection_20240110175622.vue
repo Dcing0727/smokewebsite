@@ -121,8 +121,7 @@ import { jwtDecode } from 'jwt-decode';
        viewBlog(blog) {
       // 实现查看博客的逻辑，比如导航到博客详情页面
       // 例如：this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      // alert('查看博客：' + blog.title);
+      alert('查看博客：' + blog.title);
     },
 
     editBlog(blog) {
@@ -365,8 +364,8 @@ import { jwtDecode } from 'jwt-decode';
     overflow: hidden;
     border-radius: 4px;
     border: 1px solid #ebebeb;
-    width: 73px;
-    height: 73px;
+    width: 60px;
+    height: 60px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -403,7 +402,7 @@ import { jwtDecode } from 'jwt-decode';
     color: #999;
     font-size: 12px;
     line-height: 1;
-    height: 12px;
+    height: 15px;
   }
    .mhy-collection-card__desc, .mhy-collection-card__name, .mhy-collection-card__info .mhy-collection-card__link {
      overflow: hidden;

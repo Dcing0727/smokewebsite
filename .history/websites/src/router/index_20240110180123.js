@@ -22,7 +22,6 @@ import Daily from '../components/daily-records.vue';
 import Background from '../components/background-vue.vue';
 import Button from '../components/button-usecase.vue';
 import Calendar from '../components/calendar-usecase.vue';
-import BlogDetail from '../components/BlogDetail';
 
 const router = createRouter({
   history: createWebHashHistory(),

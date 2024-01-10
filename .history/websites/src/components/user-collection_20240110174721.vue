@@ -121,8 +121,7 @@ import { jwtDecode } from 'jwt-decode';
        viewBlog(blog) {
       // 实现查看博客的逻辑，比如导航到博客详情页面
       // 例如：this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
-      // alert('查看博客：' + blog.title);
+      alert('查看博客：' + blog.title);
     },
 
     editBlog(blog) {
@@ -297,14 +296,11 @@ import { jwtDecode } from 'jwt-decode';
      width: 88px;
    }
    .mhy-button {
-     /* display: inline-block; */
+     display: inline-block;
      cursor: pointer;
      -ms-flex-negative: 0;
      flex-shrink: 0;
-     display: flex; /* 使用flex布局 */
-     align-items: center; /* 垂直居中对齐 */
-     justify-content: space-around; /* 水平方向上均匀分布 */
-  }
+   }
   .mhy-button-outlined .mhy-button__button {
     background-color: #fff;
     color: #00b2ff;
@@ -318,7 +314,6 @@ import { jwtDecode } from 'jwt-decode';
     transition-property: border-color,color;
   }
    .mhy-button__button {
-     margin-right: 10px; /* 按钮之间的间距 */
      display: -ms-inline-flexbox;
      display: inline-flex;
      -webkit-box-align: center;
@@ -365,8 +360,8 @@ import { jwtDecode } from 'jwt-decode';
     overflow: hidden;
     border-radius: 4px;
     border: 1px solid #ebebeb;
-    width: 73px;
-    height: 73px;
+    width: 60px;
+    height: 60px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -403,7 +398,7 @@ import { jwtDecode } from 'jwt-decode';
     color: #999;
     font-size: 12px;
     line-height: 1;
-    height: 12px;
+    height: 22px;
   }
    .mhy-collection-card__desc, .mhy-collection-card__name, .mhy-collection-card__info .mhy-collection-card__link {
      overflow: hidden;
