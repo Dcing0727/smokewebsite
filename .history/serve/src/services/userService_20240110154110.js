@@ -10,10 +10,10 @@ const CheckinRecord = require('../models/CheckinRecord');
 const Blog = require('../models/Blog'); // 确保路径正确
 //const sequelize = require('./db');
 
-// const multer = require('multer');
-// const upload = multer({ dest: '../uploads/' }); // 文件将保存在 'uploads/' 文件夹
+const multer = require('multer');
+const upload = multer({ dest: '../uploads/' }); // 文件将保存在 'uploads/' 文件夹
 
-// exports.uploadImage = upload.single('file'); // 'file' 是前端上传字段的名称
+exports.uploadImage = upload.single('file'); // 'file' 是前端上传字段的名称
 
 const registerUser = async (account, password) => {
   try {

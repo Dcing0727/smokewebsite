@@ -219,7 +219,7 @@
         axios.post('http://localhost:3000/api/upload', formData)
           .then(response => {
             // 使用服务器返回的永久URL
-            this.form.avatar = response.data.url;
+            this.blogForm.coverImage = response.data.url;
           })
           .catch(error => {
             console.error('Error uploading image:', error);

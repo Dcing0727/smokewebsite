@@ -405,22 +405,18 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-
 const uploadImage = (req, res) => {
-  upload.single('file')(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // 发生错误时的处理
-      return res.status(500).json({ success: false, message: err.message });
-    } else if (err) {
-      // 发生未知错误时的处理
+  userService.uploadImage(req, res, (err) => {
+    if (err) {
       return res.status(500).json({ success: false, message: err.message });
     }
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No file uploaded.' });
+    }
 
-    // 文件上传成功，处理后续逻辑
-    // 假设文件保存在本地 'uploads/' 目录
+    // 生成文件的URL（这里简单地使用本地服务器路径）
     const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    
     res.json({ success: true, url: fileUrl });
   });
 };

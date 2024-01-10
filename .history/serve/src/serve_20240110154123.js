@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const userController = require('./controllers/userController');  // Add this line
-// 配置静态文件服务
-app.use('/uploads', express.static('uploads'));
 
 
 app.use(express.json());
