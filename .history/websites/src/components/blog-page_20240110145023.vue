@@ -78,13 +78,12 @@
         <div class="blog-content">
           <h2 class="blog-title">{{ blog.title }}</h2>
           <div class="blog-meta">
-            <span>作者: {{ blog.user.account }}</span>
-          </div>
-          <div class="blog-meta">
+            <span>作者: {{ blog.userId }}</span>
             <span>发表时间: {{ formatDate(blog.createdAt) }}</span>
-            <span>最后修改: {{ formatDate(blog.updatedAt) }}</span>
+            <span class="blog-time">创建时间: {{ formatDate(blog.createdAt) }}</span>
+            <span class="blog-time">最后修改: {{ formatDate(blog.updatedAt) }}</span>
           </div>
-          <p class="blog-summary">简介：{{ blog.description }}</p>
+          <p class="blog-summary">{{ blog.summary }}</p>
           <button class="read-more-btn" @click="viewBlog(blog)">阅读更多</button>
         </div>
       </div>
@@ -120,7 +119,7 @@ export default {
         });
     },
     viewBlog(blog) {
-      alert('查看博客：' + blog.content);
+      alert('查看博客：' + blog.title);
     }
   }
 };

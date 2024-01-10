@@ -79,8 +79,6 @@
           <h2 class="blog-title">{{ blog.title }}</h2>
           <div class="blog-meta">
             <span>作者: {{ blog.user.account }}</span>
-          </div>
-          <div class="blog-meta">
             <span>发表时间: {{ formatDate(blog.createdAt) }}</span>
             <span>最后修改: {{ formatDate(blog.updatedAt) }}</span>
           </div>
