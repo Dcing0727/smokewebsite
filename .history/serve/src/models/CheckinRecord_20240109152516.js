@@ -36,7 +36,7 @@ const CheckinRecord = sequelize.define('CheckinRecord', {
 
 
 
-
+  // 同步数据库以创建表
     // CheckinRecord.sync({ force: false })
     // .then(() => {
     // console.log('CheckinRecord 表已创建或存在');

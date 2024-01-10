@@ -36,14 +36,14 @@ const CheckinRecord = sequelize.define('CheckinRecord', {
 
 
 
-
-    // CheckinRecord.sync({ force: false })
-    // .then(() => {
-    // console.log('CheckinRecord 表已创建或存在');
-    // })
-    // .catch((error) => {
-    // console.error('无法创建 CheckinRecord 表:', error);
-    // });
+  同步数据库以创建表
+    CheckinRecord.sync({ force: false })
+    .then(() => {
+    console.log('CheckinRecord 表已创建或存在');
+    })
+    .catch((error) => {
+    console.error('无法创建 CheckinRecord 表:', error);
+    });
 
 
   module.exports = CheckinRecord;

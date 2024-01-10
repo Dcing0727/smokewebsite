@@ -7,7 +7,7 @@ const { Sequelize } = require('sequelize');
 const { type } = require('express/lib/response');
 const res = require('express/lib/response');
 const CheckinRecord = require('../models/CheckinRecord');
-const Blog = require('../models/Blog'); // 确保路径正确
+const Blog = require('./models/blog'); // 确保路径正确
 //const sequelize = require('./db');
 
 const registerUser = async (account, password) => {
@@ -665,22 +665,11 @@ const successRecoed = async (account, date) =>{
 // const result = getRecentFourWeeks();
 // console.log(result);
 
-
-const createBlog = async (blogData) => {
-  try {
-    const blog = await Blog.create(blogData);
-    return blog;
-  } catch (error) {
-    throw error;
-  }
-};
-
 module.exports = {
   registerUser,
   loginUser,
   getUserByAccount,
   getUserById,
-  createBlog,
   //recordDaily,
   getWeeklyAmount,
   getMonthlyAmount,

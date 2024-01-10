@@ -9,7 +9,7 @@ const res = require('express/lib/response');
 const CheckinRecord = require('../models/CheckinRecord');
 const sequelize = require('../models/db');
 const req = require('express/lib/request');
-
+const Blog = require('./models/blog'); // 确保路径正确
 
 //JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
 //常用于身份验证和信息传递。
@@ -333,13 +333,12 @@ const getsuccessRecord = async(req, res) =>{
   }
 };
 
-const createBlogPost = async (req, res) => {
+const createBlog = async (blogData) => {
   try {
-    const blogData = req.body;
-    const blog = await userService.createBlog(blogData);
-    res.status(201).json({ success: true, message: '博客创建成功', blog });
+    const blog = await Blog.create(blogData);
+    return blog;
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    throw error;
   }
 };
 
@@ -398,7 +397,7 @@ module.exports = {
   yearlyAmount,   // 年统计量
   Spending,
   updateUser,   
-  createBlogPost,  
+  createBlog,  
   getshowCheckin,
 
 

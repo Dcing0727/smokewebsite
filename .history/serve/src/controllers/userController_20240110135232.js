@@ -9,7 +9,7 @@ const res = require('express/lib/response');
 const CheckinRecord = require('../models/CheckinRecord');
 const sequelize = require('../models/db');
 const req = require('express/lib/request');
-
+const Blog = require('./models/Blog'); // 确保路径正确
 
 //JWT 是一种用于在网络上安全地传输信息的开放标准（RFC 7519），
 //常用于身份验证和信息传递。
