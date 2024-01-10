@@ -18,12 +18,12 @@
       </aside>
       <article class="main-card">
         <!-- 博客主要内容 -->
-        <h1>{{ cblog.title }}</h1>
-        <p class="blog-time">创建时间: {{ formatDate(cblog.createdAt) }}</p>
-        <p class="blog-time">编辑时间: {{ formatDate(cblog.updatedAt) }}</p>
-        <p class="blog-description">{{ cblog.description }}</p>
+        <h1>{{ blog.title }}</h1>
+        <p class="blog-time">创建时间: {{ formatDate(blog.createdAt) }}</p>
+        <p class="blog-time">编辑时间: {{ formatDate(blog.updatedAt) }}</p>
+        <p class="blog-description">{{ blog.description }}</p>
         <!-- <p>{{ blog.userId }}</p> -->
-        <div class="blog-content">{{ cblog.content }}</div>
+        <div class="blog-content">{{ blog.content }}</div>
       </article>
       <aside class="right-card">
         <!-- 作者的其他博客 -->
@@ -58,7 +58,7 @@
   export default {
     data() {
       return {
-        cblog: {
+        blog: {
           title: '',
           description: '',
           content: '',
@@ -83,7 +83,7 @@
               const blogId = this.$route.params.blogId;
               axios.get(`http://localhost:3000/api/blog/${blogId}`)
                   .then(response => {
-                      this.cblog = response.data;
+                      this.blog = response.data;
                       // 确保获取到博客详情后再获取作者信息
                       this.fetchAuthorInfo();
                       this.fetchAuthorBlogs();
@@ -94,7 +94,7 @@
           },
           fetchAuthorInfo() {
               // 假设 authorId 是已知的或者从路由参数中获取
-              const userId = this.cblog.userId; // 或者 this.$route.params.authorId
+              const userId = this.blog.userId; // 或者 this.$route.params.authorId
               axios.get(`http://localhost:3000/api/user/id/${userId}`)
                   .then(response => {
                       this.author = response.data;
@@ -106,7 +106,7 @@
 
           fetchAuthorBlogs() {
               // 同样，假设 authorId 是已知的或者从路由参数中获取
-              const userId = this.cblog.userId; // 或者 this.$route.params.authorId
+              const userId = this.blog.userId; // 或者 this.$route.params.authorId
               axios.get(`http://localhost:3000/api/user-blogs/${userId}`)
                   .then(response => {
                       this.authorBlogs = response.data.blogs;
@@ -116,7 +116,7 @@
                   });
           },
           viewBlog(blog) {
-            alert('查看博客：' + blog.title);
+          this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
           }
     }
   };

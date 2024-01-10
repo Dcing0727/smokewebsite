@@ -20,7 +20,7 @@
         <!-- 博客主要内容 -->
         <h1>{{ cblog.title }}</h1>
         <p class="blog-time">创建时间: {{ formatDate(cblog.createdAt) }}</p>
-        <p class="blog-time">编辑时间: {{ formatDate(cblog.updatedAt) }}</p>
+        <p class="blog-time">编辑时间: {{ formatDate(console.clear();blog.updatedAt) }}</p>
         <p class="blog-description">{{ cblog.description }}</p>
         <!-- <p>{{ blog.userId }}</p> -->
         <div class="blog-content">{{ cblog.content }}</div>
@@ -116,7 +116,7 @@
                   });
           },
           viewBlog(blog) {
-            alert('查看博客：' + blog.title);
+          this.$router.push({ name: 'BlogDetail', params: { blogId: blog.blogId } });
           }
     }
   };

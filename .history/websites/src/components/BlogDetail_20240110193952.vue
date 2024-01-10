@@ -116,7 +116,7 @@
                   });
           },
           viewBlog(blog) {
-            alert('查看博客：' + blog.title);
+          this.$router.push({ name: '../BlogDetail', params: { blogId: blog.blogId } });
           }
     }
   };

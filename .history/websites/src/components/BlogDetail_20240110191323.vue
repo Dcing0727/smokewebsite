@@ -8,57 +8,39 @@
                 <img v-else src="https://t9.baidu.com/it/u=100131377,2569675271&fm=193" class="mhy-avatar__img">
             </div>
           <h3>{{ author.account }}</h3>
-          <p>简介: {{ author.bio }}</p>
           <p>昵称: {{ author.nickname }}</p>
           <p>年龄: {{ author.age }}</p>
-          <p>性别: {{ author.gender }}</p>
-          <p>邮箱: {{ author.email }}</p>
           <!-- 其他个人信息 -->
         </div>
       </aside>
       <article class="main-card">
         <!-- 博客主要内容 -->
-        <h1>{{ cblog.title }}</h1>
-        <p class="blog-time">创建时间: {{ formatDate(cblog.createdAt) }}</p>
-        <p class="blog-time">编辑时间: {{ formatDate(cblog.updatedAt) }}</p>
-        <p class="blog-description">{{ cblog.description }}</p>
-        <!-- <p>{{ blog.userId }}</p> -->
-        <div class="blog-content">{{ cblog.content }}</div>
+        <h1>{{ blog.title }}</h1>
+        <p class="blog-time">创建时间: {{ formatDate(blog.createdAt) }}</p>
+        <p class="blog-description">{{ blog.description }}</p>
+        <p>{{ blog.userId }}</p>
+        <div class="blog-content">{{ blog.content }}</div>
       </article>
       <aside class="right-card">
         <!-- 作者的其他博客 -->
-        <!-- <div class="other-blogs">
+        <div class="other-blogs">
           <h3>其他博客</h3>
           <ul>
             <li v-for="otherBlog in authorBlogs" :key="otherBlog.id">
               <a :href="`/blog/${otherBlog.id}`">{{ otherBlog.title }}</a>
             </li>
           </ul>
-        </div> -->
-        <div>
-          <div v-for="blog in authorBlogs" :key="blog.blogId" class="blog-post">
-            <div class="blog-cover">
-              <img :src="blog.coverImage" alt="博客封面" style="width: 100px; height: 140px; object-fit: cover;">
-            </div>
-            <div class="blog-content">
-              <h3 class="blog-title">{{ blog.title }}</h3>
-              <p class="blog-summary">{{ blog.description }}</p>
-              <button class="read-more-btn" @click="viewBlog(blog)">阅读更多</button>
-            </div>
         </div>
-        </div>
-
-
-       </aside>
-  </div>
-</template>
+      </aside>
+    </div>
+  </template>
   
   <script>
   import axios from 'axios';
   export default {
     data() {
       return {
-        cblog: {
+        blog: {
           title: '',
           description: '',
           content: '',
@@ -83,7 +65,7 @@
               const blogId = this.$route.params.blogId;
               axios.get(`http://localhost:3000/api/blog/${blogId}`)
                   .then(response => {
-                      this.cblog = response.data;
+                      this.blog = response.data;
                       // 确保获取到博客详情后再获取作者信息
                       this.fetchAuthorInfo();
                       this.fetchAuthorBlogs();
@@ -94,7 +76,7 @@
           },
           fetchAuthorInfo() {
               // 假设 authorId 是已知的或者从路由参数中获取
-              const userId = this.cblog.userId; // 或者 this.$route.params.authorId
+              const userId = this.blog.userId; // 或者 this.$route.params.authorId
               axios.get(`http://localhost:3000/api/user/id/${userId}`)
                   .then(response => {
                       this.author = response.data;
@@ -106,7 +88,7 @@
 
           fetchAuthorBlogs() {
               // 同样，假设 authorId 是已知的或者从路由参数中获取
-              const userId = this.cblog.userId; // 或者 this.$route.params.authorId
+              const userId = this.blog.userId; // 或者 this.$route.params.authorId
               axios.get(`http://localhost:3000/api/user-blogs/${userId}`)
                   .then(response => {
                       this.authorBlogs = response.data.blogs;
@@ -114,9 +96,6 @@
                   .catch(error => {
                       console.error('Error fetching author blogs:', error);
                   });
-          },
-          viewBlog(blog) {
-            alert('查看博客：' + blog.title);
           }
     }
   };
