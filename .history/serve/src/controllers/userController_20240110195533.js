@@ -469,7 +469,6 @@ module.exports = {
   getUserBlogs,
   getAllBlogs,
   uploadImage,
-  updateBlog,
 
 
 

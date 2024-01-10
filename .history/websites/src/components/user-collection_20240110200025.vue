@@ -70,8 +70,7 @@
                         :on-remove="handleRemove"
           >
           <img v-if="blogForm.coverImage" :src="blogForm.coverImage" class="coverImage" alt="" style="width: 100px; height: 100px; object-fit: cover;">
-          <img v-else src="https://t9.baidu.com/it/u=100131377,2569675271&fm=193" class="coverImage" alt="默认封面" style="width: 100px; height: 100px; object-fit: cover;">
-         
+          <i v-else class="el-icon-plus avatar-uploader-icon" />
           <i class="el-icon-plus"></i>
         </el-upload>
       </el-form-item>
@@ -152,99 +151,93 @@ import { jwtDecode } from 'jwt-decode';
       // openDialog() {
       // this.dialogVisible = true; // 打开对话框
       // },
-      submitBlog() {
-      // 发送请求到后端API
-      // 示例：axios.post('/api/blog', this.blogForm)
-      // ...处理响应...
-      const token = localStorage.getItem("token");
-                    // 解码 JWT
-                    //console.log(token)
-      const decodedToken = jwtDecode(token);
-                    // 获取用户账号
-      console.log(decodedToken) 
-      const userId = decodedToken.sub;
+      // submitBlog() {
+      // // 发送请求到后端API
+      // // 示例：axios.post('/api/blog', this.blogForm)
+      // // ...处理响应...
+      // const token = localStorage.getItem("token");
+      //               // 解码 JWT
+      //               //console.log(token)
+      // const decodedToken = jwtDecode(token);
+      //               // 获取用户账号
+      // console.log(decodedToken) 
+      // const userId = decodedToken.sub;
 
-      // 准备要发送的博客数据
-      const blogData = {
-        userId: userId,
-        title: this.blogForm.title,
-        description: this.blogForm.description,
-        content: this.blogForm.content,
-        coverImage: this.blogForm.coverImage
+      // // 准备要发送的博客数据
+      // const blogData = {
+      //   userId: userId,
+      //   title: this.blogForm.title,
+      //   description: this.blogForm.description,
+      //   content: this.blogForm.content,
+      //   coverImage: this.blogForm.coverImage
+      // };
+
+      // // 发送 POST 请求到后端API
+      // axios.post('http://localhost:3000/api/blog', blogData, {
+      //   headers: { 'Authorization': `Bearer ${token}` }
+      // })
+      //   .then(response => {
+      //     // 处理成功的响应
+      //     this.$message.success('博客发布成功');
+      //     this.dialogVisible = false; // 关闭对话框
+      //     // 这里可以添加代码来清空表单或更新页面上的博客列表
+      //   })
+      //   .catch(error => {
+      //     // 处理错误的响应
+      //     console.error('Error publishing the blog:', error);
+      //     this.$message.error('发布失败');
+      //   });
+
+      // this.dialogVisible = false; // 关闭对话框
+      // },
+    submitBlog() {
+      // 构造请求头部，包括认证令牌
+      const headers = {
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       };
 
-      // 发送 POST 请求到后端API
-      axios.post('http://localhost:3000/api/blog', blogData, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
-        .then(response => {
-          // 处理成功的响应
-          this.$message.success('博客发布成功');
-          this.dialogVisible = false; // 关闭对话框
-          // 这里可以添加代码来清空表单或更新页面上的博客列表
-        })
-        .catch(error => {
-          // 处理错误的响应
-          console.error('Error publishing the blog:', error);
-          this.$message.error('发布失败');
-        });
+      // 从表单数据中构造博客数据
+      const blogData = new FormData();
+      blogData.append('title', this.blogForm.title);
+      blogData.append('description', this.blogForm.description);
+      blogData.append('content', this.blogForm.content);
+      // 仅当用户选择了文件时才添加文件
+      if (this.blogForm.file) {
+        blogData.append('file', this.blogForm.file);
+      }
 
-      this.dialogVisible = false; // 关闭对话框
-      },
-    // submitBlog() {
-    //   // 构造请求头部，包括认证令牌
-    //   const headers = {
-    //     'Authorization': `Bearer ${localStorage.getItem("token")}`
-    //   };
-    //   const token = localStorage.getItem("token");
-    //                 // 解码 JWT
-    //                 //console.log(token)
-    //   const decodedToken = jwtDecode(token);
-    //                 // 获取用户账号
-    //   console.log(decodedToken) 
-    //   const userId = decodedToken.sub;
-    //   // 从表单数据中构造博客数据
-    //   const blogData = new FormData();
-    //   blogData.append('title', this.blogForm.title);
-    //   blogData.append('description', this.blogForm.description);
-    //   blogData.append('content', this.blogForm.content);
-    //   // 仅当用户选择了文件时才添加文件
-    //   if (this.blogForm.file) {
-    //     blogData.append('file', this.blogForm.file);
-    //   }
-
-    //   if (this.isEditMode) {
-    //     // 编辑模式：发送 PUT 请求来更新博客
-    //     axios.put(`http://localhost:3000/api/blog/${this.blogForm.blogId}`, blogData, { headers })
-    //       .then(response => {
-    //         // 处理成功的响应
-    //         this.$message.success('博客更新成功');
-    //         this.dialogVisible = false; // 关闭对话框
-    //         // 可以选择重新获取博客列表来更新页面
-    //         this.fetchUserBlogs();
-    //       })
-    //       .catch(error => {
-    //         // 处理错误的响应
-    //         console.error('Error updating the blog:', error);
-    //         this.$message.error('博客更新失败');
-    //       });
-    //   } else {
-    //     // 创建模式：发送 POST 请求来创建新博客
-    //     axios.post('http://localhost:3000/api/blog', blogData, { headers })
-    //       .then(response => {
-    //         // 处理成功的响应
-    //         this.$message.success('博客发布成功');
-    //         this.dialogVisible = false; // 关闭对话框
-    //         // 可以选择重新获取博客列表来更新页面
-    //         this.fetchUserBlogs();
-    //       })
-    //       .catch(error => {
-    //         // 处理错误的响应
-    //         console.error('Error publishing the blog:', error);
-    //         this.$message.error('博客发布失败');
-    //       });
-    //   }
-    // },
+      if (this.isEditMode) {
+        // 编辑模式：发送 PUT 请求来更新博客
+        axios.put(`http://localhost:3000/api/blog/${this.blogForm.blogId}`, blogData, { headers })
+          .then(response => {
+            // 处理成功的响应
+            this.$message.success('博客更新成功');
+            this.dialogVisible = false; // 关闭对话框
+            // 可以选择重新获取博客列表来更新页面
+            this.fetchUserBlogs();
+          })
+          .catch(error => {
+            // 处理错误的响应
+            console.error('Error updating the blog:', error);
+            this.$message.error('博客更新失败');
+          });
+      } else {
+        // 创建模式：发送 POST 请求来创建新博客
+        axios.post('http://localhost:3000/api/blog', blogData, { headers })
+          .then(response => {
+            // 处理成功的响应
+            this.$message.success('博客发布成功');
+            this.dialogVisible = false; // 关闭对话框
+            // 可以选择重新获取博客列表来更新页面
+            this.fetchUserBlogs();
+          })
+          .catch(error => {
+            // 处理错误的响应
+            console.error('Error publishing the blog:', error);
+            this.$message.error('博客发布失败');
+          });
+      }
+    },
 
 
 

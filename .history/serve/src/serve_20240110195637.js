@@ -25,7 +25,7 @@ app.get('/api/blogs', userController.getAllBlogs);
 app.post('/api/upload', userController.uploadImage);
 app.get('/api/blog/:blogId', userController.getBlogDetail);
 // 更新博客的路由
-app.put('/api/blog/:blogId', userController.updateBlog);
+router.put('/api/blog/:blogId', userController.updateBlog);
 
 
 app.post('/api/user/failed', userController.getfailedRecord);
